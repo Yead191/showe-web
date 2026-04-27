@@ -13,10 +13,13 @@ export default function LandingNavbar() {
     // const [showNavbar, setShowNavbar] = useState(true);
     const [drawerOpen, setDrawerOpen] = useState(false);
     const lastScrollTop = useRef(0);
+    const isManualScrolling = useRef(false);
+    const scrollTimeout = useRef<NodeJS.Timeout | null>(null);
 
     // ── Scroll spy + hide-on-scroll-down ──────────────────────────────────────
     useEffect(() => {
         const handleScroll = () => {
+            if (isManualScrolling.current) return;
             const scrollY = window.scrollY;
             const bannerHeight = document.getElementById("banner")?.offsetHeight || 0;
             // Background swap
@@ -51,8 +54,14 @@ export default function LandingNavbar() {
     const scrollToSection = (sectionId: string) => {
         const el = document.getElementById(sectionId);
         if (el) {
-            el.scrollIntoView({ behavior: "smooth", block: "start" });
+            isManualScrolling.current = true;
             setActiveSection(sectionId);
+            el.scrollIntoView({ behavior: "smooth", block: "start" });
+
+            if (scrollTimeout.current) clearTimeout(scrollTimeout.current);
+            scrollTimeout.current = setTimeout(() => {
+                isManualScrolling.current = false;
+            }, 1000);
         }
         setDrawerOpen(false);
     };
