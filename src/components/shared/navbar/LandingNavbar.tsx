@@ -6,6 +6,7 @@ import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/co
 import { Menu } from "lucide-react";
 import navItems from "@/constants/landing-nav-items";
 import Image from "next/image";
+import Link from "next/link";
 
 export default function LandingNavbar() {
     const [activeSection, setActiveSection] = useState<string>("home");
@@ -81,13 +82,13 @@ export default function LandingNavbar() {
             <div className=" container py-4 flex items-center justify-between">
 
                 {/* ── Logo ── */}
-                <button
-                    onClick={() => scrollToSection("home")}
+                <Link
+                    href="/"
                     className="shrink-0 flex items-center gap-0 select-none"
                     aria-label="Go to home"
                 >
                     <Image src={'/logo.png'} width={400} height={100} alt="logo" className="h-[51px] w-fit object-contain" draggable={false} />
-                </button>
+                </Link>
 
                 {/* ── Desktop nav links ── */}
                 <ul className="hidden lg:flex items-center gap-1">

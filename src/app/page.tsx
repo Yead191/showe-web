@@ -1,4 +1,4 @@
-import LandingIndex from "@/features/landing";
+import LandingIndex from "@/features/web-pages/landing";
 export default function Home() {
   return <>
     <LandingIndex />

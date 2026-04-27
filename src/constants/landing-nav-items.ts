@@ -6,7 +6,7 @@ export interface NavItem {
 }
 
 const navItems: NavItem[] = [
-    { label: "Home", sectionId: "home" },
+    { label: "Home", sectionId: "banner" },
     { label: "Why us", sectionId: "why-choose-us" },
     { label: "Events", sectionId: "events" },
     { label: "Programmes", sectionId: "programmes" },
