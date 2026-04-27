@@ -3,6 +3,10 @@ import LandingBanner from "./components/LandingBanner";
 import AboutShowe from "./components/AboutShowe";
 import Features from "./components/WhyChooseUs";
 import LandingEvents from "./components/LandingEvents";
+import Programmes from "./components/Programmes";
+import FeatureSections from "./components/FeatureSections";
+import LandingFAQ from "./components/LandingFAQ";
+import LandingFooter from "./components/LandingFooter";
 
 
 export default function LandingIndex() {
@@ -14,7 +18,11 @@ export default function LandingIndex() {
                 <AboutShowe />
                 <Features />
                 <LandingEvents />
+                <Programmes />
+                <FeatureSections />
+                <LandingFAQ />
             </main>
+            <LandingFooter />
         </div>
     )
 }

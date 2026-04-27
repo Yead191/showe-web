@@ -8,7 +8,7 @@ const eventData = {
 
 export default function LandingEvents() {
   return (
-    <div className=' mt-12 lg:mt-16'>
+    <div id='events' className=' mt-12 lg:mt-16'>
       <p className='text-center font-medium text-[#AFAFAF] mb-6'>Events</p>
       <section className="relative h-[600px] md:h-[750px] w-full overflow-hidden">
         {/* Background Image Container */}
