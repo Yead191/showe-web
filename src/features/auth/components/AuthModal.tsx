@@ -1,0 +1,266 @@
+"use client"
+
+import * as React from "react"
+import Image from "next/image"
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog"
+import { Button } from "@/components/ui/button"
+import { Input } from "@/components/ui/input"
+import { Label } from "@/components/ui/label"
+import { useState } from "react"
+
+type AuthView = "login" | "register" | "forgot-password" | "verify-otp" | "reset-password"
+
+interface AuthModalProps {
+  open: boolean
+  onOpenChange: (open: boolean) => void
+  initialView?: AuthView
+}
+
+export default function AuthModal({ open, onOpenChange, initialView = "login" }: AuthModalProps) {
+  const [view, setView] = useState<AuthView>(initialView)
+
+  // Reset to initial view when modal closes
+  React.useEffect(() => {
+    if (!open) {
+      const timer = setTimeout(() => setView(initialView), 300)
+      return () => clearTimeout(timer)
+    }
+  }, [open, initialView])
+
+  return (
+    <Dialog open={open} onOpenChange={onOpenChange}>
+      <DialogContent className="sm:max-w-[480px] p-0 overflow-hidden border-none shadow-2xl rounded-2xl">
+        <div className="bg-white p-8 sm:p-10 space-y-8">
+          <div className="flex flex-col items-center space-y-4">
+            <Image src="/logo.png" width={150} height={50} alt="SHOWE" className="h-10 w-auto select-none pointer-events-none" draggable={false} />
+            <div className="text-center space-y-1">
+              <DialogTitle className="text-2xl font-bold font-museo text-[#014B52]">
+                {view === "login" && "Welcome Back"}
+                {view === "register" && "Create Account"}
+                {view === "forgot-password" && "Recover Password"}
+                {view === "verify-otp" && "Verification"}
+                {view === "reset-password" && "Reset Password"}
+              </DialogTitle>
+              <p className="text-gray-500 text-sm">
+                {view === "login" && "Sign in to access your dashboard"}
+                {view === "register" && "Start creating smarter event experiences"}
+                {view === "forgot-password" && "Receive a code to reset your password"}
+                {view === "verify-otp" && "Enter the 4-digit code sent to your email"}
+                {view === "reset-password" && "Create a new password for your account"}
+              </p>
+            </div>
+          </div>
+
+          <div className="animate-in fade-in slide-in-from-bottom-4 duration-300">
+            {view === "login" && <LoginForm setView={setView} />}
+            {view === "register" && <RegisterForm setView={setView} />}
+            {view === "forgot-password" && <ForgotPasswordForm setView={setView} />}
+            {view === "verify-otp" && <VerifyOtpForm setView={setView} />}
+            {view === "reset-password" && <ResetPasswordForm setView={setView} />}
+          </div>
+        </div>
+      </DialogContent>
+    </Dialog>
+  )
+}
+
+function LoginForm({ setView }: { setView: (v: AuthView) => void }) {
+  return (
+    <div className="space-y-5">
+      <div className="space-y-2">
+        <Label htmlFor="email">Email Address</Label>
+        <Input id="email" type="email" placeholder="name@example.com" className="h-12 border-gray-200 focus:border-[#F5A800] focus:ring-[#F5A800]/20" />
+      </div>
+      <div className="space-y-2">
+        <div className="flex items-center justify-between">
+          <Label htmlFor="password">Password</Label>
+
+        </div>
+        <Input id="password" type="password" placeholder="••••••••" className="h-12 border-gray-200 focus:border-[#F5A800] focus:ring-[#F5A800]/20" />
+        <div className="w-full inline-flex justify-end">
+          <button
+            onClick={() => setView("forgot-password")}
+            className="text-xs text-[#F5A800] hover:underline font-medium underline cursor-pointer"
+          >
+            Forgot password?
+          </button>
+        </div>
+      </div>
+      <Button className="w-full h-12 bg-[#F5A800] hover:bg-[#e09900] text-white font-semibold text-base transition-all">
+        Sign In
+      </Button>
+      <div className="text-center text-sm text-gray-500 pt-2">
+        Don&apos;t have an account?{" "}
+        <button
+          onClick={() => setView("register")}
+          className="text-[#F5A800] font-semibold hover:underline"
+        >
+          Sign up
+        </button>
+      </div>
+    </div>
+  )
+}
+
+function RegisterForm({ setView }: { setView: (v: AuthView) => void }) {
+  return (
+    <div className="space-y-4">
+      <div className="grid grid-cols-2 gap-4">
+        <div className="space-y-2">
+          <Label htmlFor="firstName">First Name</Label>
+          <Input id="firstName" placeholder="John" className="h-11 border-gray-200" />
+        </div>
+        <div className="space-y-2">
+          <Label htmlFor="lastName">Last Name</Label>
+          <Input id="lastName" placeholder="Doe" className="h-11 border-gray-200" />
+        </div>
+      </div>
+      <div className="space-y-2">
+        <Label htmlFor="reg-email">Email Address</Label>
+        <Input id="reg-email" type="email" placeholder="name@example.com" className="h-11 border-gray-200" />
+      </div>
+      <div className="space-y-2">
+        <Label htmlFor="reg-password">Password</Label>
+        <Input id="reg-password" type="password" placeholder="••••••••" className="h-11 border-gray-200" />
+      </div>
+      <div className="space-y-2 pb-2">
+        <Label htmlFor="confirm-password">Confirm Password</Label>
+        <Input id="confirm-password" type="password" placeholder="••••••••" className="h-11 border-gray-200" />
+      </div>
+      <Button className="w-full h-12 bg-[#F5A800] hover:bg-[#e09900] text-white font-semibold text-base transition-all">
+        Create Account
+      </Button>
+      <div className="text-center text-sm text-gray-500 pt-2">
+        Already have an account?{" "}
+        <button
+          onClick={() => setView("login")}
+          className="text-[#F5A800] font-semibold hover:underline"
+        >
+          Sign in
+        </button>
+      </div>
+    </div>
+  )
+}
+
+function ForgotPasswordForm({ setView }: { setView: (v: AuthView) => void }) {
+  return (
+    <div className="space-y-6">
+      <div className="space-y-2">
+        <Label htmlFor="forgot-email">Email Address</Label>
+        <Input id="forgot-email" type="email" placeholder="name@example.com" className="h-12 border-gray-200" />
+      </div>
+      <Button
+        onClick={() => setView("verify-otp")}
+        className="w-full h-12 bg-[#F5A800] hover:bg-[#e09900] text-white font-semibold text-base transition-all"
+      >
+        Send Code
+      </Button>
+      <button
+        onClick={() => setView("login")}
+        className="w-full text-center text-sm text-gray-500 hover:text-[#F5A800] transition-colors"
+      >
+        Back to Login
+      </button>
+    </div>
+  )
+}
+
+function VerifyOtpForm({ setView }: { setView: (v: AuthView) => void }) {
+  const [otp, setOtp] = useState<string[]>(["", "", "", ""]);
+  const inputRefs = React.useRef<(HTMLInputElement | null)[]>([]);
+
+  const handleChange = (index: number, value: string) => {
+    if (value && !/^\d+$/.test(value)) return;
+
+    const newOtp = [...otp];
+    newOtp[index] = value.slice(-1);
+    setOtp(newOtp);
+
+    if (value && index < 3) {
+      inputRefs.current[index + 1]?.focus();
+    }
+  };
+
+  const handleKeyDown = (index: number, e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === "Backspace" && !otp[index] && index > 0) {
+      inputRefs.current[index - 1]?.focus();
+    }
+  };
+
+  const handlePaste = (e: React.ClipboardEvent) => {
+    e.preventDefault();
+    const pastedData = e.clipboardData.getData("text").slice(0, 4);
+    if (!/^\d+$/.test(pastedData)) return;
+
+    const newOtp = [...otp];
+    pastedData.split("").forEach((char, i) => {
+      newOtp[i] = char;
+    });
+    setOtp(newOtp);
+
+    // Focus last filled or next empty
+    const nextIndex = Math.min(pastedData.length, 3);
+    inputRefs.current[nextIndex]?.focus();
+  };
+
+  return (
+    <div className="space-y-6">
+      <div className="flex justify-center gap-3">
+        {otp.map((digit, i) => (
+          <Input
+            key={i}
+            ref={(el) => { inputRefs.current[i] = el; }}
+            value={digit}
+            onChange={(e) => handleChange(i, e.target.value)}
+            onKeyDown={(e) => handleKeyDown(i, e)}
+            onPaste={handlePaste}
+            className="w-12 h-14 text-center text-xl font-bold border-gray-200 focus:border-[#F5A800]"
+            maxLength={1}
+            autoFocus={i === 0}
+          />
+        ))}
+      </div>
+      <div className="space-y-3">
+        <Button
+          onClick={() => setView("reset-password")}
+          className="w-full h-12 bg-[#F5A800] hover:bg-[#e09900] text-white font-semibold text-base transition-all"
+        >
+          Verify Code
+        </Button>
+        <p className="text-center text-sm text-gray-500">
+          Didn&apos;t receive code?{" "}
+          <button className="text-[#F5A800] font-semibold hover:underline">
+            Resend
+          </button>
+        </p>
+      </div>
+    </div>
+  )
+}
+
+function ResetPasswordForm({ setView }: { setView: (v: AuthView) => void }) {
+  return (
+    <div className="space-y-5">
+      <div className="space-y-2">
+        <Label htmlFor="new-password">New Password</Label>
+        <Input id="new-password" type="password" placeholder="••••••••" className="h-12 border-gray-200" />
+      </div>
+      <div className="space-y-2">
+        <Label htmlFor="confirm-new-password">Confirm New Password</Label>
+        <Input id="confirm-new-password" type="password" placeholder="••••••••" className="h-12 border-gray-200" />
+      </div>
+      <Button
+        onClick={() => setView("login")}
+        className="w-full h-12 bg-[#F5A800] hover:bg-[#e09900] text-white font-semibold text-base transition-all"
+      >
+        Reset Password
+      </Button>
+    </div>
+  )
+}

@@ -7,12 +7,14 @@ import { Menu } from "lucide-react";
 import navItems from "@/constants/landing-nav-items";
 import Image from "next/image";
 import Link from "next/link";
+import AuthModal from "@/features/auth/components/AuthModal";
 
 export default function LandingNavbar() {
     const [activeSection, setActiveSection] = useState<string>("home");
     const [isScrolled, setIsScrolled] = useState(false);
     // const [showNavbar, setShowNavbar] = useState(true);
     const [drawerOpen, setDrawerOpen] = useState(false);
+    const [authModalOpen, setAuthModalOpen] = useState(false);
     const lastScrollTop = useRef(0);
     const isManualScrolling = useRef(false);
     const scrollTimeout = useRef<NodeJS.Timeout | null>(null);
@@ -124,7 +126,7 @@ export default function LandingNavbar() {
                 <div className="flex items-center gap-3">
                     {/* CTA button */}
                     <Button
-                        onClick={() => scrollToSection("get-started")}
+                        onClick={() => setAuthModalOpen(true)}
                         className="
               hidden lg:inline-flex
               bg-[#F5A800] hover:bg-[#e09900] text-white
@@ -207,6 +209,7 @@ export default function LandingNavbar() {
                     </Sheet>
                 </div>
             </div>
+            <AuthModal open={authModalOpen} onOpenChange={setAuthModalOpen} />
         </nav>
     );
 }
