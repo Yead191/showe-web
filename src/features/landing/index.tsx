@@ -2,6 +2,7 @@ import LandingNavbar from "@/components/shared/navbar/LandingNavbar";
 import LandingBanner from "./components/LandingBanner";
 import AboutShowe from "./components/AboutShowe";
 import Features from "./components/WhyChooseUs";
+import LandingEvents from "./components/LandingEvents";
 
 
 export default function LandingIndex() {
@@ -12,6 +13,7 @@ export default function LandingIndex() {
                 <LandingBanner />
                 <AboutShowe />
                 <Features />
+                <LandingEvents />
             </main>
         </div>
     )
