@@ -6,6 +6,8 @@ import { EventCard } from "./components/EventCard"
 import { ResultsHeader } from "./components/ResultsHeader"
 import { MOCK_EVENTS } from "../../../constants/events/mock-events"
 
+import { isWithinInterval, parseISO, isSameDay } from "date-fns"
+
 export default function EventsPage({ search }: { search: any }) {
     // Basic client-side filtering logic
     const filteredEvents = MOCK_EVENTS.filter(event => {
@@ -13,8 +15,26 @@ export default function EventsPage({ search }: { search: any }) {
         const matchesQuery = !search.q || event.title.toLowerCase().includes(search.q.toLowerCase()) ||
             event.location.toLowerCase().includes(search.q.toLowerCase())
         const matchesLocation = !search.location || event.location.toLowerCase().includes(search.location.toLowerCase())
-        // For date, we could implement a more precise check if needed
-        const matchesDate = !search.date || event.date.includes(search.date)
+        
+        // Advanced date filtering
+        let matchesDate = true
+        if (search.date) {
+            try {
+                const eventDate = parseISO(event.isoDate)
+                if (search.date.includes("_")) {
+                    const [fromStr, toStr] = search.date.split("_")
+                    const from = parseISO(fromStr)
+                    const to = parseISO(toStr)
+                    matchesDate = isWithinInterval(eventDate, { start: from, end: to })
+                } else {
+                    const searchDate = parseISO(search.date)
+                    matchesDate = isSameDay(eventDate, searchDate)
+                }
+            } catch (error) {
+                console.error("Date parsing error:", error)
+                matchesDate = false
+            }
+        }
 
         return matchesCategory && matchesQuery && matchesLocation && matchesDate
     })

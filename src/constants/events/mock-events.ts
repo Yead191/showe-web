@@ -4,6 +4,7 @@ export interface Event {
     location: string
     price: number
     date: string
+    isoDate: string // Added for filtering
     interestedCount: string
     image: string
     category: string
@@ -16,6 +17,7 @@ export const MOCK_EVENTS: Event[] = [
         location: "Amsterdam, Netherland",
         price: 120,
         date: "Saturday, Nov 18, 09:30 PM",
+        isoDate: "2025-11-18",
         interestedCount: "240+",
         image: "/assets/images/events/event1.jpg",
         category: "music"
@@ -26,6 +28,7 @@ export const MOCK_EVENTS: Event[] = [
         location: "London, UK",
         price: 45,
         date: "Monday, Dec 05, 06:00 PM",
+        isoDate: "2025-12-05",
         interestedCount: "150+",
         image: "https://images.unsplash.com/photo-1544947950-fa07a98d237f?q=80&w=1000",
         category: "community"
@@ -36,6 +39,7 @@ export const MOCK_EVENTS: Event[] = [
         location: "Kyoto, Japan",
         price: 85,
         date: "Friday, Jan 12, 10:00 AM",
+        isoDate: "2026-01-12",
         interestedCount: "80+",
         image: "https://images.unsplash.com/photo-1513364776144-60967b0f800f?q=80&w=1000",
         category: "theater"
@@ -46,6 +50,7 @@ export const MOCK_EVENTS: Event[] = [
         location: "Portland, USA",
         price: 150,
         date: "Sunday, Feb 20, 07:00 PM",
+        isoDate: "2026-02-20",
         interestedCount: "300+",
         image: "https://images.unsplash.com/photo-1504674900247-0877df9cc836?q=80&w=1000",
         category: "ceremonies"
@@ -56,6 +61,7 @@ export const MOCK_EVENTS: Event[] = [
         location: "Berlin, Germany",
         price: 60,
         date: "Thursday, Mar 15, 02:00 PM",
+        isoDate: "2026-03-15",
         interestedCount: "120+",
         image: "https://images.unsplash.com/photo-1506784983877-45594efa4cbe?q=80&w=1000",
         category: "events"
@@ -66,6 +72,7 @@ export const MOCK_EVENTS: Event[] = [
         location: "Oslo, Norway",
         price: 95,
         date: "Wednesday, Apr 10, 08:30 PM",
+        isoDate: "2026-04-10",
         interestedCount: "200+",
         image: "https://images.unsplash.com/photo-1493225255756-d9584f8606e9?q=80&w=1000",
         category: "music"
@@ -76,6 +83,7 @@ export const MOCK_EVENTS: Event[] = [
         location: "Madrid, Spain",
         price: 30,
         date: "Saturday, May 25, 09:00 PM",
+        isoDate: "2026-05-25",
         interestedCount: "500+",
         image: "https://images.unsplash.com/photo-1504450758481-7338eba7524a?q=80&w=1000",
         category: "sports"
@@ -86,6 +94,7 @@ export const MOCK_EVENTS: Event[] = [
         location: "Paris, France",
         price: 110,
         date: "Friday, Jun 07, 07:30 PM",
+        isoDate: "2026-06-07",
         interestedCount: "180+",
         image: "https://images.unsplash.com/photo-1508700115892-45ecd05ae2ad?q=80&w=1000",
         category: "theater"
@@ -96,6 +105,7 @@ export const MOCK_EVENTS: Event[] = [
         location: "San Francisco, USA",
         price: 250,
         date: "Tuesday, Jul 16, 09:00 AM",
+        isoDate: "2026-07-16",
         interestedCount: "1000+",
         image: "/assets/images/events/event2.webp",
         category: "events"

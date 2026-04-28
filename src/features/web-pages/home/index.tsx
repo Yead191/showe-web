@@ -1,5 +1,9 @@
 import PageBanner from '@/components/shared/PageBanner'
 import HomeSearch from './components/HomeSearch'
+import PopularEvents from './components/PopularEvents'
+import ExploreByDate from './components/ExploreByDate'
+import ExploreByVenue from './components/ExploreByVenue'
+import ExploreByArtist from './components/ExploreByArtist'
 
 export default function Home() {
     return (
@@ -17,6 +21,10 @@ export default function Home() {
                 ]} 
             />
             <HomeSearch />
+            <PopularEvents />
+            <ExploreByDate />
+            <ExploreByVenue />
+            <ExploreByArtist />
         </main>
     )
 }
