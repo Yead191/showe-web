@@ -27,7 +27,7 @@ const webNavItems = [
 ]
 
 export default function WebNavbar() {
-    const [isSignedIn, setIsSignedIn] = useState(false)
+    const [isSignedIn, setIsSignedIn] = useState(true)
     const [authModalOpen, setAuthModalOpen] = useState(false)
     const [authView, setAuthView] = useState<any>("login")
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
@@ -154,7 +154,7 @@ export default function WebNavbar() {
                             </button>
                             <Button
                                 onClick={() => handleOpenAuth("register")}
-                                className="bg-[#F5A800] hover:bg-[#e09900] text-white font-bold px-4 sm:px-7 h-10 transition-all rounded-md shadow-[0_4px_14px_0_rgba(245,168,0,0.39)]"
+                                className="bg-[#F5A800] hover:bg-[#e09900] text-white font-bold px-4 sm:px-7 h-10 transition-all rounded-md shadow-[0_4px_14px_0_rgba(245,168,0,0.39)] hidden md:block"
                             >
                                 Sign up
                             </Button>

@@ -31,12 +31,12 @@ export function EventHero({ event }: { event: Event }) {
                             className="object-contain "
                         />
                     </div>
-                    <div className="flex items-center gap-4 justify-end">
-                        <button className="bg-white/10 backdrop-blur-md hover:bg-white/20 text-white p-4 rounded-full border border-white/20 transition-all shadow-xl group">
-                            <Share2 className="h-5 w-5 group-hover:scale-110 transition-transform" />
+                    <div className="flex items-center gap-2 lg:gap-4 justify-end">
+                        <button className="bg-white/10 backdrop-blur-md hover:bg-white/20 text-white p-2 lg:p-4 rounded-full border border-white/20 transition-all shadow-xl group">
+                            <Share2 className="h-4 w-4 lg:h-5 lg:w-5 group-hover:scale-110 transition-transform" />
                         </button>
-                        <button className="bg-white/10 backdrop-blur-md hover:bg-white/20 text-white p-4 rounded-full border border-white/20 transition-all shadow-xl group">
-                            <Heart className={cn("h-5 w-5 group-hover:scale-110 transition-transform", event.social.is_saved && "fill-red-500 text-red-500")} />
+                        <button className="bg-white/10 backdrop-blur-md hover:bg-white/20 text-white p-2 lg:p-4 rounded-full border border-white/20 transition-all shadow-xl group">
+                            <Heart className={cn("h-4 w-4 lg:h-5 lg:w-5 group-hover:scale-110 transition-transform", event.social.is_saved && "fill-red-500 text-red-500")} />
                         </button>
                     </div>
                 </div>
