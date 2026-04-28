@@ -1,7 +1,9 @@
-import React from 'react'
+import EventsPage from '@/features/web-pages/events'
 
-export default function page() {
+export default async function page({ searchParams }: { searchParams: Promise<any> }) {
+    const search = await searchParams
+    console.log(search)
     return (
-        <div>page</div>
+        <EventsPage search={search} />
     )
 }
