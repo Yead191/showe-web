@@ -26,7 +26,7 @@ export default function LandingNavbar() {
             const scrollY = window.scrollY;
             const bannerHeight = document.getElementById("banner")?.offsetHeight || 0;
             // Background swap
-            setIsScrolled(scrollY > bannerHeight - 83);
+            setIsScrolled(scrollY > bannerHeight - 67);
 
             // Hide / show
             // if (scrollY > lastScrollTop.current && scrollY > 100) {
@@ -81,7 +81,7 @@ export default function LandingNavbar() {
 
     return (
         <nav className={`${navBase} ${navBg} `}>
-            <div className=" container py-4 flex items-center justify-between">
+            <div className=" container py-2 flex items-center justify-between">
 
                 {/* ── Logo ── */}
                 <Link

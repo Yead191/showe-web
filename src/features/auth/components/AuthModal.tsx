@@ -5,13 +5,14 @@ import Image from "next/image"
 import {
   Dialog,
   DialogContent,
-  DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { useState } from "react"
+import { Eye, EyeOff } from "lucide-react"
+import { useRouter } from "next/navigation"
 
 type AuthView = "login" | "register" | "forgot-password" | "verify-otp" | "reset-password"
 
@@ -31,6 +32,11 @@ export default function AuthModal({ open, onOpenChange, initialView = "login" }:
       return () => clearTimeout(timer)
     }
   }, [open, initialView])
+
+
+
+
+
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
@@ -57,7 +63,7 @@ export default function AuthModal({ open, onOpenChange, initialView = "login" }:
           </div>
 
           <div className="animate-in fade-in slide-in-from-bottom-4 duration-300">
-            {view === "login" && <LoginForm setView={setView} />}
+            {view === "login" && <LoginForm setView={setView} onOpenChange={onOpenChange} />}
             {view === "register" && <RegisterForm setView={setView} />}
             {view === "forgot-password" && <ForgotPasswordForm setView={setView} />}
             {view === "verify-otp" && <VerifyOtpForm setView={setView} />}
@@ -69,31 +75,45 @@ export default function AuthModal({ open, onOpenChange, initialView = "login" }:
   )
 }
 
-function LoginForm({ setView }: { setView: (v: AuthView) => void }) {
-  return (
-    <div className="space-y-5">
-      <div className="space-y-2">
-        <Label htmlFor="email">Email Address</Label>
-        <Input id="email" type="email" placeholder="name@example.com" className="h-12 border-gray-200 focus:border-[#F5A800] focus:ring-[#F5A800]/20" />
-      </div>
-      <div className="space-y-2">
-        <div className="flex items-center justify-between">
-          <Label htmlFor="password">Password</Label>
+function LoginForm({ setView, onOpenChange }: { setView: (v: AuthView) => void, onOpenChange: (open: boolean) => void }) {
+  const router = useRouter();
+  const handleLogin = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
 
+    const formData = new FormData(e.currentTarget);
+
+    const email = formData.get("email");
+    const password = formData.get("password");
+    console.log({ email, password });
+    router.push('/home');
+    onOpenChange(false);
+  };
+  return (
+    <div >
+      <form className="space-y-5" onSubmit={handleLogin}>
+        <div className="space-y-2">
+          <Label htmlFor="email">Email Address</Label>
+          <Input name="email" id="email" type="email" placeholder="name@example.com" className="h-12 border-gray-200 focus:border-[#F5A800] focus:ring-[#F5A800]/20" />
         </div>
-        <Input id="password" type="password" placeholder="••••••••" className="h-12 border-gray-200 focus:border-[#F5A800] focus:ring-[#F5A800]/20" />
-        <div className="w-full inline-flex justify-end">
-          <button
-            onClick={() => setView("forgot-password")}
-            className="text-xs text-[#F5A800] hover:underline font-medium underline cursor-pointer"
-          >
-            Forgot password?
-          </button>
+        <div className="space-y-2">
+          <div className="flex items-center justify-between">
+            <Label htmlFor="password">Password</Label>
+
+          </div>
+          <PasswordInput name="password" id="password" placeholder="••••••••" className="h-12 border-gray-200 focus:border-[#F5A800] focus:ring-[#F5A800]/20" />
+          <div className="w-full inline-flex justify-end">
+            <button
+              onClick={() => setView("forgot-password")}
+              className="text-xs text-[#F5A800] hover:underline font-medium underline cursor-pointer"
+            >
+              Forgot password?
+            </button>
+          </div>
         </div>
-      </div>
-      <Button className="w-full h-12 bg-[#F5A800] hover:bg-[#e09900] text-white font-semibold text-base transition-all">
-        Sign In
-      </Button>
+        <Button type="submit" className="w-full h-12 bg-[#F5A800] hover:bg-[#e09900] text-white font-semibold text-base transition-all">
+          Sign In
+        </Button>
+      </form>
       <div className="text-center text-sm text-gray-500 pt-2">
         Don&apos;t have an account?{" "}
         <button
@@ -126,11 +146,11 @@ function RegisterForm({ setView }: { setView: (v: AuthView) => void }) {
       </div>
       <div className="space-y-2">
         <Label htmlFor="reg-password">Password</Label>
-        <Input id="reg-password" type="password" placeholder="••••••••" className="h-11 border-gray-200" />
+        <PasswordInput id="reg-password" placeholder="••••••••" className="h-11 border-gray-200" />
       </div>
       <div className="space-y-2 pb-2">
         <Label htmlFor="confirm-password">Confirm Password</Label>
-        <Input id="confirm-password" type="password" placeholder="••••••••" className="h-11 border-gray-200" />
+        <PasswordInput id="confirm-password" placeholder="••••••••" className="h-11 border-gray-200" />
       </div>
       <Button className="w-full h-12 bg-[#F5A800] hover:bg-[#e09900] text-white font-semibold text-base transition-all">
         Create Account
@@ -249,11 +269,11 @@ function ResetPasswordForm({ setView }: { setView: (v: AuthView) => void }) {
     <div className="space-y-5">
       <div className="space-y-2">
         <Label htmlFor="new-password">New Password</Label>
-        <Input id="new-password" type="password" placeholder="••••••••" className="h-12 border-gray-200" />
+        <PasswordInput id="new-password" placeholder="••••••••" className="h-12 border-gray-200" />
       </div>
       <div className="space-y-2">
         <Label htmlFor="confirm-new-password">Confirm New Password</Label>
-        <Input id="confirm-new-password" type="password" placeholder="••••••••" className="h-12 border-gray-200" />
+        <PasswordInput id="confirm-new-password" placeholder="••••••••" className="h-12 border-gray-200" />
       </div>
       <Button
         onClick={() => setView("login")}
@@ -264,3 +284,26 @@ function ResetPasswordForm({ setView }: { setView: (v: AuthView) => void }) {
     </div>
   )
 }
+
+function PasswordInput({ id, placeholder, className, name }: { id: string, placeholder?: string, className?: string, name?: string }) {
+  const [showPassword, setShowPassword] = useState(false)
+  return (
+    <div className="relative">
+      <Input
+        name={name}
+        id={id}
+        type={showPassword ? "text" : "password"}
+        placeholder={placeholder}
+        className={`${className || ""} pr-10`}
+      />
+      <button
+        type="button"
+        onClick={() => setShowPassword(!showPassword)}
+        className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 focus:outline-none"
+      >
+        {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
+      </button>
+    </div>
+  )
+}
+

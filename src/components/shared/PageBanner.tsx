@@ -5,9 +5,10 @@ import { cn } from '@/lib/utils';
 
 interface BannerButton {
     label: string;
-    href: string;
+    href?: string;
     variant?: 'default' | 'outline' | 'secondary' | 'ghost' | 'link' | 'destructive';
     className?: string;
+    onClick?: () => void;
 }
 
 interface PageBannerProps {
@@ -63,20 +64,33 @@ export default function PageBanner({
 
                     {buttons.length > 0 && (
                         <div className="flex flex-wrap items-center justify-center gap-4 pt-6">
-                            {buttons.map((btn, index) => (
-                                <Link key={index} href={btn.href}>
+                            {buttons?.map((btn, index) => {
+                                const buttonElement = (
                                     <Button
+                                        onClick={btn.onClick}
                                         variant={btn.variant || 'default'}
                                         className={cn(
                                             "h-12 px-8 rounded-md font-semibold transition-all duration-300",
-                                            btn.variant === 'default' ? "cursor-pointer h-10 text-base px-8 bg-[#F2A900] text-white" : " h-10 text-white bg-transparent border-white/80 hover:bg-white/80 hover:text-black! px-8",
+                                            btn.variant === 'default'
+                                                ? "cursor-pointer h-10 text-base px-8 bg-[#F2A900] text-white"
+                                                : "h-10 text-white bg-transparent border-white/80 hover:bg-white/80 hover:text-black! px-8",
                                             btn.className
                                         )}
                                     >
                                         {btn.label}
                                     </Button>
-                                </Link>
-                            ))}
+                                );
+
+                                return btn.href ? (
+                                    <Link key={index} href={btn.href}>
+                                        {buttonElement}
+                                    </Link>
+                                ) : (
+                                    <div key={index}>
+                                        {buttonElement}
+                                    </div>
+                                );
+                            })}
                         </div>
                     )}
                 </div>
