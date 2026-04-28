@@ -6,14 +6,15 @@ import { Button } from "@/components/ui/button"
 
 export function ArtistHero({ artist }: { artist: any }) {
     return (
-        <section className="relative w-full pt-[72px]">
+        <section id="banner" className="relative w-full ">
             {/* Cover Image */}
-            <div className="relative h-[250px] md:h-[400px] w-full overflow-hidden">
+            <div className="relative h-[250px] md:h-[400px] lg:h-[500px] w-full overflow-hidden">
                 <Image
                     src={artist.cover_image}
                     alt={artist.name}
-                    fill
-                    className="object-cover object-[50%_15%]"
+                    width={1400}
+                    height={600}
+                    className="w-full h-full object-cover object-[50%_15%]"
                     priority
                 />
                 <div className="absolute inset-0 bg-black/30" />

@@ -80,7 +80,7 @@ export default function WebNavbar() {
                             <li key={item.href}>
                                 <Link
                                     href={item.href}
-                                    className={`relative px-4 py-2 text-sm font-medium transition-all duration-300 rounded-md hover:text-white ${isActive ? "text-[#F5A800]" : "text-white/80"
+                                    className={`relative p-2 text-sm font-medium transition-all duration-300 rounded-md hover:text-white ${isActive ? "text-[#F5A800]" : "text-white/80"
                                         }`}
                                 >
                                     {item.label}
