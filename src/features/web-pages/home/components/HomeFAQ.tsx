@@ -14,7 +14,7 @@ import { MessageCircle } from "lucide-react"
 
 export default function HomeFAQ() {
     return (
-        <section className="container mx-auto px-4 py-12 lg:py-16">
+        <section className="container mx-auto px-4 py-12 lg:py-16 mb-16">
             <div className="flex flex-col lg:flex-row gap-16 lg:gap-24">
                 {/* Left Side: Header & CTA */}
                 <div className="lg:w-1/3 space-y-12">
