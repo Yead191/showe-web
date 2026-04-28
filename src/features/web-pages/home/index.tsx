@@ -4,6 +4,7 @@ import PopularEvents from './components/PopularEvents'
 import ExploreByDate from './components/ExploreByDate'
 import ExploreByVenue from './components/ExploreByVenue'
 import ExploreByArtist from './components/ExploreByArtist'
+import HomeFAQ from './components/HomeFAQ'
 
 export default function Home() {
     return (
@@ -25,6 +26,7 @@ export default function Home() {
             <ExploreByDate />
             <ExploreByVenue />
             <ExploreByArtist />
+            <HomeFAQ />
         </main>
     )
 }

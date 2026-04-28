@@ -10,17 +10,9 @@ import { ChevronLeft, ChevronRight, ArrowUpRight } from 'lucide-react'
 // Import Swiper styles
 import 'swiper/css'
 import 'swiper/css/navigation'
+import { ARTISTS } from "@/constants/home/artists"
 
-const ARTISTS = [
-    { id: "a1", name: "Taylor Swift", image: "https://i.pravatar.cc/300?u=taylor" },
-    { id: "a2", name: "The Weeknd", image: "https://i.pravatar.cc/300?u=weeknd" },
-    { id: "a3", name: "Dua Lipa", image: "https://i.pravatar.cc/300?u=dua" },
-    { id: "a4", name: "Ed Sheeran", image: "https://i.pravatar.cc/300?u=ed" },
-    { id: "a5", name: "Drake", image: "https://i.pravatar.cc/300?u=drake" },
-    { id: "a6", name: "Billie Eilish", image: "https://i.pravatar.cc/300?u=billie" },
-    { id: "a7", name: "Post Malone", image: "https://i.pravatar.cc/300?u=post" },
-    { id: "a8", name: "Adele", image: "https://i.pravatar.cc/300?u=adele" }
-]
+
 
 export default function ExploreByArtist() {
     const router = useRouter()
@@ -30,7 +22,7 @@ export default function ExploreByArtist() {
     }
 
     return (
-        <section className="py-20 bg-gray-50/50">
+        <section className="py-20 bg-gray-50/50 my-16">
             <div className="container mx-auto px-4">
                 <div className="flex items-center justify-between mb-12">
                     <div className="flex items-center gap-3">
@@ -73,7 +65,7 @@ export default function ExploreByArtist() {
                     }}
                     className="pb-12"
                 >
-                    {ARTISTS.map((artist) => (
+                    {ARTISTS?.map((artist) => (
                         <SwiperSlide key={artist.id}>
                             <div
                                 onClick={() => handleArtistClick(artist.name)}
