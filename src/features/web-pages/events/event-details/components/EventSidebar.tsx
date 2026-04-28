@@ -1,16 +1,19 @@
 "use client"
-
-import React from "react"
 import Image from "next/image"
-import { Calendar, MapPin, CheckCircle2, ChevronRight } from "lucide-react"
+import { Calendar, MapPin, CheckCircle2, ChevronRight, FileDown } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Event } from "@/constants/events/mock-event-details"
 
-export function EventSidebar({ event }: { event: Event }) {
+interface EventSidebarProps {
+    event: Event
+    onBookTickets: () => void
+}
+
+export function EventSidebar({ event, onBookTickets }: EventSidebarProps) {
     return (
         <aside className="space-y-8 lg:sticky lg:top-24 h-fit">
             {/* ── Booking Card ── */}
-            <div className="bg-white rounded-3xl shadow-2xl shadow-black/[0.04] border border-gray-100 overflow-hidden group">
+            <div className="bg-white rounded-3xl shadow-2xl shadow-black/4 border border-gray-100 overflow-hidden group">
                 <div className="p-6 md:p-8 space-y-8">
                     <div className="flex items-center justify-between">
                         <div className="space-y-1">
@@ -21,12 +24,31 @@ export function EventSidebar({ event }: { event: Event }) {
                             Best Deal
                         </div>
                     </div>
-                    
-                    <Button className="w-full h-16 bg-[#014B52] hover:bg-[#023a40] text-white font-black text-lg rounded-2xl transition-all active:scale-[0.98] shadow-xl shadow-[#014B52]/20 flex items-center justify-center gap-2 group-hover:gap-4 duration-300">
+
+                    <Button
+                        onClick={onBookTickets}
+                        className="w-full h-16 bg-[#014B52] hover:bg-[#023a40] text-white font-black text-lg rounded-2xl transition-all active:scale-[0.98] shadow-xl shadow-[#014B52]/20 flex items-center justify-center gap-2 group-hover:gap-4 duration-300"
+                    >
                         Book Tickets Now
                         <ChevronRight className="h-5 w-5" />
                     </Button>
-                    
+                    {/* ── Downloads ── */}
+                    <div className=" flex flex-wrap gap-4">
+                        {Object.entries(event.downloads).map(([key, url]) => (
+                            <a
+                                key={key}
+                                href={url}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="flex items-center gap-3 px-6 py-3.5 rounded-2xl bg-[#014B52]/5 hover:bg-[#014B52]/10 text-[#014B52] transition-all group"
+                            >
+                                <FileDown className="h-5 w-5 group-hover:-translate-y-1 transition-transform" />
+                                <span className="text-xs font-black uppercase tracking-widest">
+                                    Download {key.replace("_url", "").replace("_", " ")}
+                                </span>
+                            </a>
+                        ))}
+                    </div>
                     <div className="space-y-5 pt-2">
                         <div className="flex items-start gap-4">
                             <div className="bg-gray-50 p-3.5 rounded-2xl flex shrink-0 shadow-sm border border-gray-100">
@@ -39,7 +61,7 @@ export function EventSidebar({ event }: { event: Event }) {
                                 </p>
                             </div>
                         </div>
-                        
+
                         <div className="flex items-start gap-4">
                             <div className="bg-gray-50 p-3.5 rounded-2xl flex shrink-0 shadow-sm border border-gray-100">
                                 <MapPin className="h-6 w-6 text-[#014B52]" />
@@ -53,15 +75,15 @@ export function EventSidebar({ event }: { event: Event }) {
                         </div>
                     </div>
                 </div>
-                
+
                 {/* ── Host Info ── */}
                 <div className="bg-gray-50/50 p-6 md:p-8 border-t border-gray-100">
                     <div className="flex items-center gap-4">
                         <div className="relative h-14 w-14 rounded-full overflow-hidden border-4 border-white shadow-md flex shrink-0">
-                            <Image 
-                                src={event.host.avatar_url} 
-                                alt={event.host.name} 
-                                fill 
+                            <Image
+                                src={event.host.avatar_url}
+                                alt={event.host.name}
+                                fill
                                 className="object-cover"
                             />
                         </div>
@@ -81,15 +103,15 @@ export function EventSidebar({ event }: { event: Event }) {
                     </div>
                 </div>
             </div>
-            
+
             {/* ── Interested Crowd ── */}
-            <div className="bg-white rounded-3xl p-6 md:p-8 border border-gray-100 shadow-xl shadow-black/[0.02]">
+            <div className="bg-white rounded-3xl p-6 md:p-8 border border-gray-100 shadow-xl shadow-black/2">
                 <p className="text-[10px] font-black text-gray-400 uppercase tracking-[0.2em] mb-6">Interested Community</p>
                 <div className="flex items-center gap-4">
                     <div className="flex -space-x-3.5">
                         {event.interested_audience.preview_users.map((user, idx) => (
-                            <div 
-                                key={user.id} 
+                            <div
+                                key={user.id}
                                 className="h-12 w-12 rounded-full border-4 border-white bg-gray-100 overflow-hidden relative shadow-sm"
                                 style={{ zIndex: 3 - idx }}
                             >
