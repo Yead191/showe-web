@@ -22,7 +22,7 @@ const MOCK_VENUES = [
 export default function FavouritesPage() {
     return (
         <div className="space-y-10 animate-in fade-in slide-in-from-bottom-4 duration-700">
-            
+
             {/* ── Header ── */}
             <div className="space-y-1">
                 <h1 className="text-4xl font-black text-gray-900 tracking-tight">My Favourites</h1>
@@ -31,20 +31,20 @@ export default function FavouritesPage() {
 
             <Tabs defaultValue="programmes" className="w-full">
                 <TabsList className="bg-gray-100/50 p-1 rounded-2xl mb-8 flex overflow-x-auto no-scrollbar whitespace-nowrap">
-                    <TabsTrigger 
-                        value="programmes" 
+                    <TabsTrigger
+                        value="programmes"
                         className="flex-1 rounded-xl px-4 md:px-8 py-3 data-[state=active]:bg-white data-[state=active]:shadow-sm data-[state=active]:text-[#014B52] font-black text-[10px] md:text-xs uppercase tracking-widest transition-all"
                     >
                         Programmes
                     </TabsTrigger>
-                    <TabsTrigger 
-                        value="artists" 
+                    <TabsTrigger
+                        value="artists"
                         className="rounded-xl px-4 md:px-8 py-3 data-[state=active]:bg-white data-[state=active]:shadow-sm data-[state=active]:text-[#014B52] font-black text-[10px] md:text-xs uppercase tracking-widest transition-all"
                     >
                         Artists
                     </TabsTrigger>
-                    <TabsTrigger 
-                        value="venues" 
+                    <TabsTrigger
+                        value="venues"
                         className="rounded-xl px-4 md:px-8 py-3 data-[state=active]:bg-white data-[state=active]:shadow-sm data-[state=active]:text-[#014B52] font-black text-[10px] md:text-xs uppercase tracking-widest transition-all"
                     >
                         Venues
@@ -55,7 +55,7 @@ export default function FavouritesPage() {
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                         {MOCK_PROGRAMMES.map((item) => (
                             <div key={item.id} className="group bg-gray-50/50 rounded-3xl p-4 border border-transparent hover:border-[#014B52]/10 hover:bg-white hover:shadow-xl transition-all duration-500">
-                                <div className="relative aspect-[3/4] rounded-2xl overflow-hidden mb-4">
+                                <div className="relative aspect-3/4 rounded-2xl overflow-hidden mb-4">
                                     <Image src={item.image} alt={item.title} fill className="object-cover group-hover:scale-110 transition-transform duration-700" />
                                     <button className="absolute top-3 right-3 p-2 bg-white/90 backdrop-blur-sm rounded-xl text-red-500 shadow-sm">
                                         <Heart size={16} fill="currentColor" />
@@ -94,7 +94,7 @@ export default function FavouritesPage() {
                         {MOCK_VENUES.map((item) => (
                             <div key={item.id} className="group relative h-48 rounded-3xl overflow-hidden shadow-sm border border-gray-100">
                                 <Image src={item.image} alt={item.name} fill className="object-cover group-hover:scale-110 transition-transform duration-700" />
-                                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
+                                <div className="absolute inset-0 bg-linear-to-t from-black/80 via-black/20 to-transparent" />
                                 <div className="absolute bottom-6 left-6 right-6">
                                     <h3 className="text-lg font-black text-white">{item.name}</h3>
                                     <div className="flex items-center gap-1.5 text-xs font-bold text-white/70">
