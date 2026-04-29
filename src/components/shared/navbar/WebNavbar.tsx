@@ -183,14 +183,7 @@ export default function WebNavbar() {
                                             <span>Dashboard</span>
                                         </Link>
                                     </DropdownMenuItem>
-                                    <DropdownMenuItem asChild className="focus:bg-white/10 cursor-pointer py-2.5 rounded-md transition-colors">
-                                        <Link href="/profile" className="flex items-center gap-2 w-full">
-                                            <User className="h-4 w-4 text-[#F5A800]" />
-                                            <span>Profile Settings</span>
-                                        </Link>
-                                    </DropdownMenuItem>
                                 </div>
-                                <DropdownMenuSeparator className="bg-white/5 mx-1" />
                                 <div className="p-1">
                                     <DropdownMenuItem
                                         className="focus:bg-red-500/10 text-red-400 cursor-pointer py-2.5 rounded-md transition-colors"
