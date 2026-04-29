@@ -1,54 +1,55 @@
-"use client";
-
-/**
- * DiagonalBooksSection
- *
- * Direct Next.js port of Flutter's DiagonalBooksSection widget.
- *
- * Flutter → React mapping:
- *   AnimationController (450ms, easeInOutCubic) → requestAnimationFrame loop
- *   Stack + Positioned (absolute)               → position: absolute
- *   GestureDetector (horizontal drag)           → wheel + touch events
- *   Obx (reactive state)                        → useState
- *   Slots [0.02, 0.35, 0.67] × width            → same slot percentages
- *   enterFrom / exitTo vectors                  → same math, px-based
- */
-
 import {
-  useEffect,
   useRef,
-  useCallback,
+  useEffect,
   useState,
+  useCallback,
+  CSSProperties,
 } from "react";
 import { useRouter } from "next/navigation";
-import { TheatreItem } from "@/helpers/useTheatreStore";
+import { TheatreItem, ALL_ITEMS } from "@/helpers/useTheatreStore";
 import { BookCard } from "./BookCard";
 import { InfoTile } from "./InfoTile";
 
-
-// ── Easing ────────────────────────────────────────────────────────────────────
-function easeInOutCubic(x: number): number {
+// ─── Easing ────────────────────────────────────────────────────────────────────
+function easeInOutCubic(x: number) {
   return x < 0.5 ? 4 * x * x * x : 1 - Math.pow(-2 * x + 2, 3) / 2;
 }
-
-// ── Types ─────────────────────────────────────────────────────────────────────
-interface DiagonalBooksSectionProps {
-  items: TheatreItem[];
-  onSwipeLeft: () => void;   // → next book
-  onSwipePrev: () => void;   // → prev book
+function lerp(a: number, b: number, t: number) {
+  return a + (b - a) * t;
+}
+function clamp(v: number, lo: number, hi: number) {
+  return Math.max(lo, Math.min(hi, v));
 }
 
-// ── Component ─────────────────────────────────────────────────────────────────
+// ─── Types ─────────────────────────────────────────────────────────────────────
+interface Slot { x: number; y: number }
+interface BookState {
+  item:    TheatreItem;
+  left:    number;
+  top:     number;
+  opacity: number;
+  infoTop: number;
+  infoOp:  number;
+  isGhost: boolean; // entering / exiting transient element
+}
+
+interface DiagonalBooksSectionProps {
+  offset:      number;    // current first-visible index
+  onSwipeLeft: () => void;
+  onSwipePrev: () => void;
+}
+
+// ─── Component ─────────────────────────────────────────────────────────────────
 export function DiagonalBooksSection({
-  items,
+  offset,
   onSwipeLeft,
   onSwipePrev,
 }: DiagonalBooksSectionProps) {
-  const router = useRouter();
+  const router       = useRouter();
   const containerRef = useRef<HTMLDivElement>(null);
 
-  // Track width reactively for SSR safety
-  const [containerW, setContainerW] = useState(960);
+  // Reactive container width
+  const [containerW, setContainerW] = useState(1200);
   useEffect(() => {
     const el = containerRef.current;
     if (!el) return;
@@ -58,275 +59,275 @@ export function DiagonalBooksSection({
     return () => ro.disconnect();
   }, []);
 
-  // ── Dimensions (Adjusted for more items) ──────────────────────────────────────
-  // Make book smaller: from 0.30 down to ~0.15-0.20 depending on count
-  const bookW = containerW * (items.length > 4 ? 0.16 : 0.25);
-  const bookH = bookW * 1.5; // Reduced aspect ratio slightly for better fit
-  const totalH = bookH + 400; // Increased padding for info tiles
+  // ── Responsive N (visible books) ─────────────────────────────────────────────
+  const N = containerW >= 1100 ? 6 : containerW >= 750 ? 5 : containerW >= 500 ? 4 : 3;
 
-  // Dynamic slots based on items.length
-  const slots: any[] = items.map((_, i) => {
-    const startX = containerW * 0.05;
-    const endX = containerW * 0.95 - bookW;
-    const startY = 320;
-    const endY = 40;
+  // ── Book dimensions ───────────────────────────────────────────────────────────
+  const bookW = Math.floor((containerW * 0.84) / (N * 1.28));
+  const bookH = Math.floor(bookW * 1.5); // Using the 1.5 ratio from the current design
 
-    const t = i / (items.length - 1 || 1);
+  // ── Slot positions ────────────────────────────────────────────────────────────
+  // X: evenly spaced left→right
+  // Y: ascending (bottom-left to top-right)
+  const xPad  = containerW * 0.05;
+  const xEnd  = containerW * 0.95 - bookW;
+  const xStep = (xEnd - xPad) / (N - 1 || 1);
+  const yStart = 320; // Matches current design
+  const yEnd   = 40;
+  const yStep  = (yEnd - yStart) / (N - 1 || 1);
+
+  const slots: Slot[] = Array.from({ length: N }, (_, i) => {
+    const t = i / (N - 1 || 1);
     return {
-      x: startX + (endX - startX) * t,
-      y: startY + (endY - startY) * t,
+      x: xPad + i * xStep,
+      y: yStart + i * yStep,
     };
   });
 
-  // Info tile offsets
-  const infoY = (slotY: number) => slotY + bookH + 22;
+  const totalH = yStart + bookH + 200; // Total height of the container
 
-  // ── Animation state ──────────────────────────────────────────────────────────
-  const isAnimatingRef = useRef(false);
-  const directionRef = useRef(1);
-  const animTRef = useRef(0);
-  const rafRef = useRef<number | null>(null);
+  // Off-screen ghost slots for animation
+  const ghostEnterFwd: Slot = { x: slots[N - 1].x + xStep, y: slots[N - 1].y + yStep };
+  const ghostExitFwd:  Slot = { x: slots[0].x   - xStep, y: slots[0].y   - yStep };
+  const ghostEnterBk:  Slot = { x: slots[0].x   - xStep, y: slots[0].y   - yStep };
+  const ghostExitBk:   Slot = { x: slots[N - 1].x + xStep, y: slots[N - 1].y + yStep };
 
-  // Snapshot of items AT THE MOMENT the animation started
-  const prevItemsRef = useRef<TheatreItem[]>(items);
-  const nextItemsRef = useRef<TheatreItem[]>(items);
+  // ── Animation state ────────
+  const animRef     = useRef(false);
+  const frameRef    = useRef<number | null>(null);
+  const offsetRef   = useRef(offset);
 
-  // Current render trigger
-  const [tick, setTick] = useState(0);
-  const forceUpdate = useCallback(() => setTick(t => t + 1), []);
+  // Rendered book states
+  const [books, setBooks] = useState<BookState[]>([]);
 
-  // ── Enter / exit vectors ───────────────────────────────────────────────────
-  const enterFrom = useCallback((dir: number): any => ({
-    x: dir >= 0 ? containerW * 1.2 : -bookW * 1.5,
-    y: dir >= 0 ? -bookH * 0.5 : bookH * 1.5,
-  }), [containerW, bookW, bookH]);
+  useEffect(() => { offsetRef.current = offset; }, [offset]);
 
-  const exitTo = useCallback((dir: number): any => ({
-    x: dir >= 0 ? -bookW * 1.5 : containerW * 1.2,
-    y: dir >= 0 ? bookH * 1.5 : -bookH * 0.5,
-  }), [containerW, bookW, bookH]);
-
-  // ── Interpolate helpers ───────────────────────────────────────────────────────
-  const lerp = (a: number, b: number, t: number) => a + (b - a) * t;
-
-  // ── Swipe trigger ─────────────────────────────────────────────────────────────
-  const swipe = useCallback(
-    (dir: number, onMidpoint: () => void) => {
-      if (isAnimatingRef.current) return;
-
-      // 1. Snapshot current items
-      prevItemsRef.current = [...items];
-
-      // 2. Advance the store
-      directionRef.current = dir;
-      isAnimatingRef.current = true;
-      onMidpoint();
-
-      // 3. Snapshot the *new* items
-      requestAnimationFrame(() => {
-        nextItemsRef.current = [...items];
-
-        const startTime = Date.now();
-        const duration = 500;
-
-        const animate = () => {
-          const raw = Math.min((Date.now() - startTime) / duration, 1);
-          animTRef.current = easeInOutCubic(raw);
-          forceUpdate();
-
-          if (raw < 1) {
-            rafRef.current = requestAnimationFrame(animate);
-          } else {
-            animTRef.current = 0;
-            isAnimatingRef.current = false;
-            forceUpdate();
-          }
+  // ── Build static state ───────────────────────────────────────────────────────
+  const buildStatic = useCallback(
+    (off: number): BookState[] =>
+      Array.from({ length: N }, (_, i) => {
+        const item = ALL_ITEMS[(off + i) % ALL_ITEMS.length];
+        return {
+          item,
+          left:    slots[i].x,
+          top:     slots[i].y,
+          opacity: 1,
+          infoTop: slots[i].y + bookH + 22,
+          infoOp:  1,
+          isGhost: false,
         };
-
-        rafRef.current = requestAnimationFrame(animate);
-      });
-    },
-    [items, forceUpdate]
+      }),
+    [N, bookW, bookH, containerW]
   );
 
-  useEffect(() => () => { if (rafRef.current) cancelAnimationFrame(rafRef.current); }, []);
+  useEffect(() => {
+    setBooks(buildStatic(offsetRef.current));
+  }, [buildStatic]);
 
-  // ── Input handling ────────────────────────────────────────────────────────────
+  // ── Core swipe ────────────────────────────────────────────────────────────────
+  const swipe = useCallback(
+    (dir: number, advance: () => void) => {
+      if (animRef.current) return;
+      animRef.current = true;
+
+      const prevOff = offsetRef.current;
+      advance(); 
+
+      const enterIdx =
+        dir > 0
+          ? (prevOff + N) % ALL_ITEMS.length          
+          : (prevOff - 1 + ALL_ITEMS.length) % ALL_ITEMS.length; 
+
+      const enterGhost: Slot = dir > 0 ? ghostEnterFwd : ghostEnterBk;
+      const exitGhost:  Slot = dir > 0 ? ghostExitFwd  : ghostExitBk;
+
+      const enterItem = ALL_ITEMS[enterIdx];
+      const prevItems = Array.from({ length: N }, (_, i) =>
+        ALL_ITEMS[(prevOff + i) % ALL_ITEMS.length]
+      );
+
+      const START = Date.now();
+      const DUR   = 450;
+
+      const tick = () => {
+        const raw = Math.min((Date.now() - START) / DUR, 1);
+        const t   = easeInOutCubic(raw);
+
+        if (dir > 0) {
+          // Forward shift
+          setBooks([
+            ...Array.from({ length: N }, (_, i) => {
+              const from = slots[i];
+              const to   = i === 0 ? exitGhost : slots[i - 1];
+              const opac = i === 0 ? clamp(1 - t * 1.8, 0, 1) : 1;
+              const iOp  = i === 0 ? clamp(1 - t * 3.5, 0, 1) : 1;
+              return {
+                item:    prevItems[i],
+                left:    lerp(from.x, to.x, t),
+                top:     lerp(from.y, to.y, t),
+                opacity: opac,
+                infoTop: lerp(from.y + bookH + 22, to.y + bookH + 22, t),
+                infoOp:  iOp,
+                isGhost: false,
+              } as BookState;
+            }),
+            {
+              item:    enterItem,
+              left:    lerp(enterGhost.x, slots[N - 1].x, t),
+              top:     lerp(enterGhost.y, slots[N - 1].y, t),
+              opacity: clamp((t - 0.25) / 0.75, 0, 1),
+              infoTop: lerp(enterGhost.y + bookH + 22, slots[N - 1].y + bookH + 22, t),
+              infoOp:  clamp((t - 0.7) / 0.3, 0, 1),
+              isGhost: true,
+            },
+          ]);
+        } else {
+          // Backward shift
+          setBooks([
+            {
+              item:    enterItem,
+              left:    lerp(enterGhost.x, slots[0].x, t),
+              top:     lerp(enterGhost.y, slots[0].y, t),
+              opacity: clamp((t - 0.25) / 0.75, 0, 1),
+              infoTop: lerp(enterGhost.y + bookH + 22, slots[0].y + bookH + 22, t),
+              infoOp:  clamp((t - 0.7) / 0.3, 0, 1),
+              isGhost: true,
+            },
+            ...Array.from({ length: N }, (_, i) => {
+              const from = slots[i];
+              const to   = i === N - 1 ? exitGhost : slots[i + 1];
+              const opac = i === N - 1 ? clamp(1 - t * 1.8, 0, 1) : 1;
+              const iOp  = i === N - 1 ? clamp(1 - t * 3.5, 0, 1) : 1;
+              return {
+                item:    prevItems[i],
+                left:    lerp(from.x, to.x, t),
+                top:     lerp(from.y, to.y, t),
+                opacity: opac,
+                infoTop: lerp(from.y + bookH + 22, to.y + bookH + 22, t),
+                infoOp:  iOp,
+                isGhost: false,
+              } as BookState;
+            }),
+          ]);
+        }
+
+        if (raw < 1) {
+          frameRef.current = requestAnimationFrame(tick);
+        } else {
+          animRef.current = false;
+          setBooks(buildStatic(offsetRef.current));
+        }
+      };
+
+      frameRef.current = requestAnimationFrame(tick);
+    },
+    [N, bookW, bookH, containerW, buildStatic]
+  );
+
+  useEffect(() => () => { if (frameRef.current) cancelAnimationFrame(frameRef.current); }, []);
+
+  // ── Input: wheel ──────────────────────────────────────────────────────────────
   useEffect(() => {
     const el = containerRef.current;
     if (!el) return;
     const handler = (e: WheelEvent) => {
       e.preventDefault();
-      if (Math.abs(e.deltaY) > 20) {
-        swipe(e.deltaY > 0 ? 1 : -1, e.deltaY > 0 ? onSwipeLeft : onSwipePrev);
-      }
+      if (e.deltaY > 30)       swipe(1,  onSwipeLeft);
+      else if (e.deltaY < -30) swipe(-1, onSwipePrev);
     };
     el.addEventListener("wheel", handler, { passive: false });
     return () => el.removeEventListener("wheel", handler);
   }, [swipe, onSwipeLeft, onSwipePrev]);
 
-  // Touch
-  const touchStartX = useRef(0);
-  const handleTouchStart = (e: React.TouchEvent) => { touchStartX.current = e.touches[0].clientX; };
-  const handleTouchEnd = (e: React.TouchEvent) => {
-    const dx = e.changedTouches[0].clientX - touchStartX.current;
-    if (dx < -50) swipe(1, onSwipeLeft);
-    else if (dx > 50) swipe(-1, onSwipePrev);
+  // ── Input: touch ──────────────────────────────────────────────────────────────
+  const touchX = useRef(0);
+  const onTouchStart = (e: React.TouchEvent) => { touchX.current = e.touches[0].clientX; };
+  const onTouchEnd   = (e: React.TouchEvent) => {
+    const dx = e.changedTouches[0].clientX - touchX.current;
+    if (dx < -45)      swipe(1,  onSwipeLeft);
+    else if (dx > 45)  swipe(-1, onSwipePrev);
   };
 
-  // Keyboard
+  // ── Input: keyboard ────────────────────────────────────────────────────────────
   useEffect(() => {
     const handler = (e: KeyboardEvent) => {
-      if (e.key === "ArrowRight" || e.key === "ArrowDown") swipe(1, onSwipeLeft);
-      if (e.key === "ArrowLeft" || e.key === "ArrowUp") swipe(-1, onSwipePrev);
+      if (e.key === "ArrowRight" || e.key === "ArrowDown") swipe(1,  onSwipeLeft);
+      if (e.key === "ArrowLeft"  || e.key === "ArrowUp")   swipe(-1, onSwipePrev);
     };
     window.addEventListener("keydown", handler);
     return () => window.removeEventListener("keydown", handler);
   }, [swipe, onSwipeLeft, onSwipePrev]);
 
-  // ── Computed positions ────────────────────────────────────────────────────────
-  const t = animTRef.current;
-  const anim = isAnimatingRef.current;
-  const dir = directionRef.current;
-  const ef = enterFrom(dir);
-  const et = exitTo(dir);
-
-  const currItems = prevItemsRef.current;
-  const nextItems = nextItemsRef.current;
-
-  // Current items positions
-  const currPositions = slots.map((slot) => ({
-    left: anim ? lerp(slot.x, et.x, t) : slot.x,
-    top: anim ? lerp(slot.y, et.y, t) : slot.y,
-    opacity: anim ? Math.max(0, 1 - t) : 1,
-  }));
-
-  // Next items positions
-  const nextPositions = slots.map((slot) => ({
-    left: lerp(ef.x, slot.x, t),
-    top: lerp(ef.y, slot.y, t),
-    opacity: t,
-  }));
-
-  // Info tiles positions
-  const infoPositions = slots.map((slot) => ({
-    left: anim ? slot.x + (et.x - slot.x) * t * 0.3 : slot.x,
-    top: anim ? infoY(slot.y) + (et.y - slot.y) * t * 0.3 : infoY(slot.y),
-    opacity: anim ? Math.max(0, 1 - t * 2) : 1,
-    scale: anim ? 1 - t * 0.1 : 1,
-  }));
-
-  // Golden diagonal line endpoints
-  const lineX1 = slots[0]?.x + bookW / 2 || 0;
-  const lineY1 = (slots[0]?.y || 0) + bookH + 10;
-  const lineX2 = slots[slots.length - 1]?.x + bookW / 2 || 0;
-  const lineY2 = (slots[slots.length - 1]?.y || 0) + bookH + 10;
+  // ── SVG diagonal line endpoints ───────────────────────────────────────────────
+  const lineY = (s: Slot) => s.y + bookH + 10;
 
   return (
     <div
       ref={containerRef}
-      className="relative w-full overflow-hidden hide-scrollbar"
-      style={{ height: totalH }}
-      onTouchStart={handleTouchStart}
-      onTouchEnd={handleTouchEnd}
+      className="relative w-full"
+      style={{ height: totalH, overflow: "visible" }}
+      onTouchStart={onTouchStart}
+      onTouchEnd={onTouchEnd}
     >
-      <style dangerouslySetInnerHTML={{
-        __html: `
-        .hide-scrollbar::-webkit-scrollbar { display: none; }
-        .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
-      ` }} />
-
-      {/* ── Golden diagonal line + dots ─────────────────────────────────────── */}
+      {/* ── Golden diagonal line + dots ──────────────────────────────────────── */}
       <svg
-        className="absolute inset-0 pointer-events-none overflow-visible"
-        style={{ width: "100%", height: totalH }}
+        className="absolute inset-0 pointer-events-none"
+        style={{ width: "100%", height: totalH, overflow: "visible" }}
       >
-        <line
-          x1={lineX1} y1={lineY1}
-          x2={lineX2} y2={lineY2}
-          stroke="#F5A623"
-          strokeWidth="1.5"
-          opacity="0.3"
-        />
+        {slots.length >= 2 && (
+          <line
+            x1={slots[0].x + bookW / 2}       y1={lineY(slots[0])}
+            x2={slots[N - 1].x + bookW / 2}   y2={lineY(slots[N - 1])}
+            stroke="#F5A623" strokeWidth="1.4" opacity="0.42"
+          />
+        )}
         {slots.map((slot, i) => (
           <g key={i}>
-            <circle
-              cx={slot.x + bookW / 2}
-              cy={slot.y + bookH + 10}
-              r="7"
-              fill="#F5A623"
-              opacity="0.15"
-            />
-            <circle
-              cx={slot.x + bookW / 2}
-              cy={slot.y + bookH + 10}
-              r="4"
-              fill="#F5A623"
-              opacity="0.7"
-            />
+            <circle cx={slot.x + bookW / 2} cy={lineY(slot)} r="8"  fill="#F5A623" opacity="0.18" />
+            <circle cx={slot.x + bookW / 2} cy={lineY(slot)} r="4"  fill="#F5A623" opacity="0.9"  />
           </g>
         ))}
       </svg>
 
-      {/* ── Current books (exiting) ──────────────────────────────────────────── */}
-      {currItems.map((item, i) => (
-        <div
-          key={`curr-${item.id}-${i}`}
-          className="absolute will-change-transform"
-          style={{
-            left: currPositions[i]?.left || 0,
-            top: currPositions[i]?.top || 0,
-            opacity: currPositions[i]?.opacity || 0,
-            zIndex: 10 + i,
-          }}
-        >
-          <BookCard
-            item={item}
-            width={bookW}
-            height={bookH}
-            onTap={() => router.push(`/programmes/${item.id}`)}
-          />
-        </div>
-      ))}
+      {/* ── Animated book cards + info tiles ────────────────────────────────── */}
+      {books.map((b, idx) => {
+        const style: CSSProperties = {
+          position: "absolute",
+          left:     b.left,
+          top:      b.top,
+          opacity:  b.opacity,
+          willChange: "transform, opacity",
+          zIndex: b.isGhost ? 0 : 10 + idx,
+        };
+        return (
+          <div key={`${b.item.id}-${idx}`}>
+            {/* Book card */}
+            <div style={style}>
+              <BookCard
+                item={b.item}
+                width={bookW}
+                height={bookH}
+                onTap={() => router.push(`/programmes/${b.item.id}`)}
+              />
+            </div>
 
-      {/* ── Next books (entering) ────────────────────────────────────────────── */}
-      {anim &&
-        nextItems.map((item, i) => (
-          <div
-            key={`next-${item.id}-${i}`}
-            className="absolute will-change-transform"
-            style={{
-              left: nextPositions[i]?.left || 0,
-              top: nextPositions[i]?.top || 0,
-              opacity: nextPositions[i]?.opacity || 0,
-              zIndex: 10 + i,
-            }}
-          >
-            <BookCard
-              item={item}
-              width={bookW}
-              height={bookH}
-              onTap={() => router.push("/programme-details")}
-            />
+            {/* Info tile */}
+            <div
+              style={{
+                position: "absolute",
+                left:     b.left,
+                top:      b.infoTop,
+                width:    bookW,
+                opacity:  b.infoOp,
+                willChange: "opacity",
+                zIndex: 5,
+              }}
+            >
+              <InfoTile item={b.item} width={bookW} />
+            </div>
           </div>
-        ))}
-
-      {/* ── Info tiles ──────────────────────────────────────────────────────── */}
-      {currItems.map((item, i) => (
-        <div
-          key={`info-${item.id}-${i}`}
-          className="absolute transition-opacity duration-200"
-          style={{
-            left: infoPositions[i]?.left || 0,
-            top: infoPositions[i]?.top || 0,
-            opacity: infoPositions[i]?.opacity || 0,
-            width: bookW,
-            transform: `scale(${infoPositions[i]?.scale || 1})`,
-          }}
-        >
-          <InfoTile item={item} width={bookW} />
-        </div>
-      ))}
+        );
+      })}
     </div>
   );
 }

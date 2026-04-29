@@ -42,35 +42,24 @@ export const ALL_ITEMS: TheatreItem[] = [
 
 export function useTheatreStore() {
   const [selectedCategoryIndex, setSelectedCategoryIndex] = useState(0);
-  const [currentOffset, setCurrentOffset] = useState(0);
+  const [offset, setOffset] = useState(0);
 
-  const currentBackground = CATEGORIES[selectedCategoryIndex].backgroundImage;
+  const selectCategory = useCallback((i: number) => setSelectedCategoryIndex(i), []);
 
-  const getVisibleItems = (count: number) => {
-    const items = [];
-    for (let i = 0; i < count; i++) {
-      items.push(ALL_ITEMS[(currentOffset + i) % ALL_ITEMS.length]);
-    }
-    return items;
-  };
-
-  const selectCategory = useCallback((index: number) => {
-    setSelectedCategoryIndex(index);
-  }, []);
-
-  const onSwipeLeft = useCallback(() => {
-    setCurrentOffset(prev => (prev + 1) % ALL_ITEMS.length);
-  }, []);
-
-  const onSwipePrev = useCallback(() => {
-    setCurrentOffset(prev => (prev - 1 + ALL_ITEMS.length) % ALL_ITEMS.length);
-  }, []);
+  const onSwipeLeft = useCallback(
+    () => setOffset((p) => (p + 1) % ALL_ITEMS.length),
+    []
+  );
+  const onSwipePrev = useCallback(
+    () => setOffset((p) => (p - 1 + ALL_ITEMS.length) % ALL_ITEMS.length),
+    []
+  );
 
   return {
     categories: CATEGORIES,
     selectedCategoryIndex,
-    currentBackground,
-    getVisibleItems,
+    currentBackground: CATEGORIES[selectedCategoryIndex].backgroundImage,
+    offset,
     selectCategory,
     onSwipeLeft,
     onSwipePrev,

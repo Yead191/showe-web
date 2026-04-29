@@ -15,29 +15,11 @@ export default function MyProgrammesPage() {
         categories,
         selectedCategoryIndex,
         currentBackground,
-        getVisibleItems,
+        offset,
         selectCategory,
         onSwipeLeft,
         onSwipePrev,
     } = useTheatreStore();
-
-    // Determine how many items to show based on screen width
-    // This is a rough estimate, DiagonalBooksSection will also have its own width
-    const [itemCount, setItemCount] = useState(5);
-
-    useEffect(() => {
-        const handleResize = () => {
-            const width = window.innerWidth;
-            if (width > 900) setItemCount(5);
-            else if (width > 600) setItemCount(4);
-            else setItemCount(3);
-        };
-        handleResize();
-        window.addEventListener('resize', handleResize);
-        return () => window.removeEventListener('resize', handleResize);
-    }, []);
-
-    const items = getVisibleItems(itemCount);
 
     return (
         <main
@@ -63,7 +45,7 @@ export default function MyProgrammesPage() {
 
             {/* ── Page content ─────────────────────────────────────────────────────── */}
             <div className="relative z-10 flex flex-col h-screen overflow-hidden">
-                <div className="flex flex-col  absolute top-20 z-20" >
+                <div className="flex flex-col  absolute top-20 left-10 z-20" >
                     {/* Title */}
                     <div className="px-4 mb-3 ">
                         <h1 className="text-white font-bold text-[22px]">My Programmes</h1>
@@ -80,9 +62,9 @@ export default function MyProgrammesPage() {
                 </div>
 
                 {/* Diagonal scrollable section */}
-                <div className="flex-1 overflow-hidden">
+                <div className="flex-1 overflow-hidden pt-20 2xl:pt-24">
                     <DiagonalBooksSection
-                        items={items}
+                        offset={offset}
                         onSwipeLeft={onSwipeLeft}
                         onSwipePrev={onSwipePrev}
                     />
