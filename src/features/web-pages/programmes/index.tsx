@@ -35,7 +35,7 @@ export default function MyProgrammesPage() {
 
     // Determine how many items to show based on screen width
     // This is a rough estimate, DiagonalBooksSection will also have its own width
-    const [itemCount, setItemCount] = useState(3);
+    const [itemCount, setItemCount] = useState(5);
 
     useEffect(() => {
         const handleResize = () => {

@@ -284,7 +284,7 @@ export function DiagonalBooksSection({
             item={item}
             width={bookW}
             height={bookH}
-            onTap={() => router.push("/programme-details")}
+            onTap={() => router.push(`/programmes/${item.id}`)}
           />
         </div>
       ))}
