@@ -7,7 +7,7 @@ import { Event } from "@/constants/events/mock-event-details"
 
 export function RelatedEvents({ event }: { event: Event }) {
     return (
-        <section className="space-y-10 py-12 border-t border-gray-100">
+        <section className="space-y-10 ">
             <div className="flex items-center justify-between">
                 <h2 className="text-3xl font-black text-gray-900 tracking-tight">You might also like</h2>
                 <Link

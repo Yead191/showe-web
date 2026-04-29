@@ -1,21 +1,9 @@
 "use client";
 
 import { useTheatreStore } from "@/helpers/useTheatreStore";
-/**
- * MyProgrammesPage — Next.js equivalent of Flutter's MyProgramScreen
- *
- * Drop this file into:  app/programmes/page.tsx
- *
- * Components used:
- *   Starfield              → AnimatedSwitcher background (star texture)
- *   CategoryTabs           → CategoryTabsWidget
- *   DiagonalBooksSection   → DiagonalBooksSection
- *   useTheatreStore        → TheatreController (GetX)
- */
 
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import { Starfield } from "./components/Starfield";
 import { CategoryTabs } from "./components/CategoryTabs";
 import { DiagonalBooksSection } from "./components/DiagonalBooksSection";
 import { useEffect, useState } from "react";

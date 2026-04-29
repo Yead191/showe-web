@@ -1,5 +1,5 @@
 "use client"
-import React, { useState, useRef, useEffect, useCallback, forwardRef } from "react";
+import { useState, useRef, useCallback, forwardRef } from "react";
 import { useRouter } from "next/navigation";
 import { pdfjs, Document, Page } from "react-pdf";
 import HTMLFlipBook from "react-pageflip";
@@ -16,7 +16,7 @@ interface ProgramDetailsPageProps {
 
 // ── Sub-component for individual pages ───────────────────────────────────────
 const PDFPage = forwardRef<HTMLDivElement, { pageNumber: number; book: string; width: number }>(
-    ({ pageNumber, book, width }, ref) => {
+    ({ pageNumber, width }, ref) => {
         return (
             <div className="bg-white shadow-inner overflow-hidden flex items-center justify-center h-full" ref={ref}>
                 <Page
@@ -62,7 +62,7 @@ export default function ProgramDetailsPage({ book }: ProgramDetailsPageProps) {
         <div className="relative w-full h-screen bg-[#020617] overflow-hidden flex flex-col items-center select-none text-white font-sans">
             {/* ── Starfield Background ── */}
             <div className="absolute inset-0 pointer-events-none overflow-hidden">
-                <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-[#1e293b] via-[#020617] to-[#020617]" />
+                <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,var(--tw-gradient-stops))] from-[#1e293b] via-[#020617] to-[#020617]" />
                 {/* Random Stars */}
                 {[...Array(100)].map((_, i) => (
                     <div

@@ -5,6 +5,9 @@ import { EventSidebar } from "./components/EventSidebar"
 import { EventAbout } from "./components/EventAbout"
 import { EventLocation } from "./components/EventLocation"
 import { RelatedEvents } from "./components/RelatedEvents"
+import { NearbyRestaurants } from "./components/NearbyRestaurants"
+import { RecommendedHotels } from "./components/RecommendedHotels"
+import { NearbyBars } from "./components/NearbyBars"
 import { Button } from "@/components/ui/button"
 import { ChevronRight } from "lucide-react"
 import { useState } from "react"
@@ -27,6 +30,9 @@ export default function EventDetails({ event }: { event: Event }) {
                     <div className="lg:w-[65%] space-y-12">
                         <EventAbout event={event} />
                         <EventLocation event={event} />
+                        <NearbyRestaurants />
+                        <RecommendedHotels />
+                        <NearbyBars />
                         <RelatedEvents event={event} />
                     </div>
 
