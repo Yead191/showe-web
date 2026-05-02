@@ -64,6 +64,7 @@ export default function ExploreByArtist() {
                         <SwiperSlide key={artist.id}>
                             <Link
                                 href={`/artists/${artist?.id}`}
+                                scroll={true}
                                 className="group flex flex-col gap-4 cursor-pointer"
                             >
                                 <div className="relative aspect-square w-full rounded-3xl overflow-hidden bg-gray-100 shadow-lg group-hover:shadow-xl transition-all duration-500">

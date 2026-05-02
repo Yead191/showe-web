@@ -104,6 +104,7 @@ export default function WebNavbar() {
                             <li key={item.href}>
                                 <Link
                                     href={item.href}
+                                    scroll={true}
                                     className={`relative p-2 text-sm font-medium transition-all duration-300 rounded-md hover:text-white ${isActive ? "text-[#F5A800]" : "text-white/80"
                                         }`}
                                 >

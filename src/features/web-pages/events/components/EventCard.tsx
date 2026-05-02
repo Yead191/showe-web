@@ -19,7 +19,7 @@ interface EventCardProps {
 
 export function EventCard({ event }: EventCardProps) {
     return (
-        <Link href={`/events/${event.id}`} className="bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 group border border-gray-100 flex flex-col h-full">
+        <Link scroll={true} href={`/events/${event.id}`} className="bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 group border border-gray-100 flex flex-col h-full">
             {/* Image Section */}
             <div className="relative aspect-4/3 overflow-hidden shrink-0">
                 <Image
