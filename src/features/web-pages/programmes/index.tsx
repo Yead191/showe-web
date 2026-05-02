@@ -45,19 +45,21 @@ export default function MyProgrammesPage() {
 
             {/* ── Page content ─────────────────────────────────────────────────────── */}
             <div className="relative z-10 flex flex-col h-screen overflow-hidden">
-                <div className="flex flex-col absolute top-20 left-0 right-0 lg:left-10 lg:right-auto z-20" >
-                    {/* Title */}
-                    <div className="px-4 mb-3 hidden md:block">
-                        <h1 className="text-white font-bold text-[22px]">My Programmes</h1>
-                    </div>
+                <div className="container relative">
+                    <div className="flex flex-col absolute top-20 left-0 right-0 lg:left-3 lg:right-auto z-20" >
+                        {/* Title */}
+                        <div className="px-4 mb-3 hidden md:block">
+                            <h1 className="text-white font-bold text-[22px]">My Programmes</h1>
+                        </div>
 
-                    {/* Category tabs */}
-                    <div className="mb-5 ">
-                        <CategoryTabs
-                            categories={categories}
-                            selectedIndex={selectedCategoryIndex}
-                            onSelect={selectCategory}
-                        />
+                        {/* Category tabs */}
+                        <div className="mb-5">
+                            <CategoryTabs
+                                categories={categories}
+                                selectedIndex={selectedCategoryIndex}
+                                onSelect={selectCategory}
+                            />
+                        </div>
                     </div>
                 </div>
 

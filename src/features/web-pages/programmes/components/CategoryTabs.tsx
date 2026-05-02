@@ -26,7 +26,7 @@ export function CategoryTabs({ categories, selectedIndex, onSelect }: CategoryTa
               padding: "6px 18px",
               background: isSelected ? "#F5A623" : "transparent",
               border: `1.2px solid ${isSelected ? "#F5A623" : "rgba(255,255,255,0.3)"}`,
-              color: isSelected ? "#1a1a1a" : "white",
+              color: "white",
             }}
           >
             {cat.name}
