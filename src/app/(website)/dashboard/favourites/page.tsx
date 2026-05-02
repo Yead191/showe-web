@@ -15,7 +15,7 @@ const MOCK_ARTISTS = [
 ]
 
 const MOCK_VENUES = [
-    { id: 1, name: "Grand Opera House", location: "Downtown", image: "https://images.unsplash.com/photo-1503095396549-80705bc06ee0?q=80&w=1000" },
+    { id: 1, name: "Grand Opera House", location: "Downtown", image: "/assets/images/venues/venue1.jpg" },
 ]
 
 export default function FavouritesPage() {
