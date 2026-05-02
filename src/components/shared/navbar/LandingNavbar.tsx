@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect, useRef } from "react";
+import { usePathname, useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
 import { Menu } from "lucide-react";
@@ -15,6 +16,8 @@ export default function LandingNavbar() {
     // const [showNavbar, setShowNavbar] = useState(true);
     const [drawerOpen, setDrawerOpen] = useState(false);
     const [authModalOpen, setAuthModalOpen] = useState(false);
+    const pathname = usePathname();
+    const router = useRouter();
     const lastScrollTop = useRef(0);
     const isManualScrolling = useRef(false);
     const scrollTimeout = useRef<NodeJS.Timeout | null>(null);
@@ -22,18 +25,14 @@ export default function LandingNavbar() {
     // ── Scroll spy + hide-on-scroll-down ──────────────────────────────────────
     useEffect(() => {
         const handleScroll = () => {
-            if (isManualScrolling.current) return;
             const scrollY = window.scrollY;
             const bannerHeight = document.getElementById("banner")?.offsetHeight || 0;
-            // Background swap
+            
+            // Background swap (Always run this, even during manual scroll)
             setIsScrolled(scrollY > bannerHeight - 67);
 
-            // Hide / show
-            // if (scrollY > lastScrollTop.current && scrollY > 100) {
-            //     setShowNavbar(false);
-            // } else {
-            //     setShowNavbar(true);
-            // }
+            if (isManualScrolling.current) return;
+            
             lastScrollTop.current = scrollY <= 0 ? 0 : scrollY;
 
             // Active section detection
@@ -55,6 +54,12 @@ export default function LandingNavbar() {
 
     // ── Smooth scroll helper ───────────────────────────────────────────────────
     const scrollToSection = (sectionId: string) => {
+        if (pathname === "/become-creator") {
+            router.push(`/#${sectionId}`);
+            setDrawerOpen(false);
+            return;
+        }
+
         const el = document.getElementById(sectionId);
         if (el) {
             isManualScrolling.current = true;

@@ -155,7 +155,7 @@ export default function WebNavbar() {
 
                 {/* ── Center: Logo ── */}
                 <div className="flex shrink-0 items-center justify-center">
-                    <Link href="/" className="flex items-center">
+                    <Link href="/home" className="flex items-center">
                         <Image
                             src="/logo.png"
                             width={160}

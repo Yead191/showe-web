@@ -1,5 +1,6 @@
 import React from 'react';
 import Image from 'next/image';
+import Link from 'next/link';
 
 const PROGRAMMES_DATA = [
   {
@@ -31,7 +32,7 @@ export default function Programmes() {
       <div className="bg-white border-b-4 border-[#000000]">
         <div className="grid grid-cols-1 md:grid-cols-3 divide-y md:divide-y-0 md:divide-x-4 divide-[#000000]">
           {PROGRAMMES_DATA.map((prog, index) => (
-            <div key={index} className="flex flex-col p-8 lg:p-12 xl:p-16">
+            <Link href={`/events/${index + 1}`} key={index} className="flex flex-col p-8 lg:p-12 xl:p-16">
               {/* Image Container */}
               <div className="relative h-[450px] w-full mb-10 overflow-hidden ">
                 <Image
@@ -54,7 +55,7 @@ export default function Programmes() {
                   {prog.description}
                 </p>
               </div>
-            </div>
+            </Link>
           ))}
         </div>
       </div>

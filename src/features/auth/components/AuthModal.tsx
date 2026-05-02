@@ -86,7 +86,7 @@ function LoginForm({ setView, onOpenChange, onLoginSuccess }: { setView: (v: Aut
 
     const email = formData.get("email");
     const password = formData.get("password");
-    
+
     // Mock login success
     const mockUser = {
       name: "John Doe",
@@ -96,7 +96,7 @@ function LoginForm({ setView, onOpenChange, onLoginSuccess }: { setView: (v: Aut
 
     localStorage.setItem("user_profile", JSON.stringify(mockUser));
     toast.success("Welcome back, " + mockUser.name + "!");
-    
+    router.push("/home")
     onLoginSuccess?.();
     onOpenChange(false);
   };

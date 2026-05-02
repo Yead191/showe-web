@@ -9,7 +9,7 @@ const FEATURE_DATA = [
     description: 'Enjoy a seamless digital event journey where everything you need—schedule, speakers, sessions, and updates—is in one place. No more searching through printed papers or outdated information. With real-time updates, easy navigation, and mobile-friendly access, users can explore events effortlessly, stay informed, and engage more deeply with every moment of the program.',
     buttonText: 'Book Your Ticket',
     image: '/assets/images/programmes/program1.jpg',
-    url: '#',
+    url: '/events',
   },
   {
     title: 'Effortless Programme Management for Creators',

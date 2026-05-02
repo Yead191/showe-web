@@ -7,6 +7,7 @@ import {
 } from "@/components/ui/accordion";
 import { Button } from "@/components/ui/button";
 import { MessageCircle } from "lucide-react";
+import Link from 'next/link';
 
 const FAQ_DATA = [
   {
@@ -51,10 +52,14 @@ export default function LandingFAQ() {
             <p className="text-gray-300 text-sm max-w-[280px]">
               Can't find the ans you're looking for? We are here for help
             </p>
-            <Button variant="outline" className="text-white hover:bg-white/10 hover:text-white h-12 px-6 gap-3 bg-transparent">
-              Get in touch
-              <MessageCircle className="size-5" />
-            </Button>
+            <Link href={'/support'}>
+
+              <Button variant="outline" className="text-white hover:bg-white/10 hover:text-white h-12 px-6 gap-3 bg-transparent">
+                Get in touch
+                <MessageCircle className="size-5" />
+              </Button>
+
+            </Link>
           </div>
         </div>
 

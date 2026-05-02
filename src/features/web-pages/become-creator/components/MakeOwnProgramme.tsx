@@ -1,8 +1,12 @@
+"use client"
 import Image from 'next/image';
 import { Button } from '@/components/ui/button';
-import Link from 'next/link';
+import { useState } from 'react';
+import AuthModal from '@/features/auth/components/AuthModal';
 
 export default function MakeOwnProgramme() {
+  const [authModalOpen, setAuthModalOpen] = useState(false)
+
   return (
     <section className="w-full pt-12 lg:pt-32  overflow-visible">
       <div className="relative w-full bg-[#F2A900]">
@@ -31,16 +35,21 @@ export default function MakeOwnProgramme() {
                 Join thousands of music lovers for an electrifying evening with world-class
               </p>
               <div className="pt-4">
-                <Link href="/register">
-                  <Button className="bg-[#004242] hover:bg-[#003333] text-white  h-12 rounded-lg font-semibold text-base transition-all duration-300 transform hover:scale-105 active:scale-95 cursor-pointer w-xs lg:w-sm">
-                    Get Started
-                  </Button>
-                </Link>
+
+                <Button onClick={() => setAuthModalOpen(true)} className="bg-[#004242] hover:bg-[#003333] text-white  h-12 rounded-lg font-semibold text-base transition-all duration-300 transform hover:scale-105 active:scale-95 cursor-pointer w-xs lg:w-sm">
+                  Get Started
+                </Button>
               </div>
             </div>
           </div>
         </div>
       </div>
+
+      <AuthModal
+        open={authModalOpen}
+        onOpenChange={setAuthModalOpen}
+        initialView={"login"}
+      />
     </section>
   );
 }
