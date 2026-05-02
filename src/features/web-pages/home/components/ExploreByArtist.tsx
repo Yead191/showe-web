@@ -1,7 +1,6 @@
 "use client"
 
 import Image from "next/image"
-import { useRouter } from "next/navigation"
 import { Swiper, SwiperSlide } from 'swiper/react'
 import { Navigation, Autoplay } from 'swiper/modules'
 import { ChevronLeft, ChevronRight, ArrowUpRight } from 'lucide-react'
@@ -10,15 +9,12 @@ import { ChevronLeft, ChevronRight, ArrowUpRight } from 'lucide-react'
 import 'swiper/css'
 import 'swiper/css/navigation'
 import { ARTISTS } from "@/constants/home/artists"
+import Link from "next/link"
 
 
 
 export default function ExploreByArtist() {
-    const router = useRouter()
 
-    const handleArtistClick = (id: string) => {
-        router.push(`/artists/${id}`)
-    }
 
     return (
         <section className="py-16 lg:py-20 bg-gray-50/50 ">
@@ -66,8 +62,8 @@ export default function ExploreByArtist() {
                 >
                     {ARTISTS?.map((artist) => (
                         <SwiperSlide key={artist.id}>
-                            <div
-                                onClick={() => handleArtistClick(artist.id)}
+                            <Link
+                                href={`/artists/${artist?.id}`}
                                 className="group flex flex-col gap-4 cursor-pointer"
                             >
                                 <div className="relative aspect-square w-full rounded-3xl overflow-hidden bg-gray-100 shadow-lg group-hover:shadow-xl transition-all duration-500">
@@ -89,7 +85,7 @@ export default function ExploreByArtist() {
                                         {artist.name}
                                     </h3>
                                 </div>
-                            </div>
+                            </Link>
                         </SwiperSlide>
                     ))}
                 </Swiper>

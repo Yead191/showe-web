@@ -23,7 +23,7 @@ export default function AboutHero() {
                     turning every scan into an interactive journey.
                 </p>
                 <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                    <Link href="/home">
+                    <Link href="/events">
                         <Button className="bg-[#F5A800] hover:bg-[#e09900] text-white px-8 h-12 text-base font-bold rounded-md shadow-lg shadow-[#F5A800]/20 w-full sm:w-auto">
                             Explore Events
                         </Button>
