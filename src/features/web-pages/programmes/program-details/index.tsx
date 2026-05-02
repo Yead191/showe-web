@@ -1,5 +1,5 @@
 "use client"
-import { useState, useRef, useCallback, forwardRef } from "react";
+import { useState, useRef, useCallback, forwardRef, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { pdfjs, Document, Page } from "react-pdf";
 import HTMLFlipBook from "react-pageflip";
@@ -39,7 +39,17 @@ export default function ProgramDetailsPage({ book }: ProgramDetailsPageProps) {
     const [currentPage, setCurrentPage] = useState(0);
     const [scale, setScale] = useState(1);
     const [loading, setLoading] = useState(true);
+    const [isMobile, setIsMobile] = useState(false);
     const bookRef = useRef<any>(null);
+
+    useEffect(() => {
+        const checkMobile = () => {
+            setIsMobile(window.innerWidth < 768);
+        };
+        checkMobile();
+        window.addEventListener('resize', checkMobile);
+        return () => window.removeEventListener('resize', checkMobile);
+    }, []);
 
     const onDocumentLoadSuccess = ({ numPages }: { numPages: number }) => {
         setNumPages(numPages);
@@ -47,16 +57,23 @@ export default function ProgramDetailsPage({ book }: ProgramDetailsPageProps) {
     };
 
     const prevPage = () => {
-        bookRef.current?.pageFlip().prevPage();
+        bookRef?.current?.pageFlip?.()?.prevPage?.();
     };
 
     const nextPage = () => {
-        bookRef.current?.pageFlip().nextPage();
+        bookRef?.current?.pageFlip?.()?.nextPage?.();
     };
 
     const onPage = useCallback((e: any) => {
         setCurrentPage(e.data);
     }, []);
+
+    const jumpToPage = (val: string) => {
+        const pageNum = parseInt(val);
+        if (!isNaN(pageNum) && pageNum >= 1 && pageNum <= numPages) {
+            bookRef.current?.pageFlip().flip(pageNum - 1);
+        }
+    };
 
     return (
         <div className="relative w-full h-screen bg-[#020617] overflow-hidden flex flex-col items-center select-none text-white font-sans">
@@ -125,40 +142,45 @@ export default function ProgramDetailsPage({ book }: ProgramDetailsPageProps) {
                         onLoadSuccess={onDocumentLoadSuccess}
                         loading={null}
                     >
-                        {/* @ts-ignore */}
-                        <HTMLFlipBook
-                            width={450}
-                            height={650}
-                            size="stretch"
-                            minWidth={315}
-                            maxWidth={1000}
-                            minHeight={400}
-                            maxHeight={1533}
-                            maxShadowOpacity={0.6}
-                            showCover={true}
-                            onFlip={onPage}
-                            className="book-container shadow-[0_50px_100px_-20px_rgba(0,0,0,0.8)]"
-                            ref={bookRef}
-                            style={{ margin: '0 auto' }}
-                            useMouseEvents={true}
-                            swipeDistance={30}
-                            showPageCorners={true}
-                            disableFlipByClick={false}
-                            flippingTime={1000}
-                            usePortrait={false}
-                            startPage={0}
-                            drawShadow={true}
-                        >
-                            {Array.from(new Array(numPages), (el, index) => (
-                                <PDFPage key={index} pageNumber={index + 1} book={book} width={450} />
-                            ))}
-                        </HTMLFlipBook>
+                        {numPages > 0 && (
+                            /* @ts-ignore */
+                            <HTMLFlipBook
+                                width={isMobile ? 350 : 450}
+                                height={isMobile ? 500 : 650}
+                                size="stretch"
+                                minWidth={isMobile ? 300 : 315}
+                                maxWidth={1000}
+                                minHeight={400}
+                                maxHeight={1533}
+                                maxShadowOpacity={0.6}
+                                showCover={true}
+                                onFlip={onPage}
+                                onInit={onPage}
+                                className="book-container shadow-[0_50px_100px_-20px_rgba(0,0,0,0.8)]"
+                                ref={bookRef}
+                                style={{ margin: '0 auto' }}
+                                useMouseEvents={true}
+                                swipeDistance={30}
+                                showPageCorners={true}
+                                disableFlipByClick={false}
+                                flippingTime={1000}
+                                usePortrait={isMobile}
+                                startPage={0}
+                                drawShadow={true}
+                                mobileScrollSupport={true}
+                                clickEventForward={true}
+                            >
+                                {Array.from(new Array(numPages), (el, index) => (
+                                    <PDFPage key={index} pageNumber={index + 1} book={book} width={isMobile ? 350 : 450} />
+                                ))}
+                            </HTMLFlipBook>
+                        )}
                     </Document>
                 </div>
             </div>
 
             {/* ── Navigation Arrows ── */}
-            <div className="absolute inset-y-0 left-4 flex items-center">
+            <div className="absolute inset-y-0 left-4 hidden lg:flex items-center">
                 <button
                     onClick={prevPage}
                     disabled={currentPage === 0}
@@ -167,7 +189,7 @@ export default function ProgramDetailsPage({ book }: ProgramDetailsPageProps) {
                     <ChevronLeft size={48} className="group-active:scale-90 transition-transform" />
                 </button>
             </div>
-            <div className="absolute inset-y-0 right-4 flex items-center">
+            <div className="absolute inset-y-0 right-4 hidden lg:flex items-center">
                 <button
                     onClick={nextPage}
                     disabled={currentPage >= numPages - 1}
@@ -179,10 +201,17 @@ export default function ProgramDetailsPage({ book }: ProgramDetailsPageProps) {
 
             {/* ── Bottom Controls ── */}
             <div className="relative z-50 flex flex-col items-center gap-4 mb-8">
-                <div className="px-6 py-2.5 rounded-full bg-black/60 backdrop-blur-xl border border-white/10 shadow-2xl flex items-center gap-4">
-                    <span className="text-xs font-bold text-white/30 tracking-[0.2em]">PROGRESS</span>
-                    <div className="flex items-baseline gap-1">
-                        <span className="text-lg font-bold text-blue-400">{currentPage + 1}</span>
+                <div className="px-6 py-2 rounded-full bg-black/60 backdrop-blur-xl border border-white/10 shadow-2xl flex items-center gap-4">
+                    <span className="text-[10px] font-bold text-white/30 tracking-[0.2em] hidden sm:block">GO TO PAGE</span>
+                    <div className="flex items-center gap-2">
+                        <input
+                            type="number"
+                            min={1}
+                            max={numPages}
+                            value={currentPage + 1}
+                            onChange={(e) => jumpToPage(e.target.value)}
+                            className="w-12 h-8 bg-white/5 border border-white/10 rounded-lg text-center text-sm font-bold text-blue-400 focus:outline-none focus:border-blue-500/50 transition-colors [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
+                        />
                         <span className="text-xs text-white/20">/</span>
                         <span className="text-sm text-white/40">{numPages}</span>
                     </div>
@@ -216,17 +245,24 @@ export default function ProgramDetailsPage({ book }: ProgramDetailsPageProps) {
                     height: auto !important;
                 }
                 /* Add a subtle spine line in the middle when two pages are shown */
-                .stf__parent::after {
-                    content: "";
-                    position: absolute;
-                    top: 0;
-                    bottom: 0;
-                    left: 50%;
-                    width: 2px;
-                    background: linear-gradient(to right, rgba(0,0,0,0.1), rgba(0,0,0,0.3), rgba(0,0,0,0.1));
-                    z-index: 100;
-                    pointer-events: none;
-                }
+              @media (min-width: 768px) {
+  .stf__parent::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 50%;
+    width: 2px;
+    background: linear-gradient(
+      to right,
+      rgba(0,0,0,0.1),
+      rgba(0,0,0,0.3),
+      rgba(0,0,0,0.1)
+    );
+    z-index: 100;
+    pointer-events: none;
+  }
+}
             `}</style>
         </div>
     );
