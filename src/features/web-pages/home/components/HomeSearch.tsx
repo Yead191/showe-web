@@ -4,7 +4,7 @@ import { CategoryBar } from "@/components/shared/search/CategoryBar"
 
 export default function HomeSearch() {
     return (
-        <section className="relative -mt-12  z-10 container mx-auto px-4 pb-20">
+        <section className="relative -mt-12  z-10 container mx-auto px-4 pb-10 lg:pb-16">
             <SearchBox />
             <div className="mt-16">
                 <CategoryBar />

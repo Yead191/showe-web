@@ -37,12 +37,14 @@ export default function LandingFooter() {
           <h3 className="text-white font-semibold text-lg md:text-xl">
             Subscribe to our updates
           </h3>
-          <div className="flex flex-col sm:flex-row gap-3 sm:gap-0 h-auto sm:h-12 bg-transparent sm:bg-white rounded-md overflow-hidden p-0 sm:p-1">
-            <Input
-              type="email"
-              placeholder="Enter email address"
-              className="flex-1 bg-white sm:bg-transparent border-none text-[#1C1C1C] h-12 sm:h-full px-6 focus-visible:ring-0 rounded-md sm:rounded-none"
-            />
+          <div className="flex flex-col sm:flex-row gap-3 sm:gap-0 h-fit sm:h-12 bg-transparent sm:bg-white rounded-md overflow-hidden p-0 sm:p-1">
+            <div className="h-12 sm:h-full md:flex-1">
+              <Input
+                type="email"
+                placeholder="Enter email address"
+                className="h-full bg-white! sm:bg-transparent border-none text-[#1C1C1C] px-6 focus-visible:ring-0 rounded-md sm:rounded-none"
+              />
+            </div>
             <Button className="bg-[#F2A900] hover:bg-[#D49400] text-white px-10 h-12 sm:h-full rounded-md sm:rounded-sm text-sm font-semibold shrink-0">
               Subscribe
             </Button>

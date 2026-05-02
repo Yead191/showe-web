@@ -11,7 +11,7 @@ export default function PopularEvents() {
     const popularEvents = MOCK_EVENTS.slice(0, 6)
 
     return (
-        <section className="container mx-auto px-4 pb-12">
+        <section className="container mx-auto px-4 pb-10 md:pb-12">
             {/* Section Header */}
             <div className="flex items-center gap-3 mb-12">
                 <h2 className="text-2xl md:text-[32px] font-semibold text-gray-900 tracking-tighter">
@@ -51,4 +51,4 @@ export default function PopularEvents() {
             </div>
         </section>
     )
-}
+}   

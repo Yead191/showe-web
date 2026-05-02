@@ -2,13 +2,13 @@
 
 import React from "react"
 import { useRouter, useSearchParams } from "next/navigation"
-import { 
-    Music, 
-    Users, 
-    Trophy, 
-    CalendarDays, 
-    Theater, 
-    PartyPopper 
+import {
+    Music,
+    Users,
+    Trophy,
+    CalendarDays,
+    Theater,
+    PartyPopper
 } from "lucide-react"
 import { cn } from "@/lib/utils"
 
@@ -43,8 +43,8 @@ export function CategoryBar({ className, activeCategory }: CategoryBarProps) {
     return (
         <div className={cn("text-center", className)}>
             <p className="text-[10px] font-bold text-gray-400 uppercase tracking-[0.2em] mb-8">Explore by Category</p>
-            <div className="flex flex-wrap justify-center gap-8 md:gap-14 lg:gap-16">
-                {categories.map((cat) => {
+            <div className="flex md:flex-wrap justify-start md:justify-center gap-6 md:gap-14 lg:gap-16 overflow-x-auto no-scrollbar">
+                {categories?.map((cat) => {
                     const isActive = activeCategory === cat.value
                     return (
                         <button
@@ -54,8 +54,8 @@ export function CategoryBar({ className, activeCategory }: CategoryBarProps) {
                         >
                             <div className={cn(
                                 "transition-all duration-300 p-2 rounded-full",
-                                isActive 
-                                    ? "text-[#F5A800] bg-[#F5A800]/5 scale-110" 
+                                isActive
+                                    ? "text-[#F5A800] bg-[#F5A800]/5 scale-110"
                                     : "text-gray-400 group-hover:text-[#F5A800] group-hover:bg-[#F5A800]/5"
                             )}>
                                 <cat.icon className="h-7 w-7 stroke-[1.5]" />

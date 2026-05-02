@@ -10,12 +10,11 @@ import {
     DropdownMenuContent,
     DropdownMenuItem,
     DropdownMenuLabel,
-    DropdownMenuSeparator,
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet"
-import { Menu, LayoutDashboard, User, LogOut } from "lucide-react"
+import { Menu, LayoutDashboard, LogOut } from "lucide-react"
 import AuthModal from "@/features/auth/components/AuthModal"
 
 const webNavItems = [
@@ -39,20 +38,23 @@ export default function WebNavbar() {
     useEffect(() => {
         const handleScroll = () => {
             const scrollY = window.scrollY;
-            const bannerHeight = document.getElementById("banner")?.offsetHeight || 0;
+            const banner = document.getElementById("banner");
+            
+            if (!banner) {
+                // If there's no banner, the background should be visible
+                setIsScrolled(true);
+                return;
+            }
+
+            const bannerHeight = banner.offsetHeight || 0;
             // Background swap
             setIsScrolled(scrollY > bannerHeight - 72);
-
-            // Hide / show
-            // if (scrollY > lastScrollTop.current && scrollY > 100) {
-            //     setShowNavbar(false);
-            // } else {
-            //     setShowNavbar(true);
-            // }
         };
+
+        handleScroll();
         window.addEventListener("scroll", handleScroll, { passive: true });
         return () => window.removeEventListener("scroll", handleScroll);
-    }, []);
+    }, [pathname]);
 
     const navBase =
         "fixed top-0 z-50 w-full transition-all duration-500";
@@ -109,7 +111,7 @@ export default function WebNavbar() {
                                     <Image src="/logo.png" width={120} height={40} alt="SHOWE" className="h-8 w-auto" />
                                 </SheetTitle>
                             </SheetHeader>
-                            <div className="flex flex-col gap-2">
+                            <div className="flex flex-col gap-2 px-3">
                                 {webNavItems.map((item) => (
                                     <Link
                                         key={item.href}

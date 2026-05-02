@@ -1,8 +1,8 @@
 "use client"
 
-import React, { useState } from "react"
+import { useState } from "react"
 import { useRouter } from "next/navigation"
-import { format, startOfToday, endOfWeek, startOfWeek, endOfMonth, startOfMonth, addDays, isSaturday, isSunday, nextSaturday, nextSunday } from "date-fns"
+import { format, startOfToday, endOfWeek, startOfWeek, endOfMonth, startOfMonth, isSaturday, isSunday, nextSaturday, nextSunday } from "date-fns"
 import { Calendar as CalendarIcon } from "lucide-react"
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover"
 import { Calendar } from "@/components/ui/calendar"
@@ -20,19 +20,19 @@ const DateCard = ({ title, dateLabel, onClick, className, isCustom }: DateCardPr
     <div
         onClick={onClick}
         className={cn(
-            "relative flex flex-col justify-between p-6 rounded-none bg-[#FFF9EB] border border-[#FDF2D5] cursor-pointer hover:shadow-lg transition-all group overflow-hidden h-[160px] w-full",
+            "relative flex flex-col justify-between p-6 rounded-none bg-[#FFF9EB] border border-[#FDF2D5] cursor-pointer hover:shadow-lg transition-all group overflow-hidden h-[100px] md:h-[160px] w-full",
             className
         )}
     >
         <div className="space-y-1 relative z-10">
-            <h3 className="text-[#F5A800] font-bold text-lg">{title}</h3>
+            <h3 className="text-[#F5A800] font-bold text-md md:text-lg">{title}</h3>
             <p className="text-gray-600 font-medium text-sm">{dateLabel}</p>
         </div>
 
         {/* Calendar Icon with Pink Circle */}
-        <div className="absolute top-4 -right-4 w-24 h-24 bg-[#FF8C8C] rounded-full flex items-center justify-center translate-x-4 -translate-y-4 group-hover:scale-110 transition-transform duration-500 opacity-80">
-            <div className="bg-white p-2 rounded-md shadow-sm translate-x--2 translate-y-2">
-                <CalendarIcon className="h-8 w-8 text-[#FF8C8C]" />
+        <div className="absolute top-4 -right-4 w-20 h-20 md:w-24 md:h-24 bg-[#FF8C8C] rounded-full flex items-center justify-center translate-x-4 -translate-y-4 group-hover:scale-110 transition-transform duration-500 opacity-80">
+            <div className="bg-white p-2 rounded-md shadow-sm ">
+                <CalendarIcon className="h-4 w-4 md:h-8 md:w-8 text-[#FF8C8C]" />
             </div>
         </div>
     </div>
@@ -70,7 +70,7 @@ export default function ExploreByDate() {
     const monthLabel = `${format(monthStart, "d")}-${format(monthEnd, "d MMMM")}`
 
     return (
-        <section className="container mx-auto px-4 py-12 lg:py-16">
+        <section className="container mx-auto px-4 py-10 lg:py-16">
             <div className="flex items-center gap-3 mb-12">
                 <h2 className="text-2xl md:text-[32px] font-semibold text-gray-900 tracking-tighter">
                     Explore Event

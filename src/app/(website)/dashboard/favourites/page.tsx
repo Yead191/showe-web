@@ -1,9 +1,8 @@
 "use client"
 
-import React from "react"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import Image from "next/image"
-import { Heart, MapPin, Music, Mic2 } from "lucide-react"
+import { Heart, MapPin, Mic2 } from "lucide-react"
 
 const MOCK_PROGRAMMES = [
     { id: 1, title: "Until We Shatter", author: "Kate Dylan", image: "/assets/images/books/book1.jpg" },

@@ -12,8 +12,7 @@ interface CategoryTabsProps {
 export function CategoryTabs({ categories, selectedIndex, onSelect }: CategoryTabsProps) {
   return (
     <div
-      className="flex gap-2 px-4 overflow-x-auto pb-1"
-      style={{ scrollbarWidth: "none" }}
+      className="flex gap-2 px-4 overflow-x-auto pb-1 w-full no-scrollbar"
     >
       {categories.map((cat, i) => {
         const isSelected = i === selectedIndex;

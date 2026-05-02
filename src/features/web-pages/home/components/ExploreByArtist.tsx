@@ -21,7 +21,7 @@ export default function ExploreByArtist() {
     }
 
     return (
-        <section className="py-20 bg-gray-50/50 my-16">
+        <section className="py-16 lg:py-20 bg-gray-50/50 ">
             <div className="container mx-auto px-4">
                 <div className="flex items-center justify-between mb-12">
                     <div className="flex items-center gap-3">
@@ -37,7 +37,7 @@ export default function ExploreByArtist() {
                     </div>
 
                     {/* Custom Navigation */}
-                    <div className="flex items-center gap-3">
+                    <div className="md:flex items-center gap-3 hidden ">
                         <button className="swiper-button-prev-custom h-12 w-12 rounded-full border border-gray-200 flex items-center justify-center bg-white text-gray-600 hover:bg-[#F5A800] hover:border-[#F5A800] hover:text-white transition-all shadow-sm cursor-pointer active:scale-90">
                             <ChevronLeft className="h-5 w-5" />
                         </button>

@@ -125,17 +125,18 @@ export default function LandingNavbar() {
                 {/* ── Right: CTA + mobile menu ── */}
                 <div className="flex items-center gap-3">
                     {/* CTA button */}
-                    <Button
-                        onClick={() => setAuthModalOpen(true)}
-                        className="
+                    <Link href={'/home'}>
+                        <Button
+                            className="
               hidden lg:inline-flex
               bg-[#F5A800] hover:bg-[#e09900] text-white
               px-6 py-2 rounded-md text-sm
               transition-all duration-200 shadow-none h-10
             "
-                    >
-                        Get Started
-                    </Button>
+                        >
+                            Get Started
+                        </Button>
+                    </Link>
 
                     {/* Mobile hamburger */}
                     <Sheet open={drawerOpen} onOpenChange={setDrawerOpen}>
@@ -173,7 +174,7 @@ export default function LandingNavbar() {
                                 </SheetTitle>
                             </SheetHeader>
 
-                            <div className="flex flex-col gap-1">
+                            <div className="flex flex-col gap-1 px-3">
                                 {navItems.map((item) => {
                                     const isActive = activeSection === item.sectionId;
                                     return (
@@ -193,17 +194,17 @@ export default function LandingNavbar() {
                                     );
                                 })}
 
-                                <div className="mt-4 pt-4 border-t border-white/10">
+                                <Link href={'/home'} className="mt-4 pt-4 border-t border-white/10">
                                     <Button
                                         onClick={() => {
                                             scrollToSection("get-started");
                                             setDrawerOpen(false);
                                         }}
-                                        className="w-full bg-[#F5A800] hover:bg-[#e09900] text-black font-bold rounded-md"
+                                        className="w-full bg-[#F5A800] hover:bg-[#e09900] text-white font-medium rounded-md h-10"
                                     >
                                         Get Started
                                     </Button>
-                                </div>
+                                </Link>
                             </div>
                         </SheetContent>
                     </Sheet>
