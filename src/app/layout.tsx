@@ -18,6 +18,8 @@ export const metadata: Metadata = {
   description: "SHOWE turns traditional event programs into dynamic, interactive experiences-accessible instantly through a simple QR scan.",
 };
 
+import { Toaster } from "sonner";
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -28,7 +30,10 @@ export default function RootLayout({
       lang="en"
       className={`${montserrat.variable} ${museoModerno.variable} h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col">{children}</body>
+      <body className="min-h-full flex flex-col">
+        {children}
+        <Toaster position="top-center" richColors duration={2000} />
+      </body>
     </html>
   );
 }

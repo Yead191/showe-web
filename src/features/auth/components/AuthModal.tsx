@@ -13,16 +13,18 @@ import { Label } from "@/components/ui/label"
 import { useState } from "react"
 import { Eye, EyeOff } from "lucide-react"
 import { useRouter } from "next/navigation"
+import { toast } from "sonner"
 
 type AuthView = "login" | "register" | "forgot-password" | "verify-otp" | "reset-password"
 
 interface AuthModalProps {
   open: boolean
   onOpenChange: (open: boolean) => void
+  onLoginSuccess?: () => void
   initialView?: AuthView
 }
 
-export default function AuthModal({ open, onOpenChange, initialView = "login" }: AuthModalProps) {
+export default function AuthModal({ open, onOpenChange, onLoginSuccess, initialView = "login" }: AuthModalProps) {
   const [view, setView] = useState<AuthView>(initialView)
 
   // Reset to initial view when modal closes
@@ -63,7 +65,7 @@ export default function AuthModal({ open, onOpenChange, initialView = "login" }:
           </div>
 
           <div className="animate-in fade-in slide-in-from-bottom-4 duration-300">
-            {view === "login" && <LoginForm setView={setView} onOpenChange={onOpenChange} />}
+            {view === "login" && <LoginForm setView={setView} onOpenChange={onOpenChange} onLoginSuccess={onLoginSuccess} />}
             {view === "register" && <RegisterForm setView={setView} />}
             {view === "forgot-password" && <ForgotPasswordForm setView={setView} />}
             {view === "verify-otp" && <VerifyOtpForm setView={setView} />}
@@ -75,7 +77,7 @@ export default function AuthModal({ open, onOpenChange, initialView = "login" }:
   )
 }
 
-function LoginForm({ setView, onOpenChange }: { setView: (v: AuthView) => void, onOpenChange: (open: boolean) => void }) {
+function LoginForm({ setView, onOpenChange, onLoginSuccess }: { setView: (v: AuthView) => void, onOpenChange: (open: boolean) => void, onLoginSuccess?: () => void }) {
   const router = useRouter();
   const handleLogin = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -84,8 +86,18 @@ function LoginForm({ setView, onOpenChange }: { setView: (v: AuthView) => void, 
 
     const email = formData.get("email");
     const password = formData.get("password");
-    console.log({ email, password });
-    router.push('/home');
+    
+    // Mock login success
+    const mockUser = {
+      name: "John Doe",
+      email: email as string || "john@example.com",
+      avatar: "https://github.com/shadcn.png"
+    };
+
+    localStorage.setItem("user_profile", JSON.stringify(mockUser));
+    toast.success("Welcome back, " + mockUser.name + "!");
+    
+    onLoginSuccess?.();
     onOpenChange(false);
   };
   return (

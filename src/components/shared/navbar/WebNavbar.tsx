@@ -16,6 +16,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet"
 import { Menu, LayoutDashboard, LogOut } from "lucide-react"
 import AuthModal from "@/features/auth/components/AuthModal"
+import { toast } from "sonner"
 
 const webNavItems = [
     { label: "Home", href: "/home" },
@@ -27,6 +28,7 @@ const webNavItems = [
 
 export default function WebNavbar() {
     const [isSignedIn, setIsSignedIn] = useState(false)
+    const [user, setUser] = useState<{ name: string; email: string; avatar: string } | null>(null)
     const [authModalOpen, setAuthModalOpen] = useState(false)
     const [authView, setAuthView] = useState<any>("login")
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
@@ -34,7 +36,27 @@ export default function WebNavbar() {
     const [isScrolled, setIsScrolled] = useState(false);
 
 
-    // ── Scroll spy + hide-on-scroll-down ──────────────────────────────────────
+    // ── Auth Check ────────────────────────────────────────────────────────────
+    const checkAuth = () => {
+        const storedUser = localStorage.getItem("user_profile");
+        if (storedUser) {
+            setUser(JSON.parse(storedUser));
+            setIsSignedIn(true);
+        } else {
+            setUser(null);
+            setIsSignedIn(false);
+        }
+    };
+
+    useEffect(() => {
+        checkAuth();
+    }, []);
+
+    const handleLogout = () => {
+        localStorage.removeItem("user_profile");
+        checkAuth();
+        toast.info("Logged out successfully");
+    };
     useEffect(() => {
         const handleScroll = () => {
             const scrollY = window.scrollY;
@@ -166,16 +188,18 @@ export default function WebNavbar() {
                             <DropdownMenuTrigger asChild>
                                 <Button variant="ghost" className="relative h-10 w-10 rounded-full p-0 border-2 border-white/10 hover:border-[#F5A800]/50 transition-all overflow-hidden ring-offset-[#014B52] focus-visible:ring-[#F5A800]">
                                     <Avatar className="h-full w-full">
-                                        <AvatarImage src="https://github.com/shadcn.png" alt="Profile" />
-                                        <AvatarFallback className="bg-[#F5A800] text-white text-xs font-bold">JD</AvatarFallback>
+                                        <AvatarImage src={user?.avatar || "https://github.com/shadcn.png"} alt="Profile" />
+                                        <AvatarFallback className="bg-[#F5A800] text-white text-xs font-bold">
+                                            {user?.name?.split(" ").map(n => n[0]).join("") || "JD"}
+                                        </AvatarFallback>
                                     </Avatar>
                                 </Button>
                             </DropdownMenuTrigger>
                             <DropdownMenuContent className="w-64 mt-2 bg-[#014B52] border-white/10 text-white shadow-2xl animate-in fade-in zoom-in-95" align="end">
                                 <DropdownMenuLabel className="font-normal border-b border-white/5 pb-3 mb-1">
                                     <div className="flex flex-col space-y-1">
-                                        <p className="text-sm font-semibold leading-none text-white">John Doe</p>
-                                        <p className="text-xs leading-none text-white/60">john@example.com</p>
+                                        <p className="text-sm font-semibold leading-none text-white">{user?.name || "John Doe"}</p>
+                                        <p className="text-xs leading-none text-white/60">{user?.email || "john@example.com"}</p>
                                     </div>
                                 </DropdownMenuLabel>
                                 <div className="p-1">
@@ -188,8 +212,8 @@ export default function WebNavbar() {
                                 </div>
                                 <div className="p-1">
                                     <DropdownMenuItem
-                                        className="focus:bg-red-500/10 text-red-400 cursor-pointer py-2.5 rounded-md transition-colors"
-                                        onClick={() => setIsSignedIn(false)}
+                                        className="focus:bg-red-500/10! text-red-400  cursor-pointer py-2.5 rounded-md transition-colors"
+                                        onClick={handleLogout}
                                     >
                                         <div className="flex items-center gap-2 w-full">
                                             <LogOut className="h-4 w-4" />
@@ -206,6 +230,7 @@ export default function WebNavbar() {
             <AuthModal
                 open={authModalOpen}
                 onOpenChange={setAuthModalOpen}
+                onLoginSuccess={checkAuth}
                 initialView={authView}
             />
         </nav>
