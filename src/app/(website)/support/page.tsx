@@ -1,7 +1,7 @@
-import ComingSoon from '@/components/shared/ComingSoon'
+import Support from '@/features/web-pages/support'
 
 export default function page() {
     return (
-        <ComingSoon />
+        <Support />
     )
 }
