@@ -1,6 +1,6 @@
 "use client"
 
-import React, { useEffect, useState } from "react"
+import { useEffect, useState } from "react"
 import Link from "next/link"
 import Image from "next/image"
 import { usePathname } from "next/navigation"
@@ -26,7 +26,7 @@ const webNavItems = [
 ]
 
 export default function WebNavbar() {
-    const [isSignedIn, setIsSignedIn] = useState(true)
+    const [isSignedIn, setIsSignedIn] = useState(false)
     const [authModalOpen, setAuthModalOpen] = useState(false)
     const [authView, setAuthView] = useState<any>("login")
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
@@ -39,7 +39,7 @@ export default function WebNavbar() {
         const handleScroll = () => {
             const scrollY = window.scrollY;
             const banner = document.getElementById("banner");
-            
+
             if (!banner) {
                 // If there's no banner, the background should be visible
                 setIsScrolled(true);
