@@ -19,6 +19,7 @@ export const metadata: Metadata = {
 };
 
 import { Toaster } from "sonner";
+import ScrollToTop from "@/helpers/ScrollToTop";
 
 export default function RootLayout({
   children,
@@ -31,6 +32,7 @@ export default function RootLayout({
       className={`${montserrat.variable} ${museoModerno.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col">
+        <ScrollToTop />
         {children}
         <Toaster position="top-center" richColors duration={2000} />
       </body>
