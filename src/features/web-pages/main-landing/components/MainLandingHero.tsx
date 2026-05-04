@@ -8,10 +8,16 @@ export default function MainLandingHero() {
 
     useEffect(() => {
         if (videoRef.current) {
-            // Ensure video plays on mount
-            videoRef.current.play().catch(error => {
-                console.log("Video autoplay failed:", error);
-            });
+            const hasShownSplash = typeof window !== "undefined" ? sessionStorage.getItem("splashShown") : null;
+            const delay = hasShownSplash ? 0 : 3000;
+
+            const timer = setTimeout(() => {
+                videoRef.current?.play().catch(error => {
+                    console.log("Video autoplay failed:", error);
+                });
+            }, delay);
+
+            return () => clearTimeout(timer);
         }
     }, []);
 
@@ -28,7 +34,6 @@ export default function MainLandingHero() {
             <div className="absolute inset-0 w-full h-full">
                 <video
                     ref={videoRef}
-                    autoPlay
                     loop
                     muted
                     playsInline
@@ -36,6 +41,7 @@ export default function MainLandingHero() {
                 >
                     <source src="/assets/video/landing-hero.mp4" type="video/mp4" />
                 </video>
+
                 {/* <div className="absolute inset-0 bg-linear-to-b from-black/60 via-transparent to-black/80" /> */}
             </div>
 

@@ -1,6 +1,9 @@
 import type { Metadata } from "next";
 import { Montserrat, MuseoModerno } from "next/font/google";
 import "./globals.css";
+import { Toaster } from "sonner";
+import ScrollToTop from "@/helpers/ScrollToTop";
+import SplashScreen from "@/components/shared/SplashScreen";
 
 const montserrat = Montserrat({
   subsets: ["latin"],
@@ -18,10 +21,7 @@ export const metadata: Metadata = {
   description: "SHOWE turns traditional event programs into dynamic, interactive experiences-accessible instantly through a simple QR scan.",
 };
 
-import { Toaster } from "sonner";
-import ScrollToTop from "@/helpers/ScrollToTop";
 
-import SplashScreen from "@/components/shared/SplashScreen";
 
 export default function RootLayout({
   children,

@@ -149,9 +149,21 @@
     @apply flex justify-center items-center
   }
 
+
+  /* scrollbar */
+
+
+
+
+  /* hover */
+  ::-webkit-scrollbar-thumb:hover {
+    background: #d89500;
+  }
+
   .no-scrollbar::-webkit-scrollbar {
     display: none;
   }
+
   .no-scrollbar {
     -ms-overflow-style: none;
     scrollbar-width: none;
