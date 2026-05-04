@@ -21,6 +21,8 @@ export const metadata: Metadata = {
 import { Toaster } from "sonner";
 import ScrollToTop from "@/helpers/ScrollToTop";
 
+import SplashScreen from "@/components/shared/SplashScreen";
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -32,6 +34,7 @@ export default function RootLayout({
       className={`${montserrat.variable} ${museoModerno.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col">
+        <SplashScreen />
         <ScrollToTop />
         {children}
         <Toaster position="top-center" richColors duration={2000} />
