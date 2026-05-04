@@ -1,6 +1,6 @@
-import LandingIndex from "@/features/web-pages/landing";
+import MainLandingIndex from "@/features/web-pages/main-landing";
 export default function Home() {
   return <>
-    <LandingIndex />
+    <MainLandingIndex />
   </>
 }

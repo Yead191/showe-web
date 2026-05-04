@@ -9,11 +9,18 @@ export default function LandingBanner() {
                 <div>
                     <h1 className='text-4xl lg:text-7xl font-bold mb-6 text-[#FEFEFE] font-museo'>Transform Event Programs Into Interactive Experiences</h1>
                     <p className='lg:text-lg mb-6 text-[#FEFEFE] max-w-[734px] mx-auto'>SHOWE turns traditional event programs into dynamic, interactive experiences-accessible instantly through a simple QR scan.</p>
-                    <div className='flex gap-5 justify-center items-center'>
-                        <Link href="/home">
-                            <Button className='cursor-pointer h-10 text-base px-8 bg-[#F2A900] text-white'>Get Started</Button>
+                    <div className="flex flex-row gap-3 lg:gap-5 justify-between lg:justify-center items-center w-full ">
+
+                        <Link href="/home" className="w-full sm:w-auto flex-1 lg:flex-none">
+                            <Button className="cursor-pointer h-12 text-base w-full sm:w-xs bg-[#F2A900] text-white">
+                                Get Started
+                            </Button>
                         </Link>
-                        <Button className='cursor-pointer h-10 text-white bg-transparent border-white/80 hover:bg-white/80 hover:text-black! px-8' >Download App</Button>
+
+                        <Button className="cursor-pointer h-12 text-white w-full sm:w-xs bg-transparent border border-white/80 hover:bg-white/80 hover:text-black flex-1 lg:flex-none">
+                            Download App
+                        </Button>
+
                     </div>
                 </div>
             </div>
