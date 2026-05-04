@@ -14,7 +14,7 @@ export default function MainLandingSplit() {
                             <div className="w-20 h-20 bg-[#014B52]/10 text-[#014B52] rounded-full flex items-center justify-center mb-8 group-hover:scale-110 transition-transform duration-500">
                                 <Ticket size={40} strokeWidth={1.5} />
                             </div>
-                            <h3 className="text-3xl font-bold text-slate-900 mb-4">I'm looking for <span className="font-museo">Events</span></h3>
+                            <h3 className="text-3xl font-bold text-slate-900 mb-4">Attending an <span className="font-museo">Event?</span></h3>
                             <p className="text-slate-600 mb-8 max-w-sm">
                                 Discover concerts, workshops, and exclusive gatherings tailored just for you. Get your tickets now.
                             </p>
@@ -33,7 +33,7 @@ export default function MainLandingSplit() {
                             <div className="w-20 h-20 bg-white/10 text-[#F5A800] rounded-full flex items-center justify-center mb-8 group-hover:scale-110 transition-transform duration-500">
                                 <Tent size={40} strokeWidth={1.5} />
                             </div>
-                            <h3 className="text-3xl font-bold text-white mb-4">I want to <span className="font-museo">Host</span></h3>
+                            <h3 className="text-3xl font-bold text-white mb-4">Running an<span className="font-museo"> Event?</span></h3>
                             <p className="text-white/80 mb-8 max-w-sm">
                                 Manage venues, sell tickets, and grow your audience with our comprehensive suite of creator tools.
                             </p>

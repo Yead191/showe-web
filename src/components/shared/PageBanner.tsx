@@ -31,7 +31,7 @@ export default function PageBanner({
     return (
         <section id='banner'
             className={cn(
-                "relative min-h-[60vh] md:min-h-[70vh] flex items-center justify-center overflow-hidden pt-20",
+                "relative min-h-screen  md:min-h-[70vh] flex items-center justify-center overflow-hidden pt-20",
                 containerClassName
             )}
         >
@@ -52,7 +52,7 @@ export default function PageBanner({
             {/* Content */}
             <div className="container relative z-20 text-center px-4">
                 <div className=" space-y-6">
-                    <h1 className="text-3xl lg:text-7xl font-bold mb-6 text-[#FEFEFE] font-museo leading-[120%]">
+                    <h1 className="text-4xl lg:text-7xl font-bold mb-6 text-[#FEFEFE] font-museo leading-[120%]">
                         {title}
                     </h1>
 
@@ -72,8 +72,8 @@ export default function PageBanner({
                                         className={cn(
                                             "h-12 px-8 rounded-md font-semibold transition-all duration-300",
                                             btn.variant === 'default'
-                                                ? "cursor-pointer h-10 text-base px-8 bg-[#F2A900] text-white"
-                                                : "h-10 text-white bg-transparent border-white/80 hover:bg-white/80 hover:text-black! px-8",
+                                                ? "cursor-pointer h-12 text-base px-8 bg-[#F2A900] text-white"
+                                                : "h-12 text-white bg-transparent border-white/80 hover:bg-white/80 hover:text-black! px-8",
                                             btn.className
                                         )}
                                     >

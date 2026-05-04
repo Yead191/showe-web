@@ -7,8 +7,9 @@ export default function LandingBanner() {
         <section id='banner' className='min-h-screen flex items-center bg-[#0C0C0C] relative overflow-hidden'>
             <div className='container relative z-10 text-center flex flex-col flex-center'>
                 <div>
-                    <h1 className='text-4xl lg:text-7xl font-bold mb-6 text-[#FEFEFE] font-museo'>Transform Event Programs Into Interactive Experiences</h1>
-                    <p className='lg:text-lg mb-6 text-[#FEFEFE] max-w-[734px] mx-auto'>SHOWE turns traditional event programs into dynamic, interactive experiences-accessible instantly through a simple QR scan.</p>
+                    <h1 className='text-4xl lg:text-7xl font-bold mb-6 text-[#FEFEFE] font-museo'>Step into the story before the curtain rises.</h1>
+                    <p className='lg:text-lg mb-6 text-[#FEFEFE] max-w-[734px] mx-auto'>Access your digital programme in seconds, explore the people and moments behind the event, and
+                        experience it in a whole new way-before, during, and after.</p>
                     <div className="flex flex-row gap-3 lg:gap-5 justify-between lg:justify-center items-center w-full ">
 
                         <Link href="/home" className="w-full sm:w-auto flex-1 lg:flex-none">

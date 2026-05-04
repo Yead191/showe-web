@@ -6,7 +6,7 @@ import Image from "next/image";
 import Link from "next/link";
 import AuthModal from "@/features/auth/components/AuthModal";
 
-export default function LandingNavbar() {
+export default function LandingNavbar({ isCreator = false }: { isCreator?: boolean }) {
     const [isScrolled, setIsScrolled] = useState(false);
 
     const [authModalOpen, setAuthModalOpen] = useState(false);
@@ -60,7 +60,7 @@ export default function LandingNavbar() {
                 {/* ── Right: CTA + mobile menu ── */}
                 <div className="flex items-center gap-3">
                     {/* CTA button */}
-                    <Link href={'/home'}>
+                    <Link href={isCreator ? "/organisation-register" : '/home'}>
                         <Button
                             className="inline-flex
               bg-[#F5A800] hover:bg-[#e09900] text-white
