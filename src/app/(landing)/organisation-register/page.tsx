@@ -1,4 +1,4 @@
-import OrganisationRegister from "@/features/auth/components/OrganisationRegister";
+import OrganisationRegister from "@/features/auth/components/org-register/OrganisationRegister";
 
 export const metadata = {
     title: "Organization Registration | Showe",
