@@ -2,7 +2,7 @@
 
 import {
     User,
-    Ticket,
+    QrCode,
     Mic2,
     Smartphone,
     ShieldCheck,
@@ -17,9 +17,9 @@ const CATEGORIES = [
         color: "#F5A800"
     },
     {
-        icon: Ticket,
-        title: "Ticketing & Payments",
-        desc: "Get help with purchases, refunds, and digital ticket access.",
+        icon: QrCode,
+        title: "Programme Access",
+        desc: "Troubleshoot QR scanning and accessing digital programme content.",
         color: "#014B52"
     },
     {

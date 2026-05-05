@@ -22,7 +22,7 @@ const webNavItems = [
     { label: "Home", href: "/home" },
     { label: "Events", href: "/events" },
     { label: "About us", href: "/about" },
-    { label: "Programmes", href: "/programmes" },
+    { label: "Programmes", href: "/programmes", requiresAuth: true },
     { label: "Support", href: "/support" },
 ]
 
@@ -34,6 +34,7 @@ export default function WebNavbar() {
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
     const pathname = usePathname()
     const [isScrolled, setIsScrolled] = useState(false);
+    const filteredNavItems = webNavItems.filter(item => !item.requiresAuth || isSignedIn)
 
 
     // ── Auth Check ────────────────────────────────────────────────────────────
@@ -98,7 +99,7 @@ export default function WebNavbar() {
 
                 {/* ── Left: Nav Items (Desktop) ── */}
                 <ul className="flex-1 hidden lg:flex items-center gap-2">
-                    {webNavItems.map((item) => {
+                    {filteredNavItems.map((item) => {
                         const isActive = pathname === item.href
                         return (
                             <li key={item.href}>
@@ -135,7 +136,7 @@ export default function WebNavbar() {
                                 </SheetTitle>
                             </SheetHeader>
                             <div className="flex flex-col gap-2 px-3">
-                                {webNavItems.map((item) => (
+                                {filteredNavItems.map((item) => (
                                     <Link
                                         key={item.href}
                                         href={item.href}

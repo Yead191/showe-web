@@ -9,8 +9,10 @@ import { Label } from '@/components/ui/label';
 import { Card, CardContent } from '@/components/ui/card';
 import { toast } from 'sonner';
 import { Building2, User, Mail, Phone, MapPin, Lock, ArrowLeft } from 'lucide-react';
+import { useRouter } from 'next/navigation';
 
 export default function OrganisationRegister() {
+    const router = useRouter()
     const [isLoading, setIsLoading] = useState(false);
 
     const handleSubmit = (e: React.FormEvent) => {
@@ -33,10 +35,10 @@ export default function OrganisationRegister() {
                 <div className="absolute top-0 right-0 w-96 h-96 bg-[#F5A800]/10 rounded-full blur-3xl -mr-20 -mt-20" />
                 <div className="absolute bottom-0 left-0 w-96 h-96 bg-[#F5A800]/5 rounded-full blur-3xl -ml-20 -mb-20" />
 
-                <Link href="/become-creator" className="relative z-10 flex items-center gap-2 text-white/80 hover:text-white transition-colors w-fit">
+                <Button onClick={() => router.back()} className="relative z-10 flex items-center gap-2 text-white/80 hover:text-white transition-colors w-fit bg-transparent">
                     <ArrowLeft size={20} />
                     <span>Back to Home</span>
-                </Link>
+                </Button>
 
                 <div className="relative z-10 max-w-lg">
                     <Image src="/logo.png" width={200} height={60} alt="Showe Logo" className="mb-12" />
