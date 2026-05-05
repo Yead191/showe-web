@@ -5,33 +5,33 @@ export interface Feature {
 
 export const DEFAULT_FEATURES: Feature[] = [
     {
-        title: 'From Print to Digital Experience',
+        title: 'Instant Access, No Hassle',
         description:
-            'We transform traditional printed event programs into interactive digital experiences that are easier to access, update, and share in real time.',
+            'Skip the line and the paper. Scan a QR code at the venue or access your digital programme instantly from your phone.',
     },
     {
-        title: 'Always Up-to-Date Content',
+        title: 'Deep Dive into the Story',
         description:
-            'Unlike static brochures, your event program can be updated instantly, ensuring attendees always see the latest agenda, speakers, and sessions.',
+            'Explore rich, interactive content. Discover cast biographies, behind-the-scenes videos, and exclusive director notes.',
     },
     {
-        title: 'Seamless Mobile Experience',
+        title: 'Stay Notified & Updated',
         description:
-            'Fully responsive layouts ensure smooth access on mobile, tablet, and desktop, so users can explore the event anytime, anywhere.',
+            'Get real-time updates about schedule changes, surprise performances, or exclusive post-show content straight to your device.',
     },
     {
-        title: 'Better Audience Engagement',
+        title: 'Interactive Maps & Schedules',
         description:
-            'Interactive elements like speaker profiles, clickable sessions, and live updates increase participation and overall event engagement.',
+            'Never miss a beat with easy-to-use digital maps and dynamic schedules that help you navigate the event seamlessly.',
     },
     {
-        title: 'Sustainable & Cost-Efficient',
+        title: 'Your Personal Event Archive',
         description:
-            'Eliminate printing costs and reduce environmental impact by switching to a fully digital, reusable event program system.',
+            'Save your favorite programmes to your profile. Revisit the stories, cast, and memories long after the curtain falls.',
     },
     {
-        title: 'Smart Navigation & Structure',
+        title: 'Eco-Friendly Experience',
         description:
-            'Clear layout and intuitive navigation help users quickly discover schedules, speakers, and sessions without confusion or delay.',
+            'Enjoy a premium experience while reducing paper waste. Digital programmes mean you are contributing to a greener planet.',
     },
-]
+]

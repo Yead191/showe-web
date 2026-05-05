@@ -16,7 +16,7 @@ export default function MainLandingSplit() {
                             </div>
                             <h3 className="text-3xl font-bold text-slate-900 mb-4">Attending an <span className="font-museo">Event?</span></h3>
                             <p className="text-slate-600 mb-8 max-w-sm">
-                                Discover concerts, workshops, and exclusive gatherings tailored just for you. Get your tickets now.
+                                Discover concerts, workshops, and exclusive gatherings, and be seamlessly directed to official venue ticketing.
                             </p>
                             <div className="mt-auto inline-flex items-center gap-2 text-[#014B52] font-semibold group-hover:gap-4 transition-all">
                                 Explore Showe <ArrowRight size={20} />
@@ -35,7 +35,7 @@ export default function MainLandingSplit() {
                             </div>
                             <h3 className="text-3xl font-bold text-white mb-4">Running an<span className="font-museo"> Event?</span></h3>
                             <p className="text-white/80 mb-8 max-w-sm">
-                                Manage venues, sell tickets, and grow your audience with our comprehensive suite of creator tools.
+                                Create interactive digital programmes, engage your audience, and streamline your event experience.
                             </p>
                             <div className="mt-auto inline-flex items-center gap-2 text-[#F5A800] font-semibold group-hover:gap-4 transition-all">
                                 Become a Creator <ArrowRight size={20} />
