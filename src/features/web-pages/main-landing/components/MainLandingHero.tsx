@@ -1,13 +1,14 @@
 "use client";
 
 import { useRef, useEffect, useState } from "react";
-import { ArrowDown, Smartphone } from "lucide-react";
+import { ArrowDown, Smartphone, Volume2, VolumeX } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 export default function MainLandingHero() {
     const videoRef = useRef<HTMLVideoElement>(null);
 
     const [baseDelay, setBaseDelay] = useState(3000);
+    const [isMuted, setIsMuted] = useState(true);
 
     useEffect(() => {
         const hasShownSplash = sessionStorage.getItem("splashShown");
@@ -54,7 +55,7 @@ export default function MainLandingHero() {
                         </p>
 
                         <div className="flex flex-wrap gap-4 pt-4 animate-in slide-in-from-left-8 fade-in duration-1000 fill-mode-both mb-28 lg:mb-0" style={{ animationDelay: `${baseDelay + 600}ms` }}>
-                            <Button className="h-14 px-8 bg-[#F5A800] hover:bg-[#e09900] text-white font-semibold text-lg rounded-xl flex items-center gap-2 shadow-lg shadow-[#F5A800]/20 active:scale-95 transition-all">
+                            <Button className="h-14 px-8 bg-[#F5A800] hover:bg-[#e09900] text-white font-semibold text-lg rounded-xl flex items-center gap-2 shadow-lg shadow-[#F5A800]/20 active:scale-95 transition-all w-full md:w-auto">
                                 <Smartphone size={20} />
                                 Download App
                             </Button>
@@ -70,7 +71,7 @@ export default function MainLandingHero() {
                             <video
                                 ref={videoRef}
                                 loop
-                                muted
+                                muted={isMuted}
                                 playsInline
                                 className="w-full h-full object-contain rounded-[2.5rem] "
                             >
@@ -79,6 +80,15 @@ export default function MainLandingHero() {
 
                             {/* Inner Glow/Overlay */}
                             <div className="absolute inset-0 pointer-events-none rounded-[2.5rem] ring-1 ring-white/10" />
+
+                            {/* Mute/Unmute Toggle */}
+                            <button
+                                onClick={() => setIsMuted(!isMuted)}
+                                className="absolute bottom-6 right-6 p-2.5 bg-black/40 hover:bg-black/60 backdrop-blur-md rounded-xl text-white/90 hover:text-white z-20 transition-all border border-white/10 shadow-lg group"
+                                aria-label={isMuted ? "Unmute video" : "Mute video"}
+                            >
+                                {isMuted ? <VolumeX size={18} className="group-hover:scale-110 transition-transform" /> : <Volume2 size={18} className="group-hover:scale-110 transition-transform" />}
+                            </button>
                         </div>
                     </div>
                 </div>
