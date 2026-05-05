@@ -56,7 +56,7 @@ export default function WhatYouCanDo() {
 
                     {/* Right Side: Audience Imagery */}
                     <div className="relative h-[500px] md:h-[700px] rounded-[3rem] overflow-hidden border border-white/10 shadow-2xl group">
-                        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent z-10" />
+                        <div className="absolute inset-0 bg-linear-to-t from-black/80 via-transparent to-transparent z-10" />
 
                         {/* High emotion audience image */}
                         <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1459749411175-04bf5292ceea?auto=format&fit=crop&q=80&w=1200')] bg-cover bg-center transition-transform duration-1000 group-hover:scale-105" />
