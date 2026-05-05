@@ -20,7 +20,7 @@ export default function CtaSection() {
                             Join thousands of organizers and artists who are already using SHOWE to build better experiences.
                         </p>
                         <div className="pt-4">
-                            <Link href="/home">
+                            <Link href="/organisation-register">
                                 <Button className="bg-white text-[#F5A800] hover:bg-gray-100 px-12 h-14 text-lg font-black rounded-2xl shadow-xl transition-all active:scale-95">
                                     Get Started Now
                                 </Button>

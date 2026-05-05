@@ -1,4 +1,4 @@
-import { Search, Smartphone, Ticket, Users } from "lucide-react"
+import { Search, Smartphone, Leaf, Users } from "lucide-react"
 
 export default function FourPillars() {
     return (
@@ -26,9 +26,9 @@ export default function FourPillars() {
                             color: "#014B52"
                         },
                         {
-                            icon: Ticket,
-                            title: "Selling & Access",
-                            desc: "Integrated ticketing and program selling features that streamline revenue for organizers.",
+                            icon: Leaf,
+                            title: "Sustainability",
+                            desc: "Eliminate paper waste and reduce environmental impact by replacing printed programs with digital solutions.",
                             color: "#F5A800"
                         },
                         {

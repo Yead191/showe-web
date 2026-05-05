@@ -10,13 +10,17 @@ import { RecommendedHotels } from "./components/RecommendedHotels"
 import { NearbyBars } from "./components/NearbyBars"
 import { Button } from "@/components/ui/button"
 import { ChevronRight } from "lucide-react"
-import { useState } from "react"
+import { toast } from "sonner"
 
-import { TicketSelectionModal } from "./components/TicketSelectionModal"
 
 export default function EventDetails({ event }: { event: Event }) {
-    const [isModalOpen, setIsModalOpen] = useState(false)
     if (!event) return null
+
+    const handleComingSoon = () => {
+        toast.info(`Get Your Ticket feature will be available soon!`, {
+            description: "We are currently working on integrating this with the venue's ticketing system."
+        });
+    }
 
     return (
         <main className="min-h-screen bg-white pb-24 lg:pb-0">
@@ -38,7 +42,7 @@ export default function EventDetails({ event }: { event: Event }) {
 
                     {/* ── Right Sidebar (35%) ── */}
                     <div className="lg:w-[35%]">
-                        <EventSidebar event={event} onBookTickets={() => setIsModalOpen(true)} />
+                        <EventSidebar event={event} />
                     </div>
                 </div>
             </div>
@@ -50,19 +54,15 @@ export default function EventDetails({ event }: { event: Event }) {
                     <p className="text-xl font-black text-[#F5A800] tracking-tight">{event.tickets.display_price}</p>
                 </div>
                 <Button
-                    onClick={() => setIsModalOpen(true)}
+                    onClick={handleComingSoon}
                     className="flex-1 h-12 bg-[#014B52] hover:bg-[#023a40] text-white font-black text-sm rounded-2xl flex items-center justify-center gap-2 active:scale-95 transition-all shadow-lg shadow-[#014B52]/20"
                 >
-                    Get Tickets
+                    Get Your Ticket
                     <ChevronRight className="h-4 w-4" />
                 </Button>
             </div>
 
-            <TicketSelectionModal
-                isOpen={isModalOpen}
-                onOpenChange={setIsModalOpen}
-                event={event}
-            />
+
         </main>
     )
 }

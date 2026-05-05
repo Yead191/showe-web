@@ -3,13 +3,19 @@ import Image from "next/image"
 import { Calendar, MapPin, CheckCircle2, ChevronRight, FileDown } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Event } from "@/constants/events/mock-event-details"
+import { toast } from "sonner"
 
 interface EventSidebarProps {
     event: Event
-    onBookTickets: () => void
 }
 
-export function EventSidebar({ event, onBookTickets }: EventSidebarProps) {
+export function EventSidebar({ event }: EventSidebarProps) {
+    const handleComingSoon = (feature: string) => {
+        toast.info(`${feature} feature will be available soon!`, {
+            description: "We are currently working on integrating this with the venue's ticketing system."
+        });
+    }
+
     return (
         <aside className="space-y-8 lg:sticky lg:top-24 h-fit">
             {/* ── Booking Card ── */}
@@ -26,28 +32,23 @@ export function EventSidebar({ event, onBookTickets }: EventSidebarProps) {
                     </div>
 
                     <Button
-                        onClick={onBookTickets}
+                        onClick={() => handleComingSoon("Get Your Ticket")}
                         className="w-full h-16 bg-[#014B52] hover:bg-[#023a40] text-white font-black text-lg rounded-2xl transition-all active:scale-[0.98] shadow-xl shadow-[#014B52]/20 flex items-center justify-center gap-2 group-hover:gap-4 duration-300"
                     >
-                        Book Tickets Now
+                        Get Your Ticket
                         <ChevronRight className="h-5 w-5" />
                     </Button>
                     {/* ── Downloads ── */}
                     <div className=" flex flex-wrap gap-4">
-                        {Object.entries(event.downloads).map(([key, url]) => (
-                            <a
-                                key={key}
-                                href={url}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                className="flex items-center gap-3 px-6 py-3.5 rounded-2xl bg-[#014B52]/5 hover:bg-[#014B52]/10 text-[#014B52] transition-all group"
-                            >
-                                <FileDown className="h-5 w-5 group-hover:-translate-y-1 transition-transform" />
-                                <span className="text-xs font-black uppercase tracking-widest">
-                                    Download {key.replace("_url", "").replace("_", " ")}
-                                </span>
-                            </a>
-                        ))}
+                        <button
+                            onClick={() => handleComingSoon("Download Programme")}
+                            className="w-full flex items-center gap-3 px-6 py-3.5 rounded-2xl bg-[#014B52]/5 hover:bg-[#014B52]/10 text-[#014B52] transition-all group cursor-pointer border-none"
+                        >
+                            <FileDown className="h-5 w-5 group-hover:-translate-y-1 transition-transform" />
+                            <span className="text-xs font-black uppercase tracking-widest text-left">
+                                Download Programme
+                            </span>
+                        </button>
                     </div>
                     <div className="space-y-5 pt-2">
                         <div className="flex items-start gap-4">

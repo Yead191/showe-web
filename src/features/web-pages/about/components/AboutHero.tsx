@@ -1,8 +1,16 @@
+"use client"
 import Image from 'next/image'
 import { Button } from "@/components/ui/button"
+import { Smartphone } from 'lucide-react'
 
-import Link from "next/link"
 export default function AboutHero() {
+    const scrollToStory = () => {
+        const section = document.getElementById('our-story');
+        if (section) {
+            section.scrollIntoView({ behavior: 'smooth' });
+        }
+    };
+
     return (
         <section id="banner" className="relative h-[75vh] min-h-[500px] flex items-center justify-center overflow-hidden">
             <Image
@@ -23,16 +31,19 @@ export default function AboutHero() {
                     turning every scan into an interactive journey.
                 </p>
                 <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                    <Link href="/events">
-                        <Button className="bg-[#F5A800] hover:bg-[#e09900] text-white px-8 h-12 text-base font-bold rounded-md shadow-lg shadow-[#F5A800]/20 w-full sm:w-auto">
-                            Explore Events
-                        </Button>
-                    </Link>
-                    <Button variant="outline" className="border-white/30 text-white hover:bg-white/10 px-8 h-12 text-base font-medium rounded-md backdrop-blur-sm w-full sm:w-auto">
+                    <Button className="h-12 px-8 bg-[#F5A800] hover:bg-[#e09900] text-white font-semibold text-lg rounded-xl flex items-center gap-2 shadow-lg shadow-[#F5A800]/20 active:scale-95 transition-all">
+                        <Smartphone size={20} />
+                        Download App
+                    </Button>
+                    <Button
+                        onClick={scrollToStory}
+                        className="border-white/30 text-white hover:bg-white/10 px-8 h-12 text-base font-medium rounded-xl backdrop-blur-sm bg-transparent w-full sm:w-auto"
+                    >
                         Our Story
                     </Button>
                 </div>
             </div>
+
 
             {/* Decorative Scroll Hint */}
             <div className="absolute bottom-10 left-1/2 -translate-x-1/2 animate-bounce">
