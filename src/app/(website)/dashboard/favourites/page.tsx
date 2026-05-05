@@ -3,6 +3,7 @@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import Image from "next/image"
 import { Heart, MapPin, Mic2 } from "lucide-react"
+import Link from "next/link"
 
 const MOCK_PROGRAMMES = [
     { id: 1, title: "Until We Shatter", author: "Kate Dylan", image: "/assets/images/books/book1.jpg" },
@@ -53,7 +54,7 @@ export default function FavouritesPage() {
                 <TabsContent value="programmes" className="animate-in fade-in zoom-in-95 duration-500">
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                         {MOCK_PROGRAMMES.map((item) => (
-                            <div key={item.id} className="group bg-gray-50/50 rounded-3xl p-4 border border-transparent hover:border-[#014B52]/10 hover:bg-white hover:shadow-xl transition-all duration-500">
+                            <Link href={`/programmes/${item.id}`} key={item.id} className="group bg-gray-50/50 rounded-3xl p-4 border border-transparent hover:border-[#014B52]/10 hover:bg-white hover:shadow-xl transition-all duration-500">
                                 <div className="relative aspect-3/4 rounded-2xl overflow-hidden mb-4">
                                     <Image src={item.image} alt={item.title} fill className="object-cover group-hover:scale-110 transition-transform duration-700" />
                                     <button className="absolute top-3 right-3 p-2 bg-white/90 backdrop-blur-sm rounded-xl text-red-500 shadow-sm">
@@ -64,7 +65,7 @@ export default function FavouritesPage() {
                                     <h3 className="text-sm font-black text-gray-900 line-clamp-1">{item.title}</h3>
                                     <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest">{item.author}</p>
                                 </div>
-                            </div>
+                            </Link>
                         ))}
                     </div>
                 </TabsContent>
@@ -72,7 +73,7 @@ export default function FavouritesPage() {
                 <TabsContent value="artists" className="animate-in fade-in zoom-in-95 duration-500">
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                         {MOCK_ARTISTS.map((item) => (
-                            <div key={item.id} className="group bg-gray-50/50 rounded-3xl p-4 border border-transparent hover:border-[#014B52]/10 hover:bg-white hover:shadow-xl transition-all duration-500">
+                            <Link href={`/artists/${item.id}`} key={item.id} className="group bg-gray-50/50 rounded-3xl p-4 border border-transparent hover:border-[#014B52]/10 hover:bg-white hover:shadow-xl transition-all duration-500">
                                 <div className="relative aspect-square rounded-full overflow-hidden mb-4 border-4 border-white shadow-md">
                                     <Image src={item.image} alt={item.name} fill className="object-cover group-hover:scale-110 transition-transform duration-700" />
                                     <button className="absolute inset-0 bg-[#014B52]/40 opacity-0 group-hover:opacity-100 flex items-center justify-center transition-all">
@@ -83,7 +84,7 @@ export default function FavouritesPage() {
                                     <h3 className="text-sm font-black text-gray-900">{item.name}</h3>
                                     <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest">{item.genre}</p>
                                 </div>
-                            </div>
+                            </Link>
                         ))}
                     </div>
                 </TabsContent>

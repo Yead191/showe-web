@@ -63,7 +63,7 @@ export default function MainLandingHero() {
 
                     {/* Right Side: Portrait Video */}
                     <div className="flex justify-center 2xl:justify-end order-1 lg:order-2 animate-in zoom-in-95 fade-in duration-1000 fill-mode-both" style={{ animationDelay: `${baseDelay + 300}ms` }}>
-                        <div className="relative h-[80vh]  rounded-[3rem]  shadow-[0_0_50px_rgba(245,168,0,0.15)] overflow-hidden bg-[#1C1C1C] p-1 border-4 border-[#1C1C1C]  ">
+                        <div className="relative h-full lg:h-[80vh]  rounded-[3rem]  shadow-[0_0_50px_rgba(245,168,0,0.15)] overflow-hidden bg-[#1C1C1C] p-1 border-4 border-[#1C1C1C]  ">
                             {/* Notch/Camera Area */}
                             {/* <div className="absolute top-0 left-1/2 -translate-x-1/2 w-1/3 h-5 bg-[#1C1C1C] rounded-b-2xl z-20" /> */}
 
