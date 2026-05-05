@@ -1,44 +1,68 @@
+import { Zap, Smartphone, Leaf, QrCode } from "lucide-react";
 
 export default function AboutShowe() {
-  return (
-    <section className="bg-[#F7F4EF] py-14 ">
-      <div className=" px-4 2xl:px-12">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-12 lg:gap-16">
-          {/* Meet SHOWE */}
-          <div className="flex flex-col gap-4">
-            <h2 className="text-xl lg:text-2xl font-bold text-[#1A1A1A]">Meet SHOWE</h2>
-            <p className="text-[#4A4A4A] text-sm lg:text-base leading-relaxed">
-              SHOWE is a digital platform that replaces traditional printed event
-              programs with interactive, mobile-first experiences. Instead of using
-              paper booklets, attendees can simply scan a QR code to access
-              beautifully designed programs directly on their phone.
-            </p>
-          </div>
+    const features = [
+        {
+            icon: <Smartphone className="w-10 h-10 text-[#F5A800]" />,
+            title: "Mobile-First",
+            description: "Beautifully designed programs formatted perfectly for your phone screen."
+        },
+        {
+            icon: <Zap className="w-10 h-10 text-[#F5A800]" />,
+            title: "Real-Time Updates",
+            description: "Never miss a beat. Get instant updates on schedule changes or announcements."
+        },
+        {
+            icon: <Leaf className="w-10 h-10 text-[#F5A800]" />,
+            title: "Eco-Friendly",
+            description: "Enjoy the show while helping the planet by reducing paper waste."
+        }
+    ];
 
-          {/* Powering Interactive Event Experiences */}
-          <div className="flex flex-col gap-4">
-            <h2 className="text-xl lg:text-2xl font-bold text-[#1A1A1A]">Powering Interactive Event Experiences</h2>
-            <p className="text-[#4A4A4A] text-sm lg:text-base leading-relaxed">
-              At an event, users scan a QR code to unlock a dynamic digital
-              program. They can explore schedules, cast details, and multimedia
-              content, all in a smooth, touch-friendly format. Organizers can also
-              update content in real time, ensuring the program stays relevant
-              throughout the event.
-            </p>
-          </div>
+    return (
+        <section className="py-24 bg-[#F7F4EF] overflow-hidden">
+            <div className="container mx-auto px-4">
+                <div className="flex flex-col lg:flex-row gap-16 items-center">
+                    {/* Left Side */}
+                    <div className="lg:w-1/2">
+                        <h2 className="text-4xl md:text-5xl font-bold text-[#014B52] mb-8 font-museo leading-tight tracking-tight">
+                            The Future of <br className="hidden md:block"/> Event Programmes.
+                        </h2>
+                        <p className="text-xl text-slate-600 font-light leading-relaxed mb-10">
+                            Showe replaces traditional printed booklets with an interactive, digital experience. Everything you need to know about the performance is right in your pocket.
+                        </p>
+                        
+                        <div className="space-y-4">
+                            <div className="flex items-start gap-4 p-5 rounded-2xl bg-white shadow-sm border-l-4 border-[#F5A800]">
+                                <div className="font-bold text-[#014B52] text-lg shrink-0">“What is this?”</div>
+                                <div className="text-slate-600 pt-[2px]">Your interactive, digital companion for live events and shows.</div>
+                            </div>
+                            <div className="flex items-start gap-4 p-5 rounded-2xl bg-white shadow-sm border-l-4 border-[#F5A800]">
+                                <div className="font-bold text-[#014B52] text-lg shrink-0">“Is it easy?”</div>
+                                <div className="text-slate-600 pt-[2px]">Just scan the QR code at the venue. No app downloads required.</div>
+                            </div>
+                        </div>
+                    </div>
 
-          {/* Why SHOWE */}
-          <div className="flex flex-col gap-4">
-            <h2 className="text-xl lg:text-2xl font-bold text-[#1A1A1A]">Why SHOWE</h2>
-            <p className="text-[#4A4A4A] text-sm lg:text-base leading-relaxed">
-              SHOWE goes beyond static content by turning programs into
-              engaging experiences. It reduces printing costs, allows instant
-              updates, and creates deeper audience interaction, while also
-              providing organizers with valuable insights into user behavior.
-            </p>
-          </div>
-        </div>
-      </div>
-    </section>
-  )
+                    {/* Right Side */}
+                    <div className="lg:w-1/2 grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div className="md:col-span-2 bg-[#014B52] text-white p-8 md:p-10 rounded-[2rem] shadow-xl transition-all hover:translate-y-[-5px]">
+                            <div className="mb-6"><QrCode className="w-12 h-12 text-[#F5A800]" /></div>
+                            <h3 className="text-2xl font-bold mb-3 text-white font-museo">Instant Access</h3>
+                            <p className="text-white/80 text-lg leading-relaxed">
+                                Point your camera, tap the link, and you're in. We believe technology should get out of the way so you can focus on the performance.
+                            </p>
+                        </div>
+                        {features.map((item, idx) => (
+                            <div key={idx} className={`p-8 rounded-[2rem] shadow-sm hover:shadow-xl transition-all hover:translate-y-[-5px] border border-slate-100 ${idx === 2 ? 'md:col-span-2 bg-white' : 'bg-white'}`}>
+                                <div className="mb-6">{item.icon}</div>
+                                <h3 className="text-xl font-bold mb-3 text-slate-900">{item.title}</h3>
+                                <p className="text-slate-600 leading-relaxed">{item.description}</p>
+                            </div>
+                        ))}
+                    </div>
+                </div>
+            </div>
+        </section>
+    );
 }

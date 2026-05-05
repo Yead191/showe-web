@@ -16,7 +16,6 @@ export default function LandingIndex() {
         <div className="flex flex-col min-h-screen">
             <LandingNavbar />
             <main>
-                {/* 1. Initial Hook */}
                 <LandingBanner />
                 <AboutShowe />
                 <HowItWorksProcess />
