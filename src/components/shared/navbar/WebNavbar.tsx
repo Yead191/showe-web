@@ -21,8 +21,8 @@ import { toast } from "sonner"
 const webNavItems = [
     { label: "Home", href: "/home" },
     { label: "Events", href: "/events" },
-    { label: "About us", href: "/about" },
     { label: "Programmes", href: "/programmes", requiresAuth: true },
+    { label: "About us", href: "/about" },
     { label: "Support", href: "/support" },
 ]
 

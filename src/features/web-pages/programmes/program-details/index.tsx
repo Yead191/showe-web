@@ -116,14 +116,7 @@ export default function ProgramDetailsPage({ book }: ProgramDetailsPageProps) {
                         <button onClick={() => setScale(s => Math.min(1.5, s + 0.1))} className="hover:text-blue-400 transition-colors"><ZoomIn size={16} /></button>
                     </div>
 
-                    <a
-                        href={book}
-                        download
-                        className="p-2 rounded-full bg-blue-600 hover:bg-blue-500 transition-all shadow-lg shadow-blue-900/20"
-                        title="Download PDF"
-                    >
-                        <Download size={18} />
-                    </a>
+
                 </div>
             </div>
 

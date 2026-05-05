@@ -26,12 +26,12 @@ export default function AboutShowe() {
                     {/* Left Side */}
                     <div className="lg:w-1/2">
                         <h2 className="text-4xl md:text-5xl font-bold text-[#014B52] mb-8 font-museo leading-tight tracking-tight">
-                            The Future of <br className="hidden md:block"/> Event Programmes.
+                            The Future of <br className="hidden md:block" /> Event Programmes.
                         </h2>
                         <p className="text-xl text-slate-600 font-light leading-relaxed mb-10">
                             Showe replaces traditional printed booklets with an interactive, digital experience. Everything you need to know about the performance is right in your pocket.
                         </p>
-                        
+
                         <div className="space-y-4">
                             <div className="flex items-start gap-4 p-5 rounded-2xl bg-white shadow-sm border-l-4 border-[#F5A800]">
                                 <div className="font-bold text-[#014B52] text-lg shrink-0">“What is this?”</div>
@@ -39,7 +39,7 @@ export default function AboutShowe() {
                             </div>
                             <div className="flex items-start gap-4 p-5 rounded-2xl bg-white shadow-sm border-l-4 border-[#F5A800]">
                                 <div className="font-bold text-[#014B52] text-lg shrink-0">“Is it easy?”</div>
-                                <div className="text-slate-600 pt-[2px]">Just scan the QR code at the venue. No app downloads required.</div>
+                                <div className="text-slate-600 pt-[2px]">Just scan the QR code at the venue. </div>
                             </div>
                         </div>
                     </div>
