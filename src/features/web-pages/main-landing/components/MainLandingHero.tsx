@@ -1,7 +1,8 @@
 "use client";
 
 import { useRef, useEffect } from "react";
-import { ArrowDown } from "lucide-react";
+import { ArrowDown, Smartphone } from "lucide-react";
+import { Button } from "@/components/ui/button";
 
 export default function MainLandingHero() {
     const videoRef = useRef<HTMLVideoElement>(null);
@@ -29,36 +30,58 @@ export default function MainLandingHero() {
     };
 
     return (
-        <section id="banner" className="relative h-screen w-full overflow-hidden bg-black flex items-center justify-center">
-            {/* Background Video */}
-            <div className="absolute inset-0 w-full h-full">
-                <video
-                    ref={videoRef}
-                    loop
-                    muted
-                    playsInline
-                    className="object-cover w-full h-full opacity-60"
-                >
-                    <source src="/assets/video/landing-hero.mp4" type="video/mp4" />
-                </video>
+        <section id="banner" className="relative min-h-screen w-full overflow-hidden bg-[#0C0C0C] flex items-center pt-24 lg:pt-0">
+            {/* Background Decorative Elements */}
+            <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-[#F5A800]/10 rounded-full blur-[120px] -mr-64 -mt-64" />
+            <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-[#014B52]/10 rounded-full blur-[100px] -ml-48 -mb-48" />
 
-                {/* <div className="absolute inset-0 bg-linear-to-b from-black/60 via-transparent to-black/80" /> */}
+            <div className=" container relative z-10 ">
+                <div className="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
+
+                    {/* Left Side: Content */}
+                    <div className="text-white space-y-8 order-2 lg:order-1">
+                        <h1 className="text-[40px] md:text-5xl 2xl:text-6xl  font-bold font-museo leading-none animate-in slide-in-from-left-8 fade-in duration-1000 fill-mode-both" style={{ animationDelay: "200ms" }}>
+                            Turn every performance into an <span className="text-[#F5A800]">interactive experience</span>
+                        </h1>
+                        <p className="text-lg md:text-xl text-white/70 font-light leading-tight max-w-2xl animate-in slide-in-from-left-8 fade-in duration-1000 fill-mode-both" style={{ animationDelay: "400ms" }}>
+                            Turn every event programme into a living, interactive experience. Instantly access it on your phone, explore rich content, discover the people behind the performance, and engage with the story as it unfolds, before, during, and after the event.
+                        </p>
+
+                        <div className="flex flex-wrap gap-4 pt-4 animate-in slide-in-from-left-8 fade-in duration-1000 fill-mode-both mb-28 lg:mb-0" style={{ animationDelay: "600ms" }}>
+                            <Button className="h-14 px-8 bg-[#F5A800] hover:bg-[#e09900] text-white font-semibold text-lg rounded-xl flex items-center gap-2 shadow-lg shadow-[#F5A800]/20 active:scale-95 transition-all">
+                                <Smartphone size={20} />
+                                Download App
+                            </Button>
+                        </div>
+                    </div>
+
+                    {/* Right Side: Portrait Video */}
+                    <div className="flex justify-center 2xl:justify-end order-1 lg:order-2 animate-in zoom-in-95 fade-in duration-1000 fill-mode-both" style={{ animationDelay: "300ms" }}>
+                        <div className="relative h-[80vh]  rounded-[3rem]  shadow-[0_0_50px_rgba(245,168,0,0.15)] overflow-hidden bg-[#1C1C1C] p-1 border-4 border-[#1C1C1C]  ">
+                            {/* Notch/Camera Area */}
+                            {/* <div className="absolute top-0 left-1/2 -translate-x-1/2 w-1/3 h-5 bg-[#1C1C1C] rounded-b-2xl z-20" /> */}
+
+                            <video
+                                ref={videoRef}
+                                loop
+                                muted
+                                playsInline
+                                className="w-full h-full object-contain rounded-[2.5rem] "
+                            >
+                                <source src="/assets/video/main-hero.mp4" type="video/mp4" />
+                            </video>
+
+                            {/* Inner Glow/Overlay */}
+                            <div className="absolute inset-0 pointer-events-none rounded-[2.5rem] ring-1 ring-white/10" />
+                        </div>
+                    </div>
+                </div>
             </div>
-
-            {/* Content */}
-            {/* <div className="relative z-10 flex flex-col items-center justify-center text-center px-4 max-w-5xl mx-auto">
-                <h1 className="text-5xl md:text-7xl lg:text-8xl font-black text-white tracking-tight mb-6 drop-shadow-lg animate-in slide-in-from-bottom-8 fade-in duration-1000 fill-mode-both" style={{ fontFamily: "var(--font-museo)", animationDelay: "200ms" }}>
-                    Experience <span className="text-[#F5A800]">Showe</span>
-                </h1>
-                <p className="text-xl md:text-2xl text-white/90 max-w-2xl font-light drop-shadow-md animate-in slide-in-from-bottom-8 fade-in duration-1000 fill-mode-both" style={{ animationDelay: "500ms" }}>
-                    The ultimate platform to discover, create, and manage extraordinary events.
-                </p>
-            </div> */}
 
             {/* Scroll Indicator */}
             <button
                 onClick={scrollToInfo}
-                className="absolute bottom-10 left-1/2 -translate-x-1/2 text-white/70 hover:text-white transition-colors animate-bounce flex flex-col items-center gap-2 z-20"
+                className="absolute bottom-10 left-1/2 -translate-x-1/2 text-white/30 hover:text-white/70 transition-colors animate-bounce flex flex-col items-center gap-2 z-20"
                 aria-label="Scroll down"
             >
                 <span className="text-sm font-medium tracking-widest uppercase">Explore</span>
