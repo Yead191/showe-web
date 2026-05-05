@@ -46,7 +46,7 @@ export default function OrganisationRegister() {
 
         <div className="relative z-10">
           <p className="text-sm text-white/40">
-            © 2024 Showe Platform. All rights reserved.
+            © 2026 Showe Platform. All rights reserved.
           </p>
         </div>
       </div>
