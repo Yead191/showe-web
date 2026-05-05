@@ -19,7 +19,8 @@ import AuthModal from "@/features/auth/components/AuthModal"
 import { toast } from "sonner"
 
 const webNavItems = [
-    { label: "Home", href: "/home" },
+    { label: "Home", href: "/for-users" },
+    { label: "Explore", href: "/home" },
     { label: "Events", href: "/events" },
     { label: "Programmes", href: "/programmes", requiresAuth: true },
     { label: "About us", href: "/about" },
@@ -156,7 +157,7 @@ export default function WebNavbar() {
 
                 {/* ── Center: Logo ── */}
                 <div className="flex shrink-0 items-center justify-center">
-                    <Link href="/home" className="flex items-center">
+                    <Link href="/" className="flex items-center">
                         <Image
                             src="/logo.png"
                             width={160}

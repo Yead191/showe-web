@@ -7,6 +7,7 @@ import { ResultsHeader } from "./components/ResultsHeader"
 import { MOCK_EVENTS } from "../../../constants/events/mock-events"
 
 import { isWithinInterval, parseISO, isSameDay } from "date-fns"
+import LandingCTA from "../landing/components/LandingCTA"
 
 export default function EventsPage({ search }: { search: any }) {
     // Basic client-side filtering logic
@@ -15,7 +16,7 @@ export default function EventsPage({ search }: { search: any }) {
         const matchesQuery = !search.q || event.title.toLowerCase().includes(search.q.toLowerCase()) ||
             event.location.toLowerCase().includes(search.q.toLowerCase())
         const matchesLocation = !search.location || event.location.toLowerCase().includes(search.location.toLowerCase())
-        
+
         // Advanced date filtering
         let matchesDate = true
         if (search.date) {
@@ -74,6 +75,7 @@ export default function EventsPage({ search }: { search: any }) {
                     </div>
                 )}
             </main>
+            <LandingCTA />
         </div>
     )
 }

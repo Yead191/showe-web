@@ -60,7 +60,7 @@ const NotFoundPage = () => {
                                 </button>
 
                                 <Link
-                                    href="/home"
+                                    href="/"
                                     className="group relative flex items-center justify-center px-6 py-3 rounded-xl text-sm font-medium transition-all duration-300 bg-[#014B52] text-white hover:bg-[#013840] cursor-pointer"
                                 >
                                     <FiHome className="mr-2 group-hover:scale-110 transition-transform duration-300" />

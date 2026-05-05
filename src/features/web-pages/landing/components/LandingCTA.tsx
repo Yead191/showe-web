@@ -4,7 +4,7 @@ import { Smartphone, Compass } from "lucide-react";
 
 export default function LandingCTA() {
     return (
-        <section className="py-20 lg:py-28 bg-white">
+        <section className="py-10 lg:py-16 bg-white mb-16">
             <div className="container mx-auto px-4">
                 <div className="relative bg-[#014B52] rounded-[3rem] px-6 py-16 md:p-20 overflow-hidden shadow-2xl shadow-[#014B52]/20 border border-white/10">
                     {/* Background Decorations */}

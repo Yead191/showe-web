@@ -31,7 +31,7 @@ export default function PageBanner({
     return (
         <section id='banner'
             className={cn(
-                "relative min-h-screen  md:min-h-[70vh] flex items-center justify-center overflow-hidden pt-20",
+                "relative min-h-screen md:min-h-[85vh]  2xl:min-h-[70vh] flex items-center justify-center overflow-hidden pt-20",
                 containerClassName
             )}
         >

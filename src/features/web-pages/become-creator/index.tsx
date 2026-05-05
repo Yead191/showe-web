@@ -22,7 +22,7 @@ export default function BecomeCreator() {
                     bgImage="/assets/bg/banner/creator-banner.jpg"
                     buttons={[
                         { label: "Get Started", onClick: () => router.push("/organisation-register"), variant: "default" },
-                        { label: "Book a Demo", onClick: () => router.push("/organisation-register"), },
+                        { label: "Book a Demo", onClick: () => router.push("/support"), },
                     ]}
                 />
 
