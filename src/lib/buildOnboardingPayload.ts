@@ -151,22 +151,14 @@ export function buildOnboardingPayload(state: OnboardingState): OnboardingPayloa
                 moduleAccess: [1, 2, 3, 4],
             };
         }
-        // Sellers always end up on Tier 3+ with charging enabled
-        if (isSeller && tierInfo) {
+        // Sellers always end up on Tier 3+ seller level with charging enabled.
+        // They have full module access even if they skipped explicit tier selection.
+        if (isSeller) {
             return {
                 level: "tier3_seller",
                 canCharge: true,
                 programmesPerYearCap: null,
-                moduleAccess: tierInfo.modules,
-            };
-        }
-        // Schools who chose to sell — they got payment setup but no tier
-        if (state.accountType === "school" && isSeller) {
-            return {
-                level: "tier3_seller",
-                canCharge: true,
-                programmesPerYearCap: null,
-                moduleAccess: [1, 2, 3, 4, 10],
+                moduleAccess: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
             };
         }
         // Standard venue/producer subscription

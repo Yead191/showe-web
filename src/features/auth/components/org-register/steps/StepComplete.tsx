@@ -30,7 +30,11 @@ export function StepComplete({ state }: Props) {
                         ? "Producer"
                         : "School / College / Amateur",
         },
-        tier && { label: "Plan", value: `${tier.name} — £${tier.priceMonthly}/mo` },
+        tier
+            ? { label: "Plan", value: `${tier.name} — £${tier.priceMonthly}/mo` }
+            : state.usageIntent === "sell_programmes"
+                ? { label: "Plan", value: "Full Module Access (Seller)" }
+                : null,
         state.payment.bankConnected && { label: "Stripe", value: "Bank connected" },
         state.payment.subscriptionActive && {
             label: "Subscription",

@@ -130,9 +130,11 @@ function nextStep(state: OnboardingState): StepId | null {
 
     // 8. Payment setup → next stop depends on who they are
     if (s === "payment_setup") {
-        // Schools who only sell programmes need payment but no tier subscription
-        if (state.accountType === "school") return "complete";
-        // Venues + Producers move to tier selection (sellers always get Tier 3+)
+        // Sellers (Venues + Producers + Schools) now move straight to complete
+        // if they are selling, skipping tier selection/subscription
+        if (state.usageIntent === "sell_programmes") return "complete";
+
+        // Fallback for anyone else hitting payment (standard tier selection)
         return "tier_selection";
     }
 
@@ -181,8 +183,8 @@ function prevStep(state: OnboardingState): StepId | null {
         case "payment_setup":
             return "commission_breakdown";
         case "tier_selection":
-            // Arrived from payment_setup (sellers) or directly from how_showe_works/producer_question (free)
-            if (state.usageIntent === "sell_programmes") return "payment_setup";
+            // Arrived directly from how_showe_works/producer_question (free path)
+            // (Sellers skip this and go from payment_setup to complete)
             if (state.accountType === "producer") return "producer_question";
             return "how_showe_works";
         case "tier_terms":
@@ -260,14 +262,12 @@ function totalStepsFor(state: OnboardingState): number {
     const map: Record<AccountType | "default", StepId[]> = {
         venue: state.usageIntent === "sell_programmes"
             ? ["account_type", "org_capture", "venue_question", "how_showe_works",
-                "commission_info", "commission_breakdown", "payment_setup",
-                "tier_selection", "tier_terms", "subscription_payment"]
+                "commission_info", "commission_breakdown", "payment_setup"]
             : ["account_type", "org_capture", "venue_question", "how_showe_works",
                 "tier_selection", "tier_terms", "subscription_payment"],
         producer: state.usageIntent === "sell_programmes"
             ? ["account_type", "org_capture", "venue_redirect", "how_showe_works",
-                "producer_question", "commission_info", "commission_breakdown", "payment_setup",
-                "tier_selection", "tier_terms", "subscription_payment"]
+                "producer_question", "commission_info", "commission_breakdown", "payment_setup"]
             : ["account_type", "org_capture", "venue_redirect", "how_showe_works",
                 "producer_question", "tier_selection", "tier_terms", "subscription_payment"],
         school: state.usageIntent === "sell_programmes"
