@@ -18,12 +18,13 @@ export interface Category {
 
 // ─── Replace these with your actual data & image paths ───────────────────────
 export const CATEGORIES: Category[] = [
-  { name: "Theatre", backgroundImage: "/assets/bg/programmes/programmes-bg.jpg" },
-  { name: "Sports", backgroundImage: "/assets/bg/programmes/sports-bg.jpg" },
-  { name: "Music", backgroundImage: "/assets/bg/programmes/music-bg.jpg" },
-  { name: "Events", backgroundImage: "/assets/bg/programmes/events-bg.jpg" },
-  { name: "Community", backgroundImage: "/assets/bg/programmes/community-bg.jpg" },
-  { name: "Ceremonies", backgroundImage: "/assets/bg/programmes/ceremony-bg.avif" },
+  { name: "Theatre", backgroundImage: "/assets/bg/programmes/theatre.png" },
+  { name: "Sports", backgroundImage: "/assets/bg/programmes/sports.png" },
+  { name: "Music", backgroundImage: "/assets/bg/programmes/music.png" },
+  { name: "Events", backgroundImage: "/assets/bg/programmes/events.png" },
+  { name: "Museum", backgroundImage: "/assets/bg/programmes/museum.png" },
+  { name: "Community", backgroundImage: "/assets/bg/programmes/community.png" },
+  { name: "Ceremonies", backgroundImage: "/assets/bg/programmes/ceremonies.png" },
 ];
 
 export const ALL_ITEMS: TheatreItem[] = [

@@ -12,7 +12,7 @@ export default function Home() {
         <main>
             <PageBanner
                 title='Discover Exciting Events Near You'
-                bgImage="/assets/bg/banner/home-bg.jpg"
+                bgImage="/assets/bg/programmes/music.png"
                 description="Browse thousands of events, book tickets instantly, and never miss out on what’s happening around you."
                 buttons={[
                     {

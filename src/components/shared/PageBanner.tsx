@@ -44,7 +44,7 @@ export default function PageBanner({
             {/* Dark Overlay/Gradient */}
             <div
                 className={cn(
-                    "absolute inset-0 z-10 bg-linear-to-b from-black/80 via-black/40 to-black/90",
+                    "absolute inset-0 z-10 bg-linear-to-b from-black/80 via-black/50 to-black/90",
                     overlayClassName
                 )}
             />

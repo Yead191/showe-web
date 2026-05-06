@@ -19,7 +19,7 @@ export default function BecomeCreator() {
                 <PageBanner
                     title="Transform your programme into a powerful digital experience."
                     description="Engage your audience, unlock new revenue streams, and replace print with a flexible, data-driven platform."
-                    bgImage="/assets/bg/banner/creator-banner.jpg"
+                    bgImage="/assets/bg/programmes/community.png"
                     buttons={[
                         { label: "Get Started", onClick: () => router.push("/organisation-register"), variant: "default" },
                         { label: "Book a Demo", onClick: () => router.push("/support"), },

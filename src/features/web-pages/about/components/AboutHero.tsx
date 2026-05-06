@@ -14,13 +14,13 @@ export default function AboutHero() {
     return (
         <section id="banner" className="relative h-[75vh] min-h-[500px] flex items-center justify-center overflow-hidden">
             <Image
-                src="/assets/images/about-hero.png"
+                src="/assets/bg/banner/about-banner2.png"
                 alt="About SHOWE"
                 fill
                 className="object-cover"
                 priority
             />
-            <div className="absolute inset-0 bg-[#014B52]/70 backdrop-blur-[2px]" />
+            <div className="absolute inset-0 bg-linear-to-t from-black/60 via-black/50 to-black/90" />
 
             <div className="relative z-10 container mx-auto px-4 text-center">
                 <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold text-white mb-6 font-museo tracking-tight max-w-4xl mx-auto leading-[1.1]">

@@ -3,14 +3,11 @@
 import { useTheatreStore } from "@/helpers/useTheatreStore";
 
 import Image from "next/image";
-import { useRouter } from "next/navigation";
 import { CategoryTabs } from "./components/CategoryTabs";
 import { DiagonalBooksSection } from "./components/DiagonalBooksSection";
-import { useEffect, useState } from "react";
 
 
 export default function MyProgrammesPage() {
-    const router = useRouter();
     const {
         categories,
         selectedCategoryIndex,
@@ -38,7 +35,7 @@ export default function MyProgrammesPage() {
                     priority
                 />
                 {/* Dark overlay so content stays readable */}
-                <div className="absolute inset-0 bg-black/60" />
+                <div className="absolute inset-0 bg-black/70" />
             </div>
 
 

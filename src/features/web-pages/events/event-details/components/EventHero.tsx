@@ -10,13 +10,13 @@ export function EventHero({ event }: { event: Event }) {
             {/* Background Image */}
             <div className="absolute inset-0 z-0">
                 <Image
-                    src={event.cover_image}
+                    src={"/assets/bg/programmes/theatre.png"}
                     alt={event.title}
                     fill
                     className="object-cover"
                     priority
                 />
-                <div className="absolute inset-0 bg-linear-to-t from-[#014B52] via-[#014B52]/40 to-black/30" />
+                <div className="absolute inset-0 bg-linear-to-t from-[#014B52] via-[#014B52]/40 to-black/80" />
             </div>
 
             {/* Content Over Image */}
