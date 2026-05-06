@@ -31,7 +31,7 @@ export default function PageBanner({
     return (
         <section id='banner'
             className={cn(
-                "relative min-h-screen md:min-h-[85vh]  2xl:min-h-[70vh] flex items-center justify-center overflow-hidden pt-20",
+                "relative min-h-screen md:min-h-[85vh]  2xl:min-h-[70vh] flex items-center justify-center overflow-hidden pt-20 bg-black",
                 containerClassName
             )}
         >
@@ -44,7 +44,7 @@ export default function PageBanner({
             {/* Dark Overlay/Gradient */}
             <div
                 className={cn(
-                    "absolute inset-0 z-10 bg-linear-to-b from-black/80 via-black/50 to-black/90",
+                    "absolute inset-0 z-10 bg-linear-to-b from-black/70 via-black/50 to-black/90",
                     overlayClassName
                 )}
             />
