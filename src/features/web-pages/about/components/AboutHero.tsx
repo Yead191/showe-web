@@ -14,7 +14,7 @@ export default function AboutHero() {
     return (
         <section id="banner" className="relative h-[75vh] min-h-[500px] flex items-center justify-center overflow-hidden">
             <Image
-                src="/assets/bg/banner/about-banner2.png"
+                src="/assets/bg/programmes/6.png"
                 alt="About SHOWE"
                 fill
                 className="object-cover"
