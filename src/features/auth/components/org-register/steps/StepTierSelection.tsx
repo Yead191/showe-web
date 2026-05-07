@@ -66,8 +66,14 @@ export function StepTierSelection({ state, dispatch }: Props) {
                             </div>
 
                             <div className="mb-5">
-                                <span className="text-4xl font-bold text-slate-900">£{t.priceMonthly}</span>
-                                <span className="text-sm text-slate-500 ml-1">/ month</span>
+                                <div className="flex items-baseline gap-1">
+                                    <span className="text-4xl font-bold text-slate-900">£{t.priceMonthly}</span>
+                                    <span className="text-sm text-slate-500">/ month</span>
+                                </div>
+                                <p className="text-[10px] text-[#014B52] font-semibold uppercase tracking-wider mt-1.5 flex items-center gap-1.5">
+                                    <span className="w-1 h-1 rounded-full bg-[#F5A800]" />
+                                    + 20% VAT (£{(t.priceMonthly * 0.2).toFixed(2)})
+                                </p>
                             </div>
 
                             <ul className="space-y-2 mb-2 text-sm">

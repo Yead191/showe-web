@@ -5,7 +5,7 @@ import {
 } from "lucide-react"
 export default function StorySections() {
     return (
-        <section id="our-story" className="py-10 lg:py-16 relative overflow-hidden scroll-mt-[60px]">
+        <section id="our-story" className="py-10 lg:py-16 relative overflow-hidden lg:scroll-mt-[60px]">
             <div className="container ">
                 <div className="flex flex-col lg:flex-row items-center gap-16">
                     <div className="lg:w-1/2 relative">

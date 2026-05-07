@@ -57,8 +57,8 @@ export function OnboardingWizard() {
         );
         console.log(state);
 
-        toast.success("Account created!", {
-            description: "Check the browser console (F12) to see all collected data.",
+        toast.success("Account created successfully!", {
+            description: "Your account is now ready to use.",
         });
     }, [state]);
 
