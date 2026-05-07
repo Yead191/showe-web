@@ -4,7 +4,18 @@ import Link from 'next/link'
 
 export default function LandingBanner() {
     return (
-        <section id='banner' className='min-h-screen flex items-center bg-[#0C0C0C] relative overflow-hidden'>
+        <section
+            id="banner"
+            className="relative min-h-screen w-full overflow-hidden flex items-center bg-black"
+            style={{
+                backgroundImage: 'url("/assets/bg/landing/home-bg.jpeg")',
+                backgroundSize: 'cover',
+                backgroundRepeat: 'no-repeat',
+                backgroundPosition: 'center',
+            }}
+        >
+            {/* Dark Overlay */}
+            <div className="absolute inset-0 bg-linear-to-b from-black/80 via-black/60 to-black/70"></div>
             <div className='container relative z-10 text-center flex flex-col flex-center'>
                 <div>
                     <h1 className='text-4xl lg:text-7xl font-bold mb-6 text-[#FEFEFE] font-museo'>Step into the story before the curtain rises.</h1>
@@ -28,7 +39,7 @@ export default function LandingBanner() {
             <Image
                 src="/assets/bg/banner/landing-bg.png"
                 alt="banner-img"
-                className="absolute -bottom-1/12 left-1/2 -translate-x-1/2 h-full w-auto object-cover lg:object-contain"
+                className="absolute -bottom-1/12 left-1/2 -translate-x-1/2 h-full w-auto object-cover lg:object-contain opacity-20"
                 width={1920}
                 height={1080}
                 priority
