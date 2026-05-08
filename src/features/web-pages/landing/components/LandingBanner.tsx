@@ -8,7 +8,7 @@ export default function LandingBanner() {
             id="banner"
             className="relative min-h-screen w-full overflow-hidden flex items-center bg-black"
             style={{
-                backgroundImage: 'url("/assets/bg/landing/home-bg.jpeg")',
+                backgroundImage: 'url("/assets/bg/landing/user-home-bg.png")',
                 backgroundSize: 'cover',
                 backgroundRepeat: 'no-repeat',
                 backgroundPosition: 'center',

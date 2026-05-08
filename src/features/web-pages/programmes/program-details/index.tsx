@@ -3,7 +3,7 @@ import { useState, useRef, useCallback, forwardRef, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { pdfjs, Document, Page } from "react-pdf";
 import HTMLFlipBook from "react-pageflip";
-import { ChevronLeft, ChevronRight, X, Download, ZoomIn, ZoomOut, Maximize2 } from "lucide-react";
+import { ChevronLeft, ChevronRight, X, ZoomIn, ZoomOut, } from "lucide-react";
 import "react-pdf/dist/Page/AnnotationLayer.css";
 import "react-pdf/dist/Page/TextLayer.css";
 
