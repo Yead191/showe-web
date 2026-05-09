@@ -36,15 +36,6 @@ export default function LandingBanner() {
                     </div>
                 </div>
             </div>
-            <Image
-                src="/assets/bg/banner/landing-bg.png"
-                alt="banner-img"
-                className="absolute -bottom-1/12 left-1/2 -translate-x-1/2 h-full w-auto object-cover lg:object-contain opacity-20"
-                width={1920}
-                height={1080}
-                priority
-                unoptimized
-            />
         </section>
     )
 }
