@@ -1,6 +1,5 @@
 "use client";
 
-import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { PartyPopper, ArrowRight, BookOpen, Settings, Wallet, Terminal } from "lucide-react";
 import { TIERS } from "@/lib/onboarding-data";
@@ -121,10 +120,13 @@ export function StepComplete({ state }: Props) {
                     asChild
                     className="w-full h-14 bg-[#F5A800] hover:bg-[#e09900] text-white text-lg font-bold rounded-xl shadow-lg hover:shadow-xl active:scale-[0.99]"
                 >
-                    <Link href="/dashboard">
+                    <a href="https://showe-dashboard.vercel.app/login"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                    >
                         Go to dashboard
                         <ArrowRight size={20} className="ml-2" />
-                    </Link>
+                    </a>
                 </Button>
             </div>
         </StepShell>
