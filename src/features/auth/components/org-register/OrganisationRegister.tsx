@@ -14,7 +14,7 @@ export default function OrganisationRegister() {
       {/* ------------------------------------------------------------------
         Left side — branding & info (unchanged from the original)
       ------------------------------------------------------------------ */}
-      <div className="hidden lg:flex lg:w-1/2 bg-[#014B52] relative overflow-hidden flex-col justify-between p-12 text-white h-full">
+      <div className="hidden lg:flex lg:w-3/8 bg-[#014B52] relative overflow-y-hidden flex-col justify-between p-12 text-white  no-scrollbar">
         <div className="absolute top-0 right-0 w-96 h-96 bg-[#F5A800]/10 rounded-full blur-3xl -mr-20 -mt-20" />
         <div className="absolute bottom-0 left-0 w-96 h-96 bg-[#F5A800]/5 rounded-full blur-3xl -ml-20 -mb-20" />
 
@@ -32,13 +32,13 @@ export default function OrganisationRegister() {
             width={200}
             height={60}
             alt="Showe Logo"
-            className="mb-12"
+            className="mb-12 h-12 2xl:h-20 w-fit object-contain"
           />
-          <h1 className="text-5xl font-bold font-museo leading-tight mb-6">
+          <h1 className="text-3xl 2xl:text-5xl font-bold font-museo leading-tight mb-6">
             Empower Your <span className="text-[#F5A800]">Organization</span> With
             Digital Intelligence.
           </h1>
-          <p className="text-xl text-white/80 font-light leading-relaxed">
+          <p className="text-[16px] 2xl:text-xl text-white/80 font-light leading-relaxed">
             Join hundreds of world-class venues and event producers who have replaced
             print with our dynamic, interactive platform.
           </p>
