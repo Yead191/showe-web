@@ -25,7 +25,7 @@ export function StepTierSelection({ state, dispatch }: Props) {
             title="Pick the tier that fits today"
             subtitle="You can upgrade or downgrade any time from the dashboard. All plans bill monthly with no long-term commitment."
         >
-            <div className="grid lg:grid-cols-3 gap-4">
+            <div className="grid lg:grid-cols-2 xl:grid-cols-3 gap-4">
                 {TIERS.map((t) => {
                     const isLocked = sellerLockedToT3 && t.id !== "tier3";
                     const isSelected = state.selectedTier === t.id;
@@ -62,7 +62,7 @@ export function StepTierSelection({ state, dispatch }: Props) {
                                     {t.id === "tier1" ? "Tier 1+" : t.id === "tier2" ? "Tier 2" : "Tier 3"}
                                 </p>
                                 <h3 className="text-2xl font-bold text-[#014B52] mt-1">{t.name}</h3>
-                                <p className="text-sm text-slate-500 mt-1 min-h-[40px]">{t.tagline}</p>
+                                <p className="text-sm text-slate-500 mt-1 min-h-10">{t.tagline}</p>
                             </div>
 
                             <div className="mb-5">

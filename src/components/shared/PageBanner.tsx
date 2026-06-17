@@ -51,13 +51,13 @@ export default function PageBanner({
 
             {/* Content */}
             <div className="container relative z-20 text-center px-4">
-                <div className=" space-y-6">
-                    <h1 className="text-4xl lg:text-7xl font-bold mb-6 text-[#FEFEFE] font-museo leading-[120%]">
+                <div className=" space-y-4 xl:space-y-6">
+                    <h1 className="text-4xl md:text-5xl xl:text-7xl font-bold mb-6 text-[#FEFEFE] font-museo leading-[120%]">
                         {title}
                     </h1>
 
                     {description && (
-                        <p className="text-[16px] mb-6 text-[#FEFEFE] max-w-[734px] mx-auto leading-[140%]">
+                        <p className="text-sm xl:text-[16px] mb-6 text-[#FEFEFE] max-w-183.5 mx-auto leading-[140%]">
                             {description}
                         </p>
                     )}

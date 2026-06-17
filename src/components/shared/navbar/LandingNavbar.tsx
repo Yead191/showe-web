@@ -52,7 +52,7 @@ export default function LandingNavbar({ isCreator = false }: { isCreator?: boole
                     className="shrink-0 flex items-center gap-0 select-none"
                     aria-label="Go to home"
                 >
-                    <Image src={'/logo.png'} width={400} height={100} alt="logo" className="h-[51px] w-fit object-contain" draggable={false} />
+                    <Image src={'/logo.png'} width={400} height={100} alt="logo" className="h-12.75 w-fit object-contain" draggable={false} />
                 </Link>
 
 
