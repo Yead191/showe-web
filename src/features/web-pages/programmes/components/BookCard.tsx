@@ -1,26 +1,94 @@
 "use client";
 
+import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import { TheatreItem } from "@/helpers/useTheatreStore";
+import { Eye, Trash2 } from "lucide-react";
 
 interface BookCardProps {
   item: TheatreItem;
   width: number;
   height: number;
   onTap: () => void;
+  onDeleteRequest: (item: TheatreItem) => void;
 }
 
-export function BookCard({ item, width, height, onTap }: BookCardProps) {
-  const titleSize = Math.max(width * 0.1, 12);
-  const authorSize = Math.max(width * 0.046, 8);
+export function BookCard({
+  item,
+  width,
+  height,
+  onTap,
+  onDeleteRequest,
+}: BookCardProps) {
+  const cardRef = useRef<HTMLDivElement>(null);
+  const longPressTimerRef = useRef<number | null>(null);
+  const longPressTriggeredRef = useRef(false);
+  const [menuOpen, setMenuOpen] = useState(false);
+  const [menuPosition, setMenuPosition] = useState({ x: 0, y: 0 });
 
-  // Split title into parts if it's long
-  const titleParts = item.title.split(" ");
+  const clearLongPressTimer = () => {
+    if (longPressTimerRef.current !== null) {
+      window.clearTimeout(longPressTimerRef.current);
+      longPressTimerRef.current = null;
+    }
+  };
+
+  const openMenu = (anchor: DOMRect) => {
+    const menuWidth = 208;
+    const menuHeight = 104;
+    const preferredX = anchor.right + 12;
+    const preferredY = anchor.top + anchor.height * 0.5 - menuHeight * 0.5;
+    const clampedX = Math.max(12, Math.min(preferredX, window.innerWidth - menuWidth - 12));
+    const clampedY = Math.max(12, Math.min(preferredY, window.innerHeight - menuHeight - 12));
+
+    setMenuPosition({
+      x: clampedX - anchor.left,
+      y: clampedY - anchor.top,
+    });
+    setMenuOpen(true);
+  };
+
+  useEffect(() => {
+    if (!menuOpen) return;
+
+    const handlePointerDown = (event: PointerEvent) => {
+      if (cardRef.current?.contains(event.target as Node)) return;
+      setMenuOpen(false);
+    };
+
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") setMenuOpen(false);
+    };
+
+    document.addEventListener("pointerdown", handlePointerDown);
+    document.addEventListener("keydown", handleKeyDown);
+    return () => {
+      document.removeEventListener("pointerdown", handlePointerDown);
+      document.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [menuOpen]);
 
   return (
     <div
+      ref={cardRef}
       onClick={onTap}
-      className="relative overflow-hidden cursor-pointer select-none active:scale-[0.97] transition-transform"
+      onContextMenu={(event) => {
+        event.preventDefault();
+        openMenu(event.currentTarget.getBoundingClientRect());
+      }}
+      onPointerDown={(event) => {
+        if (event.pointerType === "mouse") return;
+        longPressTriggeredRef.current = false;
+        clearLongPressTimer();
+        longPressTimerRef.current = window.setTimeout(() => {
+          longPressTriggeredRef.current = true;
+          openMenu(event.currentTarget.getBoundingClientRect());
+        }, 550);
+      }}
+      onPointerUp={clearLongPressTimer}
+      onPointerLeave={clearLongPressTimer}
+      onPointerCancel={clearLongPressTimer}
+      className="relative overflow-visible cursor-pointer select-none active:scale-[0.97] transition-transform"
       style={{
         width,
         height,
@@ -46,93 +114,41 @@ export function BookCard({ item, width, height, onTap }: BookCardProps) {
           }}
         />
       )}
-
-      {/* Pink bloom overlay */}
-      {/* <div
-        className="absolute inset-0 pointer-events-none"
-        style={{
-          background:
-            "radial-gradient(ellipse 55% 35% at 72% 22%,rgba(255,120,180,0.38) 0%,transparent 100%)",
-        }}
-      /> */}
-      {/* <div
-        className="absolute inset-0 pointer-events-none"
-        style={{
-          background:
-            "radial-gradient(ellipse 30% 20% at 30% 70%,rgba(140,80,220,0.25) 0%,transparent 100%)",
-        }}
-      /> */}
-
-      {/* Castle silhouette */}
-      {/* <div className="absolute bottom-0 left-0 right-0" style={{ height: "52%" }}>
-        <svg
-          viewBox="0 0 120 90"
-          className="w-full h-full"
-          preserveAspectRatio="xMidYMax meet"
-        >
-          <path
-            d="M0 90 L0 55 L8 55 L8 44 L14 44 L14 55 L22 55 L22 36 L28 28 L34 36 L34 55
-               L42 55 L42 38 L50 28 L58 38 L58 55 L62 55 L62 38 L70 28 L78 38 L78 55
-               L86 55 L86 36 L92 28 L98 36 L98 55 L106 55 L106 44 L112 44 L112 55 L120 55
-               L120 90 Z"
-            fill="rgba(6,4,22,0.88)"
-          />
-          <ellipse cx="60" cy="50" rx="4.5" ry="5.5" fill="rgba(245,166,35,0.65)" />
-        </svg>
-      </div> */}
-
-      {/* Top ornament */}
-      {/* <div className="absolute top-0 left-0 right-0 flex justify-center pt-1.5">
-        <svg width="32" height="16" viewBox="0 0 32 16">
-          <path
-            d="M16 2 Q20 8 16 13 Q12 8 16 2"
-            fill="none"
-            stroke="rgba(100,210,230,0.5)"
-            strokeWidth="0.8"
-          />
-          <circle cx="16" cy="2" r="1.2" fill="rgba(100,210,230,0.5)" />
-          <circle cx="9" cy="8" r="0.9" fill="rgba(100,210,230,0.35)" />
-          <circle cx="23" cy="8" r="0.9" fill="rgba(100,210,230,0.35)" />
-        </svg>
-      </div> */}
-
-      {/* Quote */}
-      {/* <div className="absolute top-5 left-0 right-0 text-center px-2">
-        <p
-          className="italic"
-          style={{ color: "rgba(200,230,255,0.65)", fontSize: 6, letterSpacing: 0.2 }}
-        >
-          {item.quote}
-        </p>
-      </div> */}
-
-      {/* Title + Author */}
-      {/* <div
-        className="absolute inset-0 flex flex-col items-center justify-center p-2"
-        style={{ marginTop: height * 0.04 }}
-      >
-        <h3
-          className="text-white font-black text-center leading-[1.1]"
+      {menuOpen && (
+        <div
+          className="absolute z-30 min-w-52 overflow-hidden rounded-2xl border border-white/10 bg-[#061419] p-2 text-white shadow-[0_20px_60px_rgba(0,0,0,0.45)]"
           style={{
-            fontFamily: "Georgia, serif",
-            fontSize: titleSize,
-            textShadow: "0 0 18px rgba(160,100,255,0.55)",
+            left: menuPosition.x,
+            top: menuPosition.y,
           }}
         >
-          {titleParts.map((part, i) => (
-            <span key={i}>
-              {part.toUpperCase()}
-              {i < titleParts.length - 1 && <br />}
-            </span>
-          ))}
-        </h3>
-        <p
-          className="mt-1 font-bold tracking-[1px] text-center"
-          style={{ color: "rgba(200,220,255,0.8)", fontSize: authorSize }}
-        >
-          {item.author.toUpperCase()}
-        </p>
-      </div> */}
+          <button
+            type="button"
+            className="flex w-full items-center gap-2 rounded-xl px-3 py-2 text-left text-sm font-medium text-white/90 transition-colors hover:bg-white/10"
+            onClick={(event) => {
+              event.stopPropagation();
+              setMenuOpen(false);
+              longPressTriggeredRef.current = false;
+              onTap();
+            }}
+          >
+            <Eye className="h-4 w-4" />
+            View programme
+          </button>
+          <button
+            type="button"
+            className="flex w-full items-center gap-2 rounded-xl px-3 py-2 text-left text-sm font-medium text-red-200 transition-colors hover:bg-red-500/10"
+            onClick={(event) => {
+              event.stopPropagation();
+              setMenuOpen(false);
+              onDeleteRequest(item);
+            }}
+          >
+            <Trash2 className="h-4 w-4" />
+            Delete programme
+          </button>
+        </div>
+      )}
     </div>
   );
 }
