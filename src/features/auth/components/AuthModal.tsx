@@ -11,9 +11,12 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { useState } from "react"
-import { Eye, EyeOff } from "lucide-react"
+import { Eye, EyeOff, Loader2 } from "lucide-react"
 import { useRouter } from "next/navigation"
 import { toast } from "sonner"
+import Cookies from 'js-cookie';
+import { nextFetch } from "@/helpers/next-fetch/NextFetch"
+
 
 type AuthView = "login" | "register" | "forgot-password" | "verify-otp" | "reset-password"
 
@@ -27,16 +30,12 @@ interface AuthModalProps {
 export default function AuthModal({ open, onOpenChange, onLoginSuccess, initialView = "login" }: AuthModalProps) {
   const [view, setView] = useState<AuthView>(initialView)
 
-  // Reset to initial view when modal closes
+  // Sync the view to the requested initialView each time the modal opens
   React.useEffect(() => {
-    if (!open) {
-      const timer = setTimeout(() => setView(initialView), 300)
-      return () => clearTimeout(timer)
+    if (open) {
+      setView(initialView)
     }
   }, [open, initialView])
-
-
-
 
 
 
@@ -79,27 +78,84 @@ export default function AuthModal({ open, onOpenChange, onLoginSuccess, initialV
 
 function LoginForm({ setView, onOpenChange, onLoginSuccess }: { setView: (v: AuthView) => void, onOpenChange: (open: boolean) => void, onLoginSuccess?: () => void }) {
   const router = useRouter();
-  const handleLogin = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState('');
 
+
+  const handleResend = async (email: string) => {
+
+    if (!email) return;
+    try {
+      const res = await nextFetch("/auth/forget-password", {
+        method: "POST",
+        body: { email },
+      });
+      if (res?.success) {
+        router.replace(`/verify-otp?email=${email}`);
+        toast.success(res?.message || "OTP resent successfully", {
+          id: "otp-resend",
+        });
+      } else {
+        toast.error(res?.message || "Failed to resend OTP", {
+          id: "otp-resend",
+        });
+      }
+    } catch {
+      toast.error("Something went wrong while resending OTP", {
+        id: "otp-resend",
+      });
+    }
+  };
+
+  const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setIsLoading(true);
+    setError('');
     const formData = new FormData(e.currentTarget);
 
     const email = formData.get("email");
     const password = formData.get("password");
+    if (!email || !password) {
+      toast.error("Please fill in all fields", { id: "login" });
+      setIsLoading(false);
+      return;
+    }
 
-    // Mock login success
-    const mockUser = {
-      name: "John Doe",
-      email: email as string || "john@example.com",
-      avatar: "https://github.com/shadcn.png"
-    };
+    try {
+      const response = await nextFetch("/auth/login", { method: "POST", body: { email, password } })
+      if (!response?.success && response.message === "Account is not verified. Please check your email for verification code.") {
+         handleResend(email as string);
+        setIsLoading(false);
+        return
+      }
+      if (response?.success) {
+        Cookies.set("accessToken", response?.data?.accessToken);
+        Cookies.set("role", response?.data?.role);
+        toast.success(response?.message)
+        router.replace('/home');
+        onLoginSuccess?.();
+        onOpenChange(false);
+        setIsLoading(false);
+      } else {
+        if (response?.error && Array.isArray(response.error)) {
+          response.error.forEach((err: { message: string }) => {
+            toast.error(err.message, { id: "sign-up" });
+          });
+        } else {
+          toast.error(response?.message || "Something went wrong!", {
+            id: "sign-up",
+          });
+        }
+      }
+    } catch (err) {
+      console.error('Login error:', err);
+      setIsLoading(false);
+    } finally {
+      setIsLoading(false);
+    }
 
-    localStorage.setItem("user_profile", JSON.stringify(mockUser));
-    toast.success("Welcome back, " + mockUser.name + "!");
-    router.push("/home")
-    onLoginSuccess?.();
-    onOpenChange(false);
   };
+
   return (
     <div >
       <form className="space-y-5" onSubmit={handleLogin}>
@@ -122,13 +178,17 @@ function LoginForm({ setView, onOpenChange, onLoginSuccess }: { setView: (v: Aut
             </button>
           </div>
         </div>
-        <Button type="submit" className="w-full h-12 bg-[#F5A800] hover:bg-[#e09900] text-white font-semibold text-base transition-all">
-          Sign In
+        <Button
+          type="submit"
+          disabled={isLoading}
+          className="w-full h-12 bg-[#F5A800] hover:bg-[#e09900] text-white font-semibold text-base transition-all">
+          {isLoading ? <Loader2 className="w-4 h-4 animate-spin" /> : "Sign In"}
         </Button>
       </form>
       <div className="text-center text-sm text-gray-500 pt-2">
         Don&apos;t have an account?{" "}
         <button
+
           onClick={() => setView("register")}
           className="text-[#F5A800] font-semibold hover:underline"
         >
@@ -170,6 +230,7 @@ function RegisterForm({ setView }: { setView: (v: AuthView) => void }) {
       <div className="text-center text-sm text-gray-500 pt-2">
         Already have an account?{" "}
         <button
+
           onClick={() => setView("login")}
           className="text-[#F5A800] font-semibold hover:underline"
         >

@@ -81,21 +81,21 @@ export default function WebNavbar() {
     }, [pathname]);
 
     const navBase =
-        "fixed top-0 z-50 w-full transition-all duration-500";
+        "fixed top-0 z-50 w-full transition-[background-color,backdrop-filter] duration-500 pr-(--removed-body-scroll-bar-size)";
 
     const navBg = isScrolled
         ? "bg-[#014B52] backdrop-blur-sm"
         : "bg-transparent";
 
     const handleOpenAuth = (view: "login" | "register") => {
-        console.log(view)
+        // console.log(view)
         setAuthView(view)
         setAuthModalOpen(true)
         setMobileMenuOpen(false)
     }
 
     return (
-        <nav className={`${navBase} ${navBg}`}>
+        <nav className={`${navBase} ${navBg} `}>
             <div className="container mx-auto px-4 h-18 flex items-center justify-between">
 
                 {/* ── Left: Nav Items (Desktop) ── */}

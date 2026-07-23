@@ -37,7 +37,7 @@ export default function RootLayout({
         <SplashScreen />
         <ScrollToTop />
         {children}
-        <Toaster position="top-center" richColors duration={2000} />
+        <Toaster position="bottom-right" richColors duration={2000} closeButton={true} />
       </body>
     </html>
   );
