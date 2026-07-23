@@ -28,7 +28,7 @@ interface EventCardProps {
 }
 
 export function EventCard({ event }: EventCardProps) {
-    console.log(event)
+    // console.log(event)
     return (
         <Link scroll={true} href={`/events/${event._id}`} className="bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 group border border-gray-100 flex flex-col h-full">
             {/* Image Section */}
