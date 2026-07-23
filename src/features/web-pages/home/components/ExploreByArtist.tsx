@@ -8,12 +8,13 @@ import { ChevronLeft, ChevronRight, ArrowUpRight } from 'lucide-react'
 // Import Swiper styles
 import 'swiper/css'
 import 'swiper/css/navigation'
-import { ARTISTS } from "@/constants/home/artists"
 import Link from "next/link"
 
 
 
-export default function ExploreByArtist() {
+export default function ExploreByArtist({ artists }: { artists: any[] }) {
+
+    const ARTISTS = artists ?? []
 
 
     return (
@@ -63,13 +64,13 @@ export default function ExploreByArtist() {
                     {ARTISTS?.map((artist) => (
                         <SwiperSlide key={artist.id}>
                             <Link
-                                href={`/artists/${artist?.id}`}
+                                href={`/artists/${artist?._id}`}
                                 scroll={true}
                                 className="group flex flex-col gap-4 cursor-pointer"
                             >
                                 <div className="relative aspect-square w-full rounded-3xl overflow-hidden bg-gray-100 shadow-lg group-hover:shadow-xl transition-all duration-500">
                                     <Image
-                                        src={artist.image}
+                                        src={`${process.env.NEXT_PUBLIC_IMAGE_BASE_URL}${artist.image}`}
                                         alt={artist.name}
                                         fill
                                         className="object-cover group-hover:scale-110 transition-transform duration-700"

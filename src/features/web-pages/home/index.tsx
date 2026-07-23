@@ -7,7 +7,7 @@ import ExploreByArtist from './components/ExploreByArtist'
 import HomeFAQ from './components/HomeFAQ'
 import LandingCTA from '../landing/components/LandingCTA'
 
-export default function Home() {
+export default function Home({ events, artists }: { events: any[], artists: any[] }) {
     return (
         <main>
             <PageBanner
@@ -23,10 +23,10 @@ export default function Home() {
                 ]}
             />
             <HomeSearch />
-            <PopularEvents />
+            <PopularEvents events={events} />
             <ExploreByDate />
             <ExploreByVenue />
-            <ExploreByArtist />
+            <ExploreByArtist artists={artists} />
             <HomeFAQ />
             <LandingCTA />
 
