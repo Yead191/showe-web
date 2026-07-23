@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react"
 import Link from "next/link"
 import Image from "next/image"
-import { usePathname } from "next/navigation"
+import { usePathname, useRouter } from "next/navigation"
 import { Button } from "@/components/ui/button"
 import {
     DropdownMenu,
@@ -17,6 +17,8 @@ import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/co
 import { Menu, LayoutDashboard, LogOut } from "lucide-react"
 import AuthModal from "@/features/auth/components/AuthModal"
 import { toast } from "sonner"
+import Cookies from "js-cookie"
+import { getImageUrl } from "@/lib/getImageUrl"
 
 const webNavItems = [
     { label: "Home", href: "/for-users" },
@@ -27,37 +29,20 @@ const webNavItems = [
     { label: "Support", href: "/support" },
 ]
 
-export default function WebNavbar() {
-    const [isSignedIn, setIsSignedIn] = useState(false)
-    const [user, setUser] = useState<{ name: string; email: string; avatar: string } | null>(null)
+export default function WebNavbar({ user }: { user: any }) {
+    // console.log(user)
     const [authModalOpen, setAuthModalOpen] = useState(false)
     const [authView, setAuthView] = useState<any>("login")
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
     const pathname = usePathname()
     const [isScrolled, setIsScrolled] = useState(false);
-    const filteredNavItems = webNavItems.filter(item => !item.requiresAuth || isSignedIn)
+    const filteredNavItems = webNavItems.filter(item => !item.requiresAuth || user)
 
-
-    // ── Auth Check ────────────────────────────────────────────────────────────
-    const checkAuth = () => {
-        const storedUser = localStorage.getItem("user_profile");
-        if (storedUser) {
-            setUser(JSON.parse(storedUser));
-            setIsSignedIn(true);
-        } else {
-            setUser(null);
-            setIsSignedIn(false);
-        }
-    };
-
-    useEffect(() => {
-        checkAuth();
-    }, []);
-
+    const router = useRouter()
     const handleLogout = () => {
-        localStorage.removeItem("user_profile");
-        checkAuth();
+        Cookies.remove("accessToken");
         toast.info("Logged out successfully");
+        router.refresh()
     };
     useEffect(() => {
         const handleScroll = () => {
@@ -171,7 +156,7 @@ export default function WebNavbar() {
 
                 {/* ── Right: Profile / Auth ── */}
                 <div className="flex-1 flex items-center justify-end gap-3 md:gap-6">
-                    {!isSignedIn ? (
+                    {!user ? (
                         <div className="flex items-center gap-2 sm:gap-4">
                             <button
                                 onClick={() => handleOpenAuth("login")}
@@ -191,9 +176,9 @@ export default function WebNavbar() {
                             <DropdownMenuTrigger asChild>
                                 <Button variant="ghost" className="relative h-10 w-10 rounded-full p-0 border-2 border-white/10 hover:border-[#F5A800]/50 transition-all overflow-hidden ring-offset-[#014B52] focus-visible:ring-[#F5A800]">
                                     <Avatar className="h-full w-full">
-                                        <AvatarImage src={user?.avatar || "https://github.com/shadcn.png"} alt="Profile" />
+                                        <AvatarImage src={getImageUrl(user?.image) || "https://github.com/shadcn.png"} alt="Profile" />
                                         <AvatarFallback className="bg-[#F5A800] text-white text-xs font-bold">
-                                            {user?.name?.split(" ").map(n => n[0]).join("") || "JD"}
+                                            {user?.name || "JD"}
                                         </AvatarFallback>
                                     </Avatar>
                                 </Button>
@@ -233,7 +218,10 @@ export default function WebNavbar() {
             <AuthModal
                 open={authModalOpen}
                 onOpenChange={setAuthModalOpen}
-                onLoginSuccess={checkAuth}
+                onLoginSuccess={() => {
+                    setAuthModalOpen(false)
+                    globalThis.location.reload()
+                }}
                 initialView={authView}
             />
         </nav>
