@@ -37,12 +37,12 @@ export default function FavouritesPage() {
                     >
                         Programmes
                     </TabsTrigger>
-                    <TabsTrigger
+                    {/* <TabsTrigger
                         value="artists"
                         className="rounded-xl px-4 md:px-8 py-3 data-[state=active]:bg-white data-[state=active]:shadow-sm data-[state=active]:text-[#014B52] font-black text-[10px] md:text-xs uppercase tracking-widest transition-all"
                     >
                         Artists
-                    </TabsTrigger>
+                    </TabsTrigger> */}
                     <TabsTrigger
                         value="venues"
                         className="rounded-xl px-4 md:px-8 py-3 data-[state=active]:bg-white data-[state=active]:shadow-sm data-[state=active]:text-[#014B52] font-black text-[10px] md:text-xs uppercase tracking-widest transition-all"

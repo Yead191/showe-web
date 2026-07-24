@@ -6,10 +6,10 @@ import { MOCK_EVENTS } from "@/constants/events/mock-events"
 import { Button } from "@/components/ui/button"
 import Link from "next/link"
 
-export default function PopularEvents() {
-    // Get the first 6 events from mock data
-    const popularEvents = MOCK_EVENTS.slice(0, 6)
-
+export default function PopularEvents({ events }: { events: any[] }) {
+   
+   
+    const popularEvents = events.slice(0, 6)
     return (
         <section className="container mx-auto px-4 pb-10 md:pb-12">
             {/* Section Header */}
@@ -29,7 +29,7 @@ export default function PopularEvents() {
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-16">
                 {popularEvents.map((event, idx) => (
                     <div
-                        key={event.id}
+                        key={event._id}
                         className="animate-in fade-in slide-in-from-bottom-8 duration-700 fill-mode-both"
                         style={{ animationDelay: `${idx * 100}ms` }}
                     >

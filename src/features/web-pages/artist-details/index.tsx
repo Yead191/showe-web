@@ -1,8 +1,27 @@
 import { ArtistHero } from "./components/ArtistHero"
 import { ArtistAbout } from "./components/ArtistAbout"
 import { ArtistEvents } from "./components/ArtistEvents"
+import type { Event } from "../events/components/EventCard"
 
-export default function ArtistDetails({ artist }: { artist: any }) {
+export interface Artist {
+    _id: string
+    name: string
+    image: string
+    cover_image: string
+    short_description?: string
+    category?: string
+    genres?: string[]
+    instruments?: string[]
+    languages?: string[]
+}
+
+export default function ArtistDetails({
+    artist,
+    events,
+}: {
+    artist: Artist
+    events: Event[]
+}) {
     if (!artist) return null
 
     return (
@@ -10,14 +29,8 @@ export default function ArtistDetails({ artist }: { artist: any }) {
             <ArtistHero artist={artist} />
 
             <div className="container mt-8 md:mt-10 space-y-12 md:space-y-16">
-                {/* Statistics Section */}
-                {/* <ArtistStats stats={artist.stats} /> */}
-
-                {/* About Section */}
-                <ArtistAbout about={artist.about} />
-
-                {/* Events Section */}
-                <ArtistEvents events={artist.events} />
+                <ArtistAbout artist={artist} />
+                <ArtistEvents events={events ?? []} />
             </div>
         </main>
     )
