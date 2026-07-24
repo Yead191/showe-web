@@ -3,9 +3,19 @@
 import Link from "next/link"
 import Image from "next/image"
 import { Calendar, ChevronRight } from "lucide-react"
-import { Event } from "@/constants/events/mock-event-details"
+import { getImageUrl } from "@/lib/getImageUrl"
 
-export function RelatedEvents({ event }: { event: Event }) {
+export interface RelatedEventItem {
+    id: string
+    title: string
+    cover_image: string
+    date: string
+    price: number
+}
+
+export function RelatedEvents({ items }: { items?: RelatedEventItem[] }) {
+    if (!items || items.length === 0) return null
+
     return (
         <section className="space-y-10 ">
             <div className="flex items-center justify-between">
@@ -20,7 +30,7 @@ export function RelatedEvents({ event }: { event: Event }) {
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-                {event.related_events.map((rel) => (
+                {items.map((rel) => (
                     <Link
                         key={rel.id}
                         href={`/events/${rel.id}`}
@@ -28,7 +38,7 @@ export function RelatedEvents({ event }: { event: Event }) {
                     >
                         <div className="relative aspect-4/3 rounded-3xl overflow-hidden shadow-sm border border-gray-100">
                             <Image
-                                src={rel.cover_image}
+                                src={getImageUrl(rel.cover_image)}
                                 alt={rel.title}
                                 fill
                                 className="object-cover group-hover:scale-110 transition-transform duration-700"
@@ -40,7 +50,7 @@ export function RelatedEvents({ event }: { event: Event }) {
                         <div className="space-y-2 px-1">
                             <div className="flex items-center gap-2 text-[10px] font-bold text-gray-400 uppercase tracking-widest">
                                 <Calendar className="h-3 w-3 text-[#F5A800]" />
-                                {rel.date.split(",")[1]}
+                                {rel.date}
                             </div>
                             <h3 className="text-sm font-black text-gray-900 leading-tight group-hover:text-[#F5A800] transition-colors line-clamp-2">
                                 {rel.title}

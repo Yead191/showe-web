@@ -2,11 +2,12 @@
 
 import Image from "next/image"
 import { Star, MapPin, Beer } from "lucide-react"
-import { MOCK_BARS } from "@/constants/events/mock-bars"
+import { NearbyPlace } from "../types"
+import { getImageUrl } from "@/lib/getImageUrl"
 
+export function NearbyBars({ items }: { items?: NearbyPlace[] }) {
+    if (!items || items.length === 0) return null
 
-
-export function NearbyBars() {
     return (
         <section className="space-y-10 ">
             <div className="flex items-center justify-between">
@@ -17,11 +18,11 @@ export function NearbyBars() {
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                {MOCK_BARS?.map((bar) => (
-                    <div key={bar.id} className="group space-y-4">
+                {items.map((bar) => (
+                    <div key={bar._id} className="group space-y-4">
                         <div className="relative aspect-video rounded-3xl overflow-hidden shadow-sm border border-gray-100">
                             <Image
-                                src={bar.image}
+                                src={getImageUrl(bar.image)}
                                 alt={bar.name}
                                 fill
                                 className="object-cover group-hover:scale-110 transition-transform duration-700"
@@ -33,8 +34,8 @@ export function NearbyBars() {
                         </div>
                         <div className="space-y-2 px-1">
                             <div className="flex items-center justify-between">
-                                <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest">{bar.type}</p>
-                                <p className="text-[10px] font-black text-[#F5A800] uppercase tracking-widest">{bar.vibe}</p>
+                                <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest">{bar.category}</p>
+                                <p className="text-[10px] font-black text-[#F5A800] uppercase tracking-widest">{bar.price}</p>
                             </div>
                             <h3 className="text-lg font-black text-gray-900 leading-tight group-hover:text-[#F5A800] transition-colors">
                                 {bar.name}

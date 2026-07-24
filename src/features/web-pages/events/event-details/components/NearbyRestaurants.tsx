@@ -2,11 +2,12 @@
 
 import Image from "next/image"
 import { Star, MapPin, Utensils } from "lucide-react"
-import { MOCK_RESTAURANTS } from "@/constants/events/MOCK_RESTAURANTS"
+import { NearbyPlace } from "../types"
+import { getImageUrl } from "@/lib/getImageUrl"
 
+export function NearbyRestaurants({ items }: { items?: NearbyPlace[] }) {
+    if (!items || items.length === 0) return null
 
-
-export function NearbyRestaurants() {
     return (
         <section className="space-y-10">
             <div className="flex items-center justify-between">
@@ -17,11 +18,11 @@ export function NearbyRestaurants() {
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                {MOCK_RESTAURANTS?.map((res) => (
-                    <div key={res.id} className="group space-y-4">
+                {items.map((res) => (
+                    <div key={res._id} className="group space-y-4">
                         <div className="relative aspect-video rounded-3xl overflow-hidden shadow-sm border border-gray-100">
                             <Image
-                                src={res.image}
+                                src={getImageUrl(res.image)}
                                 alt={res.name}
                                 fill
                                 className="object-cover group-hover:scale-110 transition-transform duration-700"
@@ -33,7 +34,7 @@ export function NearbyRestaurants() {
                         </div>
                         <div className="space-y-2 px-1">
                             <div className="flex items-center justify-between">
-                                <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest">{res.cuisine}</p>
+                                <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest">{res.category}</p>
                                 <p className="text-[10px] font-black text-[#F5A800] uppercase tracking-widest">{res.price}</p>
                             </div>
                             <h3 className="text-lg font-black text-gray-900 leading-tight group-hover:text-[#F5A800] transition-colors">

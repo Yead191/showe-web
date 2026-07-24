@@ -1,16 +1,20 @@
 "use client"
+import * as React from "react"
 import Image from "next/image"
 import { Share2, Heart } from "lucide-react"
 import { cn } from "@/lib/utils"
-import { Event } from "@/constants/events/mock-event-details"
+import { EventDetail } from "../types"
+import { getImageUrl } from "@/lib/getImageUrl"
+import { PerformancesModal } from "./PerformancesModal"
 
-export function EventHero({ event }: { event: Event }) {
+export function EventHero({ event }: { event: EventDetail }) {
+    const [showPerformances, setShowPerformances] = React.useState(false)
     return (
         <section id="banner" className="relative w-full h-[45vh] md:h-[65vh] lg:h-[85vh] pt-[72px]">
             {/* Background Image */}
             <div className="absolute inset-0 z-0">
                 <Image
-                    src={"/assets/bg/programmes/theatre.png"}
+                    src={getImageUrl(event.cover_image) || "/assets/bg/programmes/theatre.png"}
                     alt={event.title}
                     fill
                     className="object-cover"
@@ -35,13 +39,23 @@ export function EventHero({ event }: { event: Event }) {
                         <button className="bg-white/10 backdrop-blur-md hover:bg-white/20 text-white p-2 lg:p-4 rounded-full border border-white/20 transition-all shadow-xl group">
                             <Share2 className="h-4 w-4 lg:h-5 lg:w-5 group-hover:scale-110 transition-transform" />
                         </button>
-                        <button className="bg-white/10 backdrop-blur-md hover:bg-white/20 text-white p-2 lg:p-4 rounded-full border border-white/20 transition-all shadow-xl group">
-                            <Heart className={cn("h-4 w-4 lg:h-5 lg:w-5 group-hover:scale-110 transition-transform", event.social.is_saved && "fill-red-500 text-red-500")} />
+                        <button
+                            onClick={() => setShowPerformances(true)}
+                            aria-label="Choose a performance to favourite"
+                            className="bg-white/10 backdrop-blur-md hover:bg-white/20 text-white p-2 lg:p-4 rounded-full border border-white/20 transition-all shadow-xl group cursor-pointer"
+                        >
+                            <Heart className={cn("h-4 w-4 lg:h-5 lg:w-5 group-hover:scale-110 transition-transform", event.isFavorited && "fill-red-500 text-red-500")} />
                         </button>
                     </div>
                 </div>
             </div>
 
+            <PerformancesModal
+                open={showPerformances}
+                onOpenChange={setShowPerformances}
+                performances={event.performances}
+                eventTitle={event.title}
+            />
         </section>
     )
 }
