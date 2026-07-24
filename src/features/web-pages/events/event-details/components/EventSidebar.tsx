@@ -1,17 +1,20 @@
 "use client"
 import Image from "next/image"
-import { Calendar, MapPin, CheckCircle2, ChevronRight, FileDown } from "lucide-react"
+import { Calendar, MapPin, CheckCircle2, ChevronRight } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { EventDetail } from "../types"
 import { getImageUrl } from "@/lib/getImageUrl"
 import { toast } from "sonner"
 import { format, parseISO } from "date-fns"
+import { ProgrammePurchase } from "./ProgrammePurchase"
 
 interface EventSidebarProps {
     event: EventDetail
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    user?: any
 }
 
-export function EventSidebar({ event }: EventSidebarProps) {
+export function EventSidebar({ event, user }: EventSidebarProps) {
     const handleComingSoon = (feature: string) => {
         toast.info(`${feature} feature will be available soon!`, {
             description: "We are currently working on integrating this with the venue's ticketing system."
@@ -54,18 +57,10 @@ export function EventSidebar({ event }: EventSidebarProps) {
                         Get Your Ticket
                         <ChevronRight className="h-5 w-5" />
                     </Button>
-                    {/* ── Downloads ── */}
-                    <div className=" flex flex-wrap gap-4">
-                        <button
-                            onClick={() => handleComingSoon("Download Programme")}
-                            className="w-full flex items-center gap-3 px-6 py-3.5 rounded-2xl bg-[#014B52]/5 hover:bg-[#014B52]/10 text-[#014B52] transition-all group cursor-pointer border-none"
-                        >
-                            <FileDown className="h-5 w-5 group-hover:-translate-y-1 transition-transform" />
-                            <span className="text-xs font-black uppercase tracking-widest text-left">
-                                Download Programme
-                            </span>
-                        </button>
-                    </div>
+                    {/* ── Programme ── */}
+                    {event.programme?._id && (
+                        <ProgrammePurchase eventId={event._id} programme={event.programme} user={user} />
+                    )}
                     <div className="space-y-5 pt-2">
                         <div className="flex items-start gap-4">
                             <div className="bg-gray-50 p-3.5 rounded-2xl flex shrink-0 shadow-sm border border-gray-100">

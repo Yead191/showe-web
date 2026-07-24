@@ -14,7 +14,7 @@ import { useResendOtp } from "@/features/auth/hooks/useResendOtp"
 import { PasswordInput } from "./PasswordInput"
 import type { AuthView } from "@/features/auth/types"
 
-export function LoginForm({ setView, onOpenChange, onLoginSuccess, onNeedVerify }: { setView: (v: AuthView) => void, onOpenChange: (open: boolean) => void, onLoginSuccess?: () => void, onNeedVerify?: (email: string) => void }) {
+export function LoginForm({ setView, onOpenChange, onLoginSuccess, onNeedVerify, redirectOnSuccess = true }: { setView: (v: AuthView) => void, onOpenChange: (open: boolean) => void, onLoginSuccess?: () => void, onNeedVerify?: (email: string) => void, redirectOnSuccess?: boolean }) {
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
@@ -47,7 +47,11 @@ export function LoginForm({ setView, onOpenChange, onLoginSuccess, onNeedVerify 
         Cookies.set("accessToken", response?.data?.accessToken);
         Cookies.set("role", response?.data?.role);
         toast.success(response?.message)
-        router.replace('/home');
+        // Callers that resume their own flow (e.g. a purchase) can opt out of
+        // the default redirect to /home.
+        if (redirectOnSuccess) {
+          router.replace('/home');
+        }
         onLoginSuccess?.();
         onOpenChange(false);
         setIsLoading(false);

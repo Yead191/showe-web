@@ -14,7 +14,8 @@ import { ChevronRight } from "lucide-react"
 import { toast } from "sonner"
 
 
-export default function EventDetails({ event }: { event: EventDetail }) {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export default function EventDetails({ event, user }: { event: EventDetail; user?: any }) {
     if (!event) return null
 
     const handleGetTicket = () => {
@@ -48,7 +49,7 @@ export default function EventDetails({ event }: { event: EventDetail }) {
 
                     {/* ── Right Sidebar (35%) ── */}
                     <div className="lg:w-[35%]">
-                        <EventSidebar event={event} />
+                        <EventSidebar event={event} user={user} />
                     </div>
                 </div>
             </div>

@@ -20,9 +20,10 @@ interface AuthModalProps {
   onOpenChange: (open: boolean) => void
   onLoginSuccess?: () => void
   initialView?: AuthView
+  redirectOnSuccess?: boolean
 }
 
-export default function AuthModal({ open, onOpenChange, onLoginSuccess, initialView = "login" }: AuthModalProps) {
+export default function AuthModal({ open, onOpenChange, onLoginSuccess, initialView = "login", redirectOnSuccess = true }: AuthModalProps) {
   const [view, setView] = useState<AuthView>(initialView)
   // Email captured during registration, used by the OTP verification step
   const [pendingEmail, setPendingEmail] = useState("")
@@ -68,7 +69,7 @@ export default function AuthModal({ open, onOpenChange, onLoginSuccess, initialV
           </div>
 
           <div className="animate-in fade-in slide-in-from-bottom-4 duration-300">
-            {view === "login" && <LoginForm setView={setView} onOpenChange={onOpenChange} onLoginSuccess={onLoginSuccess} onNeedVerify={(email) => setPendingEmail(email)} />}
+            {view === "login" && <LoginForm setView={setView} onOpenChange={onOpenChange} onLoginSuccess={onLoginSuccess} onNeedVerify={(email) => setPendingEmail(email)} redirectOnSuccess={redirectOnSuccess} />}
             {view === "register" && (
               <RegisterForm
                 setView={setView}

@@ -34,20 +34,19 @@ export function PerformancesModal({
     performances,
     eventTitle,
 }: PerformancesModalProps) {
-    const [favorites, setFavorites] = React.useState<Record<string, boolean>>({})
+    const [favoriteId, setFavoriteId] = React.useState<string | null>(null)
 
     const toggleFavorite = (perf: EventPerformance) => {
-        setFavorites((prev) => {
-            const next = { ...prev, [perf._id]: !prev[perf._id] }
-            const nowFav = next[perf._id]
+        setFavoriteId((prev) => {
+            const nowFav = prev !== perf._id
             const label = perf.date
                 ? format(parseISO(perf.date), "EEE, MMM dd")
                 : "this slot"
             toast[nowFav ? "success" : "info"](
-                nowFav ? `Added ${label} to your favourites` : `Removed ${label} from favourites`,
-                { id: `perf-fav-${perf._id}` }
+                nowFav ? `Marked ${label} as your favourite` : `Removed ${label} from favourites`,
+                { id: "perf-fav" }
             )
-            return next
+            return nowFav ? perf._id : null
         })
     }
 
@@ -73,7 +72,7 @@ export function PerformancesModal({
                     )}
 
                     {performances?.map((perf) => {
-                        const isFav = !!favorites[perf._id]
+                        const isFav = favoriteId === perf._id
                         const dateObj = perf.date ? parseISO(perf.date) : null
                         return (
                             <div
@@ -132,7 +131,7 @@ export function PerformancesModal({
                     <div className="p-4 md:p-5 border-t border-gray-100 bg-gray-50/60 flex items-center justify-between">
                         <p className="text-xs font-bold text-gray-500 flex items-center gap-1.5">
                             <Check className="h-4 w-4 text-[#F5A800]" />
-                            {Object.values(favorites).filter(Boolean).length} selected
+                            {favoriteId ? "1 selected" : "None selected"}
                         </p>
                         <button
                             onClick={() => onOpenChange(false)}

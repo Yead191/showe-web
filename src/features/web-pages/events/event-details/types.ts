@@ -66,6 +66,7 @@ export interface EventProgramme {
     _id: string
     title: string
     cover_image: string
+    price_pence?: number
 }
 
 export interface EventArtist {
