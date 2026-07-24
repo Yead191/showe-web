@@ -61,18 +61,7 @@ export function ArtistHero({ artist }: { artist: Artist }) {
                         </div>
                     </div>
 
-                    {/* Actions */}
-                    {/* <div className="flex items-center gap-3 pb-4">
-                        <Button className="h-12 px-8 bg-[#014B52] hover:bg-[#023a40] text-white font-black text-sm rounded-2xl transition-all active:scale-95 shadow-xl shadow-[#014B52]/20">
-                            Follow Artist
-                        </Button>
-                        <button className="h-12 w-12 rounded-2xl border border-gray-200 flex items-center justify-center hover:bg-gray-50 transition-colors shadow-sm">
-                            <Share2 className="h-5 w-5 text-gray-600" />
-                        </button>
-                        <button className="h-12 w-12 rounded-2xl border border-gray-200 flex items-center justify-center hover:bg-gray-50 transition-colors shadow-sm">
-                            <Heart className="h-5 w-5 text-gray-600" />
-                        </button>
-                    </div> */}
+                   
                 </div>
             </div>
         </section>
