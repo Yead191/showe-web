@@ -1,14 +1,8 @@
-"use client"
+import { redirect } from 'next/navigation'
+import { buildMetadata } from '@/lib/seo'
 
-import { useRouter } from 'next/navigation'
-import { useEffect } from 'react'
+export const metadata = buildMetadata({ title: "Dashboard", path: "/dashboard", noIndex: true })
 
 export default function DashboardPage() {
-    const router = useRouter()
-    
-    useEffect(() => {
-        router.replace('/dashboard/profile')
-    }, [router])
-
-    return null
+    redirect('/dashboard/profile')
 }

@@ -62,13 +62,13 @@ export function useTheatreStore() {
   const selectedCategoryIndex = foundIndex >= 0 ? foundIndex : 0;
 
   // Default to the first category so it's selected (and sent to the API) on load.
-  useEffect(() => {
-    if (foundIndex < 0) {
-      const params = new URLSearchParams(searchParams.toString());
-      params.set("category", CATEGORIES[0].name.toUpperCase());
-      router.replace(`${pathname}?${params.toString()}`);
-    }
-  }, [foundIndex, pathname, router, searchParams]);
+  // useEffect(() => {
+  //   if (foundIndex < 0) {
+  //     const params = new URLSearchParams(searchParams.toString());
+  //     params.set("category", CATEGORIES[0].name.toUpperCase());
+  //     router.replace(`${pathname}?${params.toString()}`);
+  //   }
+  // }, [foundIndex, pathname, router, searchParams]);
 
   // Continuous counter; the carousel wraps it around the visible items.
   const [offset, setOffset] = useState(0);
