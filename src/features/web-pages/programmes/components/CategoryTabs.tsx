@@ -2,18 +2,19 @@
 
 import { Category } from "@/helpers/useTheatreStore";
 
-
 interface CategoryTabsProps {
   categories: Category[];
   selectedIndex: number;
   onSelect: (index: number) => void;
 }
 
-export function CategoryTabs({ categories, selectedIndex, onSelect }: CategoryTabsProps) {
+export function CategoryTabs({
+  categories,
+  selectedIndex,
+  onSelect,
+}: CategoryTabsProps) {
   return (
-    <div
-      className="flex gap-2 px-4 overflow-x-auto pb-1 w-full no-scrollbar"
-    >
+    <div className="flex gap-2 px-4 overflow-x-auto pb-1 w-full no-scrollbar">
       {categories.map((cat, i) => {
         const isSelected = i === selectedIndex;
         return (
