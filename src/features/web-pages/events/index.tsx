@@ -6,6 +6,8 @@ import { EventCard, type Event } from "./components/EventCard"
 import { ResultsHeader } from "./components/ResultsHeader"
 import { EventsPagination } from "./components/EventsPagination"
 import LandingCTA from "../landing/components/LandingCTA"
+import { Suspense } from "react"
+import Spinner from "@/components/shared/Spinner"
 
 interface PaginationInfo {
     total: number
@@ -46,7 +48,7 @@ export default function EventsPage({ search, events, pagination }: EventsPagePro
                 <ResultsHeader search={search} />
 
                 {eventList.length > 0 ? (
-                    <>
+                    <Suspense fallback={<Spinner />}>
                         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-12">
                             {eventList.map((event, index) => (
                                 <div key={event._id} className="animate-in fade-in slide-in-from-bottom-4 duration-500 fill-mode-both" style={{ animationDelay: `${index * 50}ms` }}>
@@ -56,7 +58,7 @@ export default function EventsPage({ search, events, pagination }: EventsPagePro
                         </div>
 
                         <EventsPagination pagination={pagination} />
-                    </>
+                    </Suspense>
                 ) : (
                     <div className="text-center py-32 bg-gray-50/50 rounded-3xl border border-dashed border-gray-200">
                         <div className="space-y-4">

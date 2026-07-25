@@ -21,13 +21,12 @@ type HttpMethod = "GET" | "POST" | "PUT" | "PATCH" | "DELETE";
 interface FetchOptions {
   method?: HttpMethod;
   body?: any;
-  tags?: string[];
   token?: string;
   headers?: Record<string, string>;
   cache?: RequestCache;
-  next?: { revalidate?: number };
+  tags?: string[];
+  next?: NextFetchRequestConfig;
 }
-
 export const nextFetch = async <T = any>(
   url: string,
   {
@@ -37,7 +36,7 @@ export const nextFetch = async <T = any>(
     token,
     headers = {},
     cache = "default",
-    // next = {}
+    next = {}
   }: FetchOptions = {}
 ): Promise<FetchResponse<T>> => {
   const accessToken = await getAccessToken();
@@ -56,13 +55,15 @@ export const nextFetch = async <T = any>(
     const res = await fetch(`${process.env.BASE_URL}${url}`, {
       method,
       headers: reqHeaders,
-      ...(hasBody && { body: isFormData ? body : JSON.stringify(body) }),
-      ...(tags && { next: { tags } }),
-      ...(!(method === "GET") ? { cache: "no-store" } : { cache: cache }),
-      // ...(next && { next: next }),
-
+      ...(hasBody && {
+        body: isFormData ? body : JSON.stringify(body),
+      }),
+      cache: method === "GET" ? cache : "no-store",
+      next: {
+        ...next,
+        ...(tags && { tags }),
+      },
     });
-
     const json = await res.json();
 
     if (!res.ok) {

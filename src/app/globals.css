@@ -49,6 +49,78 @@
   --radius-4xl: calc(var(--radius) * 2.6);
 }
 
+/* ============================================================
+   Brand / programme-reader design tokens (ported from the
+   dashboard Tailwind v3 config into Tailwind v4).
+
+   These register the utilities the reader + block previews rely
+   on (text-ink, bg-surface-*, border-line, text-primary-700,
+   text-accent, text-purple, shadow-soft, font-display, ...).
+
+   NOTE: base `primary` / `accent` are intentionally NOT redefined
+   here — they stay mapped to the shadcn oklch tokens so existing
+   shadcn components (button, badge, checkbox, ...) are unaffected.
+   Their brand values are re-pointed only inside `.programme-reader`
+   (see below).
+   ============================================================ */
+@theme {
+  --font-display: var(--font-sans);
+
+  /* Brand — primary (teal) scale */
+  --color-primary-50: #E6F0F1;
+  --color-primary-100: #CCE1E3;
+  --color-primary-200: #99C3C7;
+  --color-primary-300: #66A5AB;
+  --color-primary-400: #33878F;
+  --color-primary-500: #01696F;
+  --color-primary-600: #014B52;
+  --color-primary-700: #013D43;
+  --color-primary-800: #012F33;
+  --color-primary-900: #012124;
+
+  /* Brand — accent (gold) scale */
+  --color-accent-50: #FEF6E5;
+  --color-accent-100: #FDECC0;
+  --color-accent-200: #FBD881;
+  --color-accent-300: #F9C541;
+  --color-accent-400: #F5A800;
+  --color-accent-500: #D89400;
+  --color-accent-600: #B17800;
+  --color-accent-700: #8A5C00;
+
+  /* Surfaces (warm cream) */
+  --color-surface: #FBFAF7;
+  --color-surface-base: #F6F4EF;
+  --color-surface-raised: #FBFAF7;
+  --color-surface-sunken: #F2EFE9;
+  --color-surface-offset: #EBE7DF;
+
+  /* Ink (text) */
+  --color-ink: #28251D;
+  --color-ink-muted: #6C665D;
+  --color-ink-faint: #9A938B;
+  --color-ink-inverse: #F9F8F4;
+
+  /* Lines / dividers */
+  --color-line: rgba(40, 37, 29, 0.11);
+  --color-line-strong: rgba(40, 37, 29, 0.18);
+  --color-line-divider: #D9D3CB;
+
+  /* Semantic */
+  --color-success: #437A22;
+  --color-info: #006494;
+  --color-warning: #DA7101;
+  --color-danger: #B42318;
+  --color-purple: #7A39BB;
+
+  /* Elevation */
+  --shadow-soft: 0 1px 2px rgba(40, 37, 29, .05), 0 8px 22px rgba(40, 37, 29, .03);
+  --shadow-medium: 0 8px 20px rgba(40, 37, 29, .08), 0 20px 56px rgba(40, 37, 29, .06);
+  --shadow-large: 0 16px 28px rgba(40, 37, 29, .12), 0 26px 72px rgba(40, 37, 29, .08);
+  --shadow-ring: 0 0 0 4px rgba(1, 75, 82, 0.10);
+  --shadow-ring-accent: 0 0 0 4px rgba(245, 168, 0, 0.18);
+}
+
 :root {
   --background: oklch(1 0 0);
   --foreground: oklch(0.145 0 0);
@@ -172,3 +244,150 @@
     scrollbar-width: none;
   }
 }
+
+.hide-scrollbar {
+  scrollbar-width: none;
+  /* Firefox */
+  -ms-overflow-style: none;
+  /* IE and Edge */
+}
+
+.hide-scrollbar::-webkit-scrollbar {
+  display: none;
+  /* Chrome, Safari, Opera */
+}
+
+
+
+/* ============================================================
+   Reader scope — re-point brand primary/accent to teal/gold only
+   inside the programme reader. Utilities `text-primary`, `bg-primary`,
+   `text-accent`, `bg-accent` (+ opacity variants) resolve via the
+   shadcn `--primary` / `--accent` vars, so overriding those vars here
+   recolors the reader without touching shadcn components elsewhere.
+   ============================================================ */
+.programme-reader {
+  --primary: #014B52;
+  --accent: #F5A800;
+}
+
+/* ============================================================
+   Base component classes used across the block previews.
+   `.eyebrow` = small uppercase section label (default teal).
+   `.tabular` = tabular figures for aligned numbers.
+   These have no !important, so the .block-*color overrides below
+   still win when a block sets a custom colour.
+   ============================================================ */
+.eyebrow {
+  font-size: 11px;
+  line-height: 1;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #014B52;
+}
+
+.tabular {
+  font-variant-numeric: tabular-nums;
+}
+
+/* ============================================================
+   Block text-colour override
+   Applied via .block-textcolor class on the SortableBlock wrapper
+   when block.layout.text_color is set. Uses CSS custom prop --btext.
+   ============================================================ */
+   .block-textcolor .text-ink {
+    color: var(--btext) !important;
+  }
+  
+  .block-textcolor .text-ink-muted {
+    color: color-mix(in srgb, var(--btext) 68%, transparent) !important;
+  }
+  
+  .block-textcolor .text-ink-faint {
+    color: color-mix(in srgb, var(--btext) 45%, transparent) !important;
+  }
+  
+  .block-textcolor .text-primary {
+    color: color-mix(in srgb, var(--btext) 80%, transparent) !important;
+  }
+  
+  .block-textcolor .eyebrow {
+    color: color-mix(in srgb, var(--btext) 60%, transparent) !important;
+  }
+  
+  .block-textcolor .font-display {
+    color: var(--btext) !important;
+  }
+  
+  .block-textcolor .border-line {
+    border-color: color-mix(in srgb, var(--btext) 10%, transparent) !important;
+  }
+  
+  /* ============================================================
+     Block title-colour override
+     Applied via .block-titlecolor on the SortableBlock wrapper.
+     Wins over .block-textcolor for headings via cascade order.
+     ============================================================ */
+  .block-titlecolor h1,
+  .block-titlecolor h2,
+  .block-titlecolor h3,
+  .block-titlecolor h4,
+  .block-titlecolor .font-display {
+    color: var(--btitle) !important;
+  }
+  
+  /* ============================================================
+     Eyebrow / tag colour override
+     The .eyebrow class is the small uppercase section label used
+     in ~13 block types (schedule, accessibility, behind_scenes,
+     sponsor_thanks, cast_grid, image_story, merchandise,
+     future_shows, offers, recommendations, map, directions, etc.).
+     Default colour is text-primary (teal #014B52).
+     Placed AFTER .block-textcolor rules so its same-specificity
+     selector wins via cascade order.
+     ============================================================ */
+  .block-eyebrowcolor .eyebrow {
+    color: var(--beyebrow) !important;
+  }
+  
+  /* ============================================================
+     Card background override
+     Flips inner card surfaces (bg-surface-raised + bg-surface-sunken)
+     to a custom colour. The SortableBlock wrapper itself uses an
+     inline-style background, so it's unaffected by these rules.
+     ============================================================ */
+  .block-cardbg .bg-surface-raised,
+  .block-cardbg .bg-surface-sunken {
+    background-color: var(--bcardbg) !important;
+  }
+  
+  /* ============================================================
+     Card text-colour override
+     Higher specificity than .block-textcolor so card text wins
+     inside card surfaces when both are set.
+     ============================================================ */
+  .block-cardtext .bg-surface-raised .text-ink .eyebrow,
+  .block-cardtext .bg-surface-sunken .text-ink .eyebrow {
+    color: var(--bcardtext) !important;
+  }
+  
+  .block-cardtext .bg-surface-raised .text-ink-muted,
+  .block-cardtext .bg-surface-sunken .text-ink-muted {
+    color: color-mix(in srgb, var(--bcardtext) 68%, transparent) !important;
+  }
+  
+  .block-cardtext .bg-surface-raised .text-ink-faint,
+  .block-cardtext .bg-surface-sunken .text-ink-faint {
+    color: color-mix(in srgb, var(--bcardtext) 45%, transparent) !important;
+  }
+  
+  .block-cardtext .bg-surface-raised .font-display,
+  .block-cardtext .bg-surface-sunken .font-display {
+    color: var(--bcardtext) !important;
+  }
+  
+  .block-cardtext .bg-surface-raised .eyebrow,
+  .block-cardtext .bg-surface-sunken .eyebrow {
+    color: color-mix(in srgb, var(--bcardtext) 60%, transparent) !important;
+  }

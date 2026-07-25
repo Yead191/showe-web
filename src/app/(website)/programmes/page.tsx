@@ -9,6 +9,10 @@ export default async function page({ searchParams }: { searchParams: Promise<any
 
     const programmes = await nextFetch(`/booking?${params.toString()}`, {
         method: 'GET',
+        cache: "force-cache",
+        next: {
+            revalidate: 1
+        }
     })
     return (
         <MyProgrammesPage programmes={programmes?.data ?? []} />

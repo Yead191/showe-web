@@ -6,12 +6,12 @@ export default async function page() {
         method: "GET",
         // cache: "force-cache",
     })
-    console.log(events)
+    // console.log(events)
 
     const artists = await nextFetch("/artist", {
         method: "GET",
     })
-    console.log("artists", artists)
+    // console.log("artists", artists)
 
     return (
         <Home events={events.data??[]} artists={artists.data??[]} />

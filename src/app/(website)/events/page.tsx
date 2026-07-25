@@ -20,6 +20,9 @@ export default async function page({ searchParams }: { searchParams: Promise<any
     const { data: events, pagination } = await nextFetch(`/event/search?${params.toString()}`, {
         method: 'GET',
         cache: "force-cache",
+        next: {
+            revalidate: 1
+        }
     })
 
 

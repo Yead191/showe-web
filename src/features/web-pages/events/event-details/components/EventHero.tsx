@@ -10,7 +10,7 @@ import { PerformancesModal } from "./PerformancesModal"
 export function EventHero({ event }: { event: EventDetail }) {
     const [showPerformances, setShowPerformances] = React.useState(false)
     return (
-        <section id="banner" className="relative w-full h-[45vh] md:h-[65vh] lg:h-[85vh] pt-18">
+        <section id="banner" className="relative w-full h-[45vh] md:h-[65vh] lg:h-screen 2xl:h-[85vh] pt-18">
             {/* Background Image */}
             <div className="absolute inset-0 z-0">
                 <Image
@@ -24,7 +24,7 @@ export function EventHero({ event }: { event: EventDetail }) {
             </div>
 
             {/* Content Over Image */}
-            <div className="container relative z-10 h-full mx-auto px-4 flex flex-col justify-end pb-12 md:pb-16">
+            <div className="container relative z-10 h-full mx-auto px-4 flex flex-col justify-end pb-12 lg:pb-4 2xl:pb-16">
 
                 {/* Action buttons (bottom-right) */}
                 <div className="absolute bottom-12 md:bottom-16 right-4 flex items-center gap-2 lg:gap-4 z-20">
@@ -43,7 +43,7 @@ export function EventHero({ event }: { event: EventDetail }) {
                 {/* Phone (centered) */}
                 <div className="flex justify-center items-end">
                     {event.programme?.cover_image && (
-                        <div className="relative w-52.5h-110 md:w-70 md:h-146.25 lg:w-87.5 lg:h-155 rounded-[3rem] bg-neutral-900 p-3 shadow-2xl shadow-black/60 ring-1 ring-white/15">
+                        <div className="relative w-52.5h-110 md:w-70 md:h-146.25 lg:w-74 2xl:w-87.5 lg:h-[84vh] 2xl:h-155 rounded-[3rem] bg-neutral-900 p-3 shadow-2xl shadow-black/60 ring-1 ring-white/15">
                             {/* Side buttons */}
                             <span className="absolute -left-0.75 top-28 h-16 w-0.75 rounded-l bg-neutral-700" />
                             <span className="absolute -right-0.75 top-24 h-12 w-0.75 rounded-r bg-neutral-700" />

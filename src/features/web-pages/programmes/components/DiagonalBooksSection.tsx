@@ -102,7 +102,7 @@ export function DiagonalBooksSection({
   };
 
   const handleViewProgramme = (item: ProgrammeItem) => {
-    router.push(`/programmes/${item._id}`);
+    router.push(`/reader/${item._id}`);
   };
 
   const handleDeleteRequest = (item: ProgrammeItem) => {
