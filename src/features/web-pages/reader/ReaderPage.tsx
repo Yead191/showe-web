@@ -1,16 +1,17 @@
 'use client';
 
 import { useState } from 'react';
-import Link from 'next/link';
-import { ArrowLeft, ChevronLeft, ChevronRight, BookOpen, Share2 } from 'lucide-react';
+import { ArrowLeft, ChevronLeft, ChevronRight, BookOpen,  } from 'lucide-react';
 
 import { cn } from '@/lib/utils';
 import { Block, ProgrammeDoc, ProgrammePage } from '@/types/programme';
 import { useReveal } from './animation';
 import { renderBlockPreview } from './BlockPreviews';
+import { useRouter } from 'next/navigation';
 
 export default function ReaderPage({ programme }: { programme: ProgrammeDoc }) {
   const [pageIndex, setPageIndex] = useState(0);
+  const router = useRouter();
 
   if (!programme || !programme.pages || programme.pages.length === 0) {
     return (
@@ -18,9 +19,9 @@ export default function ReaderPage({ programme }: { programme: ProgrammeDoc }) {
         <BookOpen size={32} className="text-ink-faint mb-3" />
         <h1 className="font-display font-bold text-2xl text-ink">Programme not found</h1>
         <p className="text-ink-muted mt-2">This programme may have been deleted or moved.</p>
-        <Link href="/" className="mt-4 text-primary font-semibold">
+        <div onClick={() => router.back()} className="mt-4 text-primary font-semibold cursor-pointer">
           Back to home
-        </Link>
+        </div>
       </div>
     );
   }
@@ -53,44 +54,16 @@ export default function ReaderPage({ programme }: { programme: ProgrammeDoc }) {
           </h1>
         </div>
         <div className="flex items-center gap-2">
-          <Link
-            href="/"
-            className="hidden sm:inline-flex items-center gap-1.5 text-[12px] font-semibold text-white/70 hover:text-white transition-colors"
+          <div
+            onClick={() => router.back()}
+            className="hidden sm:inline-flex items-center gap-1.5 text-[12px] font-semibold text-white/70 hover:text-white transition-colors cursor-pointer"
           >
-            <ArrowLeft size={12} /> Back to home
-          </Link>
-          <button
-            onClick={() => {
-              if (navigator.share) {
-                navigator.share({ title: programme.title, url: window.location.href });
-              } else {
-                navigator.clipboard.writeText(window.location.href);
-              }
-            }}
-            className="w-8 h-8 rounded-full bg-white/10 hover:bg-white/15 flex items-center justify-center transition-colors"
-            aria-label="Share"
-          >
-            <Share2 size={13} />
-          </button>
+            <ArrowLeft size={12} /> Back to programmes
+          </div>
+      
         </div>
       </div>
 
-      {/* Title strip */}
-      {/* <div className="text-center py-4 px-5 pt-[73px]">
-        <div className="text-[11px] uppercase tracking-[0.18em] font-bold text-accent">
-          Programme
-        </div>
-      
-        <div className="text-[11.5px] text-white/60 mt-1.5">
-          Page {pageIndex + 1} of {totalPages}
-          {totalPages > 1 && (
-            <>
-              {' · '}
-              <span className="font-semibold text-white/80">{page.title}</span>
-            </>
-          )}
-        </div>
-      </div> */}
 
       {/* Phone frame on desktop, full-width on mobile */}
       <div className="px-4 pt-[72px]  2xl:pt-20 2xl:pb-16">

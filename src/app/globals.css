@@ -284,7 +284,7 @@
   font-weight: 700;
   letter-spacing: 0.14em;
   text-transform: uppercase;
-  color: #014B52;
+  color: #014B52 !important;
 }
 
 .tabular {
