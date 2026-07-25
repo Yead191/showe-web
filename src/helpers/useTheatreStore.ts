@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useCallback, useEffect } from "react";
+import { useState, useCallback } from "react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 
 export interface TheatreItem {
@@ -55,20 +55,11 @@ export function useTheatreStore() {
   const searchParams = useSearchParams();
 
   // Selected category is driven by the `category` query param.
+  // No param => nothing selected (-1) so all programmes are shown by default.
   const categoryParam = searchParams.get("category");
-  const foundIndex = CATEGORIES.findIndex(
+  const selectedCategoryIndex = CATEGORIES.findIndex(
     (c) => c.name.toLowerCase() === (categoryParam ?? "").toLowerCase()
   );
-  const selectedCategoryIndex = foundIndex >= 0 ? foundIndex : 0;
-
-  // Default to the first category so it's selected (and sent to the API) on load.
-  // useEffect(() => {
-  //   if (foundIndex < 0) {
-  //     const params = new URLSearchParams(searchParams.toString());
-  //     params.set("category", CATEGORIES[0].name.toUpperCase());
-  //     router.replace(`${pathname}?${params.toString()}`);
-  //   }
-  // }, [foundIndex, pathname, router, searchParams]);
 
   // Continuous counter; the carousel wraps it around the visible items.
   const [offset, setOffset] = useState(0);
@@ -88,7 +79,10 @@ export function useTheatreStore() {
   return {
     categories: CATEGORIES,
     selectedCategoryIndex,
-    currentBackground: CATEGORIES[selectedCategoryIndex].backgroundImage,
+    // Fall back to the first category's image as a neutral backdrop when
+    // nothing is selected (no tab is highlighted in that case).
+    currentBackground:
+      CATEGORIES[selectedCategoryIndex]?.backgroundImage ?? CATEGORIES[0].backgroundImage,
     offset,
     selectCategory,
     onSwipeLeft,
