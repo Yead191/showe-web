@@ -1,6 +1,6 @@
 import { useRef, useEffect, useState, useMemo } from "react";
 import { useRouter } from "next/navigation";
-import { ALL_ITEMS } from "@/helpers/useTheatreStore";
+import { type ProgrammeItem } from "@/helpers/useTheatreStore";
 import { BookCard } from "./BookCard";
 import { InfoTile } from "./InfoTile";
 import { DeleteProgrammeDialog } from "./DeleteProgrammeDialog";
@@ -11,19 +11,21 @@ interface Slot {
 }
 
 interface DiagonalBooksSectionProps {
+  items: ProgrammeItem[];
   offset: number;
   onSwipeLeft: () => void;
   onSwipePrev: () => void;
 }
 
 export function DiagonalBooksSection({
+  items,
   offset,
   onSwipeLeft,
   onSwipePrev,
 }: DiagonalBooksSectionProps) {
   const router = useRouter();
   const containerRef = useRef<HTMLDivElement>(null);
-  const [activeItem, setActiveItem] = useState<(typeof ALL_ITEMS)[number] | null>(null);
+  const [activeItem, setActiveItem] = useState<ProgrammeItem | null>(null);
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
 
   const [containerW, setContainerW] = useState(1200);
@@ -99,19 +101,30 @@ export function DiagonalBooksSection({
     if (Math.abs(dx) > 40) handleSwipe(dx < 0 ? 1 : -1);
   };
 
-  const handleViewProgramme = (item: (typeof ALL_ITEMS)[number]) => {
-    router.push(`/programmes/${item.id}`);
+  const handleViewProgramme = (item: ProgrammeItem) => {
+    router.push(`/programmes/${item._id}`);
   };
 
-  const handleDeleteRequest = (item: (typeof ALL_ITEMS)[number]) => {
+  const handleDeleteRequest = (item: ProgrammeItem) => {
     setActiveItem(item);
     setDeleteDialogOpen(true);
   };
 
+  // Repeat the API items so the diagonal always has enough cards to loop,
+  // even when only a few programmes are returned. When there are already
+  // enough items this is a no-op and behaves exactly like before.
+  const loopItems = useMemo(() => {
+    if (items.length === 0) return [];
+    const repeat = Math.max(1, Math.ceil((N + 2) / items.length));
+    return Array.from({ length: repeat }, () => items).flat();
+  }, [items, N]);
+
   const renderedItems = useMemo(() => {
-    const total = ALL_ITEMS.length;
-    return ALL_ITEMS.map((item, i) => {
-      let relIdx = (i - offset + total) % total;
+    const total = loopItems.length;
+    if (total === 0) return [];
+    const normOffset = ((offset % total) + total) % total;
+    return loopItems.map((item, i) => {
+      let relIdx = (i - normOffset + total) % total;
       if (relIdx > N + 1) relIdx -= total;
 
       let x = 0;
@@ -137,9 +150,9 @@ export function DiagonalBooksSection({
         y = relIdx < -1 ? ghostPrev.y : ghostNext.y;
       }
 
-      return { item, x, y, opacity, infoOp, zIndex, id: item.id };
+      return { item, x, y, opacity, infoOp, zIndex, id: `${item._id}-${i}` };
     });
-  }, [offset, N, slots, ghostPrev, ghostNext]);
+  }, [loopItems, offset, N, slots, ghostPrev, ghostNext]);
 
   const lineY = (s: Slot) => s.y + bookH + 10;
 

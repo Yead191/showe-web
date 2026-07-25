@@ -2,15 +2,16 @@
 
 import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
-import { TheatreItem } from "@/helpers/useTheatreStore";
+import { ProgrammeItem } from "@/helpers/useTheatreStore";
+import { getImageUrl } from "@/lib/getImageUrl";
 import { Eye, Trash2 } from "lucide-react";
 
 interface BookCardProps {
-  item: TheatreItem;
+  item: ProgrammeItem;
   width: number;
   height: number;
   onTap: () => void;
-  onDeleteRequest: (item: TheatreItem) => void;
+  onDeleteRequest: (item: ProgrammeItem) => void;
 }
 
 export function BookCard({
@@ -96,9 +97,9 @@ export function BookCard({
       }}
     >
       {/* ── Background ── */}
-      {item.imageUrl ? (
+      {item.cover_image ? (
         <Image
-          src={item.imageUrl}
+          src={getImageUrl(item.cover_image)}
           alt={item.title}
           fill
           className="object-cover"

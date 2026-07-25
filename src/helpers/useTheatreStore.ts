@@ -1,6 +1,7 @@
 "use client";
 
-import { useState, useCallback } from "react";
+import { useState, useCallback, useEffect } from "react";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 
 export interface TheatreItem {
   id: number;
@@ -9,6 +10,13 @@ export interface TheatreItem {
   quote: string;
   description: string;
   imageUrl?: string; // optional: replace with your actual image paths
+}
+
+// Shape of a programme returned by the API
+export interface ProgrammeItem {
+  _id: string;
+  title: string;
+  cover_image: string;
 }
 
 export interface Category {
@@ -42,19 +50,40 @@ export const ALL_ITEMS: TheatreItem[] = [
 // ─────────────────────────────────────────────────────────────────────────────
 
 export function useTheatreStore() {
-  const [selectedCategoryIndex, setSelectedCategoryIndex] = useState(0);
+  const router = useRouter();
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
+
+  // Selected category is driven by the `category` query param.
+  const categoryParam = searchParams.get("category");
+  const foundIndex = CATEGORIES.findIndex(
+    (c) => c.name.toLowerCase() === (categoryParam ?? "").toLowerCase()
+  );
+  const selectedCategoryIndex = foundIndex >= 0 ? foundIndex : 0;
+
+  // Default to the first category so it's selected (and sent to the API) on load.
+  useEffect(() => {
+    if (foundIndex < 0) {
+      const params = new URLSearchParams(searchParams.toString());
+      params.set("category", CATEGORIES[0].name.toUpperCase());
+      router.replace(`${pathname}?${params.toString()}`);
+    }
+  }, [foundIndex, pathname, router, searchParams]);
+
+  // Continuous counter; the carousel wraps it around the visible items.
   const [offset, setOffset] = useState(0);
 
-  const selectCategory = useCallback((i: number) => setSelectedCategoryIndex(i), []);
+  const selectCategory = useCallback(
+    (i: number) => {
+      const params = new URLSearchParams(searchParams.toString());
+      params.set("category", CATEGORIES[i].name.toUpperCase());
+      router.push(`${pathname}?${params.toString()}`);
+    },
+    [router, pathname, searchParams]
+  );
 
-  const onSwipeLeft = useCallback(
-    () => setOffset((p) => (p + 1) % ALL_ITEMS.length),
-    []
-  );
-  const onSwipePrev = useCallback(
-    () => setOffset((p) => (p - 1 + ALL_ITEMS.length) % ALL_ITEMS.length),
-    []
-  );
+  const onSwipeLeft = useCallback(() => setOffset((p) => p + 1), []);
+  const onSwipePrev = useCallback(() => setOffset((p) => p - 1), []);
 
   return {
     categories: CATEGORIES,

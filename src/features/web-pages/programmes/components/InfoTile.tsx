@@ -1,9 +1,9 @@
 "use client";
 
-import { TheatreItem } from "@/helpers/useTheatreStore";
+import { ProgrammeItem } from "@/helpers/useTheatreStore";
 
 interface InfoTileProps {
-  item: TheatreItem;
+  item: ProgrammeItem;
   width: number;
 }
 
@@ -20,12 +20,6 @@ export function InfoTile({ item, width }: InfoTileProps) {
         }}
       >
         {item.title}
-      </p>
-      <p
-        className="leading-relaxed"
-        style={{ color: "#979797", fontSize: 11 }}
-      >
-        {item.description}
       </p>
     </div>
   );

@@ -1,13 +1,15 @@
 "use client";
 
-import { useTheatreStore } from "@/helpers/useTheatreStore";
+import { useTheatreStore, type ProgrammeItem } from "@/helpers/useTheatreStore";
 
 import Image from "next/image";
 import { CategoryTabs } from "./components/CategoryTabs";
 import { DiagonalBooksSection } from "./components/DiagonalBooksSection";
 
 
-export default function MyProgrammesPage() {
+export default function MyProgrammesPage({ programmes }: { programmes: ProgrammeItem[] }) {
+    const items = programmes ?? [];
+
     const {
         categories,
         selectedCategoryIndex,
@@ -62,20 +64,32 @@ export default function MyProgrammesPage() {
 
                 {/* Diagonal scrollable section */}
                 <div className="flex-1 overflow-hidden pt-20 2xl:pt-24">
-                    <DiagonalBooksSection
-                        offset={offset}
-                        onSwipeLeft={onSwipeLeft}
-                        onSwipePrev={onSwipePrev}
-                    />
+                    {items.length > 0 ? (
+                        <DiagonalBooksSection
+                            items={items}
+                            offset={offset}
+                            onSwipeLeft={onSwipeLeft}
+                            onSwipePrev={onSwipePrev}
+                        />
+                    ) : (
+                        <div className="flex h-full flex-col items-center justify-center px-6 text-center">
+                            <p className="text-white text-lg font-semibold">No programmes found</p>
+                            <p className="mt-1 text-sm text-white/50">
+                                There are no programmes in this category yet.
+                            </p>
+                        </div>
+                    )}
                 </div>
 
                 {/* Scroll hint */}
-                <p
-                    className="text-center pb-4 text-xs"
-                    style={{ color: "rgba(255,255,255,0.35)", letterSpacing: 1 }}
-                >
-                    scroll · swipe · or use ← → keys
-                </p>
+                {items.length > 0 && (
+                    <p
+                        className="text-center pb-4 text-xs"
+                        style={{ color: "rgba(255,255,255,0.35)", letterSpacing: 1 }}
+                    >
+                        scroll · swipe · or use ← → keys
+                    </p>
+                )}
             </div>
         </main>
     );

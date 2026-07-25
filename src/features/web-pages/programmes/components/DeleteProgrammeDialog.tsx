@@ -1,6 +1,6 @@
 "use client";
 
-import { TheatreItem } from "@/helpers/useTheatreStore";
+import { ProgrammeItem } from "@/helpers/useTheatreStore";
 import {
   Dialog,
   DialogContent,
@@ -13,10 +13,10 @@ import { Button } from "@/components/ui/button";
 import { AlertTriangle, Trash2 } from "lucide-react";
 
 interface DeleteProgrammeDialogProps {
-  item: TheatreItem | null;
+  item: ProgrammeItem | null;
   open: boolean;
   onOpenChange: (open: boolean) => void;
-  onConfirmDelete: (item: TheatreItem) => void;
+  onConfirmDelete: (item: ProgrammeItem) => void;
 }
 
 export function DeleteProgrammeDialog({

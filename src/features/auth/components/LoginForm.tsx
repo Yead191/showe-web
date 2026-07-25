@@ -90,6 +90,7 @@ export function LoginForm({ setView, onOpenChange, onLoginSuccess, onNeedVerify,
           <PasswordInput name="password" id="password" placeholder="••••••••" className="h-12 border-gray-200 focus:border-[#F5A800] focus:ring-[#F5A800]/20" />
           <div className="w-full inline-flex justify-end">
             <button
+              type="button"
               onClick={() => setView("forgot-password")}
               className="text-xs text-[#F5A800] hover:underline font-medium underline cursor-pointer"
             >
