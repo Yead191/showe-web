@@ -24,12 +24,19 @@ export const metadata = buildMetadata({
 export default async function page() {
     const events = await nextFetch("/event/search", {
         method: "GET",
-        // cache: "force-cache",
+        cache: "force-cache",
+        next: {
+            revalidate: 60 * 60 // 1 hour
+        }
     })
     // console.log(events)
 
     const artists = await nextFetch("/artist", {
         method: "GET",
+        cache: "force-cache",
+        next: {
+            revalidate: 60 * 60 // 1 hour
+        }
     })
     // console.log("artists", artists)
 

@@ -65,7 +65,7 @@ async function EventsResults({ search }: { search: EventsSearch }) {
         method: 'GET',
         cache: "force-cache",
         next: {
-            revalidate: 1
+            revalidate: 60 * 60 // 1 hour
         }
     })
 

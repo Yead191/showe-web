@@ -7,6 +7,7 @@ import { cn } from '@/lib/utils';
 import { Block, ProgrammeDoc, ProgrammePage } from '@/types/programme';
 import { useReveal } from './animation';
 import { renderBlockPreview } from './BlockPreviews';
+import ProgrammeNotFound from './ProgrammeNotFound';
 import { useRouter } from 'next/navigation';
 
 export default function ReaderPage({ programme }: { programme: ProgrammeDoc }) {
@@ -14,16 +15,7 @@ export default function ReaderPage({ programme }: { programme: ProgrammeDoc }) {
   const router = useRouter();
 
   if (!programme || !programme.pages || programme.pages.length === 0) {
-    return (
-      <div className="programme-reader min-h-dvh flex flex-col items-center justify-center bg-surface-base p-6">
-        <BookOpen size={32} className="text-ink-faint mb-3" />
-        <h1 className="font-display font-bold text-2xl text-ink">Programme not found</h1>
-        <p className="text-ink-muted mt-2">This programme may have been deleted or moved.</p>
-        <div onClick={() => router.back()} className="mt-4 text-primary font-semibold cursor-pointer">
-          Back to home
-        </div>
-      </div>
-    );
+    return <ProgrammeNotFound />;
   }
 
   const page = programme.pages[pageIndex] ?? programme.pages[0]!;

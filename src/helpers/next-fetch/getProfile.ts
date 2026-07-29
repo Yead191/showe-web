@@ -9,8 +9,9 @@ const getProfile = async (): Promise<any | null> => {
   const res = await fetch(`${process.env.BASE_URL}/user/profile`, {
     next: {
       tags: ["user-profile"],
+      revalidate: 60 * 60 // 1 hour
     },
-    cache: "no-store",
+    cache: "force-cache",
     headers: {
       Authorization: `Bearer ${token}`,
       "Content-Type": "application/json",
