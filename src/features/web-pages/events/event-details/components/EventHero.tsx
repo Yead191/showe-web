@@ -9,6 +9,27 @@ import { PerformancesModal } from "./PerformancesModal";
 
 export function EventHero({ event }: { event: EventDetail }) {
   const [showPerformances, setShowPerformances] = React.useState(false);
+  const [hasSelectedPerformance, setHasSelectedPerformance] = React.useState(false);
+
+  const checkSelected = React.useCallback(() => {
+    if (typeof window === "undefined") return;
+    const storageKey = `saved_performance_${event._id}`;
+    const savedId =
+      localStorage.getItem(storageKey) ||
+      localStorage.getItem("saved_performance_id");
+    if (savedId && event.performances?.some((p) => p._id === savedId)) {
+      setHasSelectedPerformance(true);
+    } else {
+      setHasSelectedPerformance(false);
+    }
+  }, [event._id, event.performances]);
+
+  React.useEffect(() => {
+    checkSelected();
+  }, [checkSelected, showPerformances]);
+
+  const isFilled = hasSelectedPerformance || event.isFavorited;
+
   return (
     <section
       id="banner"
@@ -39,12 +60,17 @@ export function EventHero({ event }: { event: EventDetail }) {
           <button
             onClick={() => setShowPerformances(true)}
             aria-label="Choose a performance to favourite"
-            className="bg-white/10 backdrop-blur-md hover:bg-white/20 text-white p-2 lg:p-4 rounded-full border border-white/20 transition-all shadow-xl group cursor-pointer"
+            className={cn(
+              "backdrop-blur-md p-2 lg:p-4 rounded-full border transition-all shadow-xl group cursor-pointer",
+              isFilled
+                ? "bg-red-500/20 border-red-500/50 text-white"
+                : "bg-white/10 hover:bg-white/20 text-white border-white/20"
+            )}
           >
             <Heart
               className={cn(
                 "h-4 w-4 lg:h-5 lg:w-5 group-hover:scale-110 transition-transform",
-                event.isFavorited && "fill-red-500 text-red-500",
+                isFilled && "fill-red-500 text-red-500",
               )}
             />
           </button>
@@ -87,6 +113,7 @@ export function EventHero({ event }: { event: EventDetail }) {
         onOpenChange={setShowPerformances}
         performances={event.performances}
         eventTitle={event.title}
+        eventId={event._id}
       />
     </section>
   );

@@ -1,12 +1,29 @@
-'use client';
+"use client";
 
-import MediaRenderer from '@/helpers/MediaRenderer';
-import { getImageUrl } from '@/lib/getImageUrl';
-import { nextFetch } from '@/helpers/next-fetch/NextFetch';
-import { Block, ProgrammeDoc, ProgrammePage } from '@/types/programme';
-import { MapPin, Star, ShoppingBag, Heart, Coffee, ArrowRight, Bell, Sparkles, AccessibilityIcon, Camera, X as XIcon, Download, Utensils, BedDouble, Wine, CheckCircle2, ParkingCircle, } from 'lucide-react';
-import { useState, useRef, useMemo, useEffect } from 'react';
-
+import MediaRenderer from "@/helpers/MediaRenderer";
+import { getImageUrl } from "@/lib/getImageUrl";
+import { nextFetch } from "@/helpers/next-fetch/NextFetch";
+import { Block, ProgrammeDoc, ProgrammePage } from "@/types/programme";
+import {
+  MapPin,
+  Star,
+  ShoppingBag,
+  Heart,
+  Coffee,
+  ArrowRight,
+  Bell,
+  Sparkles,
+  AccessibilityIcon,
+  Camera,
+  X as XIcon,
+  Download,
+  Utensils,
+  BedDouble,
+  Wine,
+  CheckCircle2,
+  ParkingCircle,
+} from "lucide-react";
+import { useState, useRef, useMemo, useEffect } from "react";
 
 /**
  * Maps a Block to its preview JSX.
@@ -17,53 +34,53 @@ export function renderBlockPreview(
   context?: { programme?: ProgrammeDoc | null; page?: ProgrammePage | null },
 ) {
   switch (block.type) {
-    case 'hero':
+    case "hero":
       return <HeroPreview block={block} />;
-    case 'welcome':
+    case "welcome":
       return <WelcomePreview block={block} />;
-    case 'schedule':
+    case "schedule":
       return <SchedulePreview block={block} />;
-    case 'accessibility':
+    case "accessibility":
       return <AccessibilityPreview block={block} />;
-    case 'behind_scenes':
+    case "behind_scenes":
       return <BehindScenesPreview block={block} />;
-    case 'sponsor_thanks':
+    case "sponsor_thanks":
       return <SponsorThanksPreview block={block} />;
-    case 'refreshments':
+    case "refreshments":
       return <RefreshmentsPreview block={block} />;
-    case 'cast_grid':
+    case "cast_grid":
       return <CastGridPreview block={block} />;
-    case 'cast_spotlight':
+    case "cast_spotlight":
       return <CastSpotlightPreview block={block} />;
-    case 'narrative_text':
+    case "narrative_text":
       return <NarrativeTextPreview block={block} />;
-    case 'image_story':
+    case "image_story":
       return <ImageStoryPreview block={block} />;
-    case 'poll':
+    case "poll":
       return <PollPreview block={block} />;
-    case 'review':
+    case "review":
       return <ReviewPreview block={block} />;
-    case 'merchandise':
+    case "merchandise":
       return <MerchandisePreview block={block} />;
-    case 'future_shows':
+    case "future_shows":
       return <FutureShowsPreview block={block} />;
-    case 'donation':
+    case "donation":
       return <DonationPreview block={block} />;
-    case 'offers':
+    case "offers":
       return <OffersPreview block={block} />;
-    case 'ads':
+    case "ads":
       return <AdsPreview block={block} />;
-    case 'memory_capture':
+    case "memory_capture":
       return <MemoryCapturePreview block={block} />;
-    case 'recap':
+    case "recap":
       return <RecapPreview block={block} context={context} />;
-    case 'recommendations':
+    case "recommendations":
       return <RecommendationsPreview block={block} />;
-    case 'push_notification':
+    case "push_notification":
       return <PushNotificationPreview block={block} />;
-    case 'map':
+    case "map":
       return <MapPreview block={block} />;
-    case 'directions':
+    case "directions":
       return <DirectionsPreview block={block} />;
     default:
       return null;
@@ -72,12 +89,20 @@ export function renderBlockPreview(
 
 /* ---------------- Module 1 ---------------- */
 
-function HeroPreview({ block }: { block: Extract<Block, { type: 'hero' }> }) {
-  const heightClass = { short: 'h-40', medium: 'h-56', tall: 'h-80', full: 'h-screen lg:h-[500px]' }[block.height];
+function HeroPreview({ block }: { block: Extract<Block, { type: "hero" }> }) {
+  const heightClass = {
+    short: "h-40",
+    medium: "h-56",
+    tall: "h-80",
+    full: "h-screen lg:h-[500px]",
+  }[block.height];
   return (
     <div className={`relative w-full ${heightClass} overflow-hidden`}>
       {block.cover_image ? (
-        <MediaRenderer src={block.cover_image} className="absolute inset-0 w-full h-full object-cover" />
+        <MediaRenderer
+          src={block.cover_image}
+          className="absolute inset-0 w-full h-full object-cover"
+        />
       ) : (
         <div className="absolute inset-0 bg-linear-to-br from-primary to-primary-700" />
       )}
@@ -89,18 +114,28 @@ function HeroPreview({ block }: { block: Extract<Block, { type: 'hero' }> }) {
           {block.title}
         </h1>
         {block.subtitle && (
-          <p className="text-sm text-white/85 mt-1 drop-shadow">{block.subtitle}</p>
+          <p className="text-sm text-white/85 mt-1 drop-shadow">
+            {block.subtitle}
+          </p>
         )}
       </div>
     </div>
   );
 }
 
-function WelcomePreview({ block }: { block: Extract<Block, { type: 'welcome' }> }) {
+function WelcomePreview({
+  block,
+}: {
+  block: Extract<Block, { type: "welcome" }>;
+}) {
   return (
     <div>
-      <h2 className="font-display font-extrabold text-xl text-ink leading-tight">{block.heading}</h2>
-      <p className="mt-3 text-[14px] leading-relaxed text-ink-muted whitespace-pre-line">{block.body}</p>
+      <h2 className="font-display font-extrabold text-xl text-ink leading-tight">
+        {block.heading}
+      </h2>
+      <p className="mt-3 text-[14px] leading-relaxed text-ink-muted whitespace-pre-line">
+        {block.body}
+      </p>
       {block.signature && (
         <div className="mt-3 text-[12px] uppercase tracking-wider font-bold text-primary">
           — {block.signature}
@@ -110,7 +145,11 @@ function WelcomePreview({ block }: { block: Extract<Block, { type: 'welcome' }> 
   );
 }
 
-function SchedulePreview({ block }: { block: Extract<Block, { type: 'schedule' }> }) {
+function SchedulePreview({
+  block,
+}: {
+  block: Extract<Block, { type: "schedule" }>;
+}) {
   return (
     <div>
       <div className="eyebrow mb-3">{block.title}</div>
@@ -124,8 +163,14 @@ function SchedulePreview({ block }: { block: Extract<Block, { type: 'schedule' }
               {item.time}
             </div>
             <div>
-              <div className="font-semibold text-ink text-sm leading-tight">{item.label}</div>
-              {item.note && <div className="text-[12px] text-ink-faint mt-0.5">{item.note}</div>}
+              <div className="font-semibold text-ink text-sm leading-tight">
+                {item.label}
+              </div>
+              {item.note && (
+                <div className="text-[12px] text-ink-faint mt-0.5">
+                  {item.note}
+                </div>
+              )}
             </div>
           </li>
         ))}
@@ -134,7 +179,11 @@ function SchedulePreview({ block }: { block: Extract<Block, { type: 'schedule' }
   );
 }
 
-function AccessibilityPreview({ block }: { block: Extract<Block, { type: 'accessibility' }> }) {
+function AccessibilityPreview({
+  block,
+}: {
+  block: Extract<Block, { type: "accessibility" }>;
+}) {
   return (
     <div>
       <div className="eyebrow mb-3">{block.title}</div>
@@ -146,7 +195,11 @@ function AccessibilityPreview({ block }: { block: Extract<Block, { type: 'access
             </span>
             <div className="min-w-0">
               <div className="font-semibold text-ink text-sm">{f.label}</div>
-              {f.description && <div className="text-[12px] text-ink-muted mt-0.5">{f.description}</div>}
+              {f.description && (
+                <div className="text-[12px] text-ink-muted mt-0.5">
+                  {f.description}
+                </div>
+              )}
             </div>
           </li>
         ))}
@@ -155,13 +208,19 @@ function AccessibilityPreview({ block }: { block: Extract<Block, { type: 'access
   );
 }
 
-function BehindScenesPreview({ block }: { block: Extract<Block, { type: 'behind_scenes' }> }) {
+function BehindScenesPreview({
+  block,
+}: {
+  block: Extract<Block, { type: "behind_scenes" }>;
+}) {
   const [fullscreenMedia, setFullscreenMedia] = useState<string | null>(null);
 
   return (
     <div>
       <div className="eyebrow mb-3">{block.title}</div>
-      <p className="text-[14px] text-ink-muted leading-relaxed mb-3">{block.body}</p>
+      <p className="text-[14px] text-ink-muted leading-relaxed mb-3">
+        {block.body}
+      </p>
       <div className="grid grid-cols-2 gap-2">
         {block.images.map((src, idx) => (
           <button
@@ -179,7 +238,13 @@ function BehindScenesPreview({ block }: { block: Extract<Block, { type: 'behind_
       </div>
 
       {fullscreenMedia && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/95 p-4" onClick={(e) => { e.stopPropagation(); setFullscreenMedia(null); }}>
+        <div
+          className="fixed inset-0 z-50 flex items-center justify-center bg-black/95 p-4"
+          onClick={(e) => {
+            e.stopPropagation();
+            setFullscreenMedia(null);
+          }}
+        >
           <button
             type="button"
             className="absolute top-4 right-4 w-10 h-10 flex items-center justify-center rounded-full bg-white/10 text-white hover:bg-white/20 transition-colors"
@@ -190,8 +255,12 @@ function BehindScenesPreview({ block }: { block: Extract<Block, { type: 'behind_
           >
             <XIcon size={20} />
           </button>
-          <div className="max-w-4xl max-h-[90vh] w-full flex items-center justify-center" onClick={(e) => e.stopPropagation()}>
-            {fullscreenMedia.startsWith('data:video') || fullscreenMedia.match(/\.(mp4|webm|mov)$/i) ? (
+          <div
+            className="max-w-4xl max-h-[90vh] w-full flex items-center justify-center"
+            onClick={(e) => e.stopPropagation()}
+          >
+            {fullscreenMedia.startsWith("data:video") ||
+            fullscreenMedia.match(/\.(mp4|webm|mov)$/i) ? (
               <video
                 src={fullscreenMedia}
                 controls
@@ -199,7 +268,11 @@ function BehindScenesPreview({ block }: { block: Extract<Block, { type: 'behind_
                 className="max-w-full max-h-[90vh] object-contain rounded-lg"
               />
             ) : (
-              <img src={fullscreenMedia} alt="Fullscreen preview" className="max-w-full max-h-[90vh] object-contain rounded-lg" />
+              <img
+                src={fullscreenMedia}
+                alt="Fullscreen preview"
+                className="max-w-full max-h-[90vh] object-contain rounded-lg"
+              />
             )}
           </div>
         </div>
@@ -208,7 +281,11 @@ function BehindScenesPreview({ block }: { block: Extract<Block, { type: 'behind_
   );
 }
 
-function SponsorThanksPreview({ block }: { block: Extract<Block, { type: 'sponsor_thanks' }> }) {
+function SponsorThanksPreview({
+  block,
+}: {
+  block: Extract<Block, { type: "sponsor_thanks" }>;
+}) {
   return (
     <div>
       <div className="eyebrow mb-3">{block.title}</div>
@@ -219,7 +296,10 @@ function SponsorThanksPreview({ block }: { block: Extract<Block, { type: 'sponso
             className="rounded-lg border border-line bg-surface-raised p-3 text-center text-sm font-semibold text-ink"
           >
             {s.logo ? (
-              <MediaRenderer src={s.logo} className="h-8 mx-auto object-contain mb-1" />
+              <MediaRenderer
+                src={s.logo}
+                className="h-8 mx-auto object-contain mb-1"
+              />
             ) : (
               <Heart size={14} className="text-accent mx-auto mb-1.5" />
             )}
@@ -231,13 +311,19 @@ function SponsorThanksPreview({ block }: { block: Extract<Block, { type: 'sponso
   );
 }
 
-function RefreshmentsPreview({ block }: { block: Extract<Block, { type: 'refreshments' }> }) {
+function RefreshmentsPreview({
+  block,
+}: {
+  block: Extract<Block, { type: "refreshments" }>;
+}) {
   return (
     <div className="rounded-xl border border-line bg-surface-sunken p-4">
       <div className="w-10 h-10 rounded-full bg-accent text-ink flex items-center justify-center mb-3">
         <Coffee size={16} />
       </div>
-      <h3 className="font-display font-bold text-ink leading-tight">{block.title}</h3>
+      <h3 className="font-display font-bold text-ink leading-tight">
+        {block.title}
+      </h3>
       <p className="text-[13px] text-ink-muted mt-1.5">{block.description}</p>
       <button className="mt-3 inline-flex items-center gap-1.5 text-sm font-semibold text-primary">
         {block.cta_label} <ArrowRight size={13} />
@@ -248,9 +334,13 @@ function RefreshmentsPreview({ block }: { block: Extract<Block, { type: 'refresh
 
 /* ---------------- Module 2 ---------------- */
 
-function CastGridPreview({ block }: { block: Extract<Block, { type: 'cast_grid' }> }) {
+function CastGridPreview({
+  block,
+}: {
+  block: Extract<Block, { type: "cast_grid" }>;
+}) {
   const [openId, setOpenId] = useState<string | null>(null);
-  const cols = block.columns === 3 ? 'grid-cols-3' : 'grid-cols-2';
+  const cols = block.columns === 3 ? "grid-cols-3" : "grid-cols-2";
   return (
     <div>
       <div className="eyebrow mb-1">{block.title}</div>
@@ -269,12 +359,23 @@ function CastGridPreview({ block }: { block: Extract<Block, { type: 'cast_grid' 
                 setOpenId(isOpen ? null : m.id);
               }}
             >
-              {m.image && <MediaRenderer src={m.image} className="w-full aspect-square object-cover" />}
+              {m.image && (
+                <MediaRenderer
+                  src={m.image}
+                  className="w-full aspect-square object-cover"
+                />
+              )}
               <div className="p-2.5">
-                <div className="font-semibold text-ink text-[13px] leading-tight truncate">{m.name}</div>
-                <div className="text-[11px] text-ink-faint truncate">{m.role}</div>
+                <div className="font-semibold text-ink text-[13px] leading-tight truncate">
+                  {m.name}
+                </div>
+                <div className="text-[11px] text-ink-faint truncate">
+                  {m.role}
+                </div>
                 {isOpen && m.bio && (
-                  <p className="text-[11.5px] text-ink-muted mt-2 leading-snug">{m.bio}</p>
+                  <p className="text-[11.5px] text-ink-muted mt-2 leading-snug">
+                    {m.bio}
+                  </p>
                 )}
                 {isOpen && m.link_url && (
                   <a
@@ -285,7 +386,7 @@ function CastGridPreview({ block }: { block: Extract<Block, { type: 'cast_grid' 
                     className="mt-2 inline-flex items-center gap-1 text-[11px] font-bold text-primary hover:text-primary-700 transition-colors"
                   >
                     <ArrowRight size={10} />
-                    {m.link_label || 'Visit'}
+                    {m.link_label || "Visit"}
                   </a>
                 )}
               </div>
@@ -297,16 +398,27 @@ function CastGridPreview({ block }: { block: Extract<Block, { type: 'cast_grid' 
   );
 }
 
-function CastSpotlightPreview({ block }: { block: Extract<Block, { type: 'cast_spotlight' }> }) {
+function CastSpotlightPreview({
+  block,
+}: {
+  block: Extract<Block, { type: "cast_spotlight" }>;
+}) {
   return (
     <div className="rounded-xl overflow-hidden border border-line">
       {block.image && (
-        <MediaRenderer src={block.image} className="w-full aspect-[4/3] object-cover" />
+        <MediaRenderer
+          src={block.image}
+          className="w-full aspect-4/3 object-cover"
+        />
       )}
       <div className="p-4">
-        <div className="eyebrow !text-accent">{block.role}</div>
-        <h3 className="font-display font-bold text-lg text-ink mt-1">{block.name}</h3>
-        <p className="text-[13px] text-ink-muted mt-2 leading-relaxed">{block.bio}</p>
+        <div className="eyebrow text-accent!">{block.role}</div>
+        <h3 className="font-display font-bold text-lg text-ink mt-1">
+          {block.name}
+        </h3>
+        <p className="text-[13px] text-ink-muted mt-2 leading-relaxed">
+          {block.bio}
+        </p>
         {block.link_url && (
           <a
             href={block.link_url}
@@ -316,7 +428,7 @@ function CastSpotlightPreview({ block }: { block: Extract<Block, { type: 'cast_s
             className="mt-3 inline-flex items-center gap-1.5 h-8 px-3 rounded-full bg-primary/10 text-primary text-[12px] font-bold hover:bg-primary/20 transition-colors"
           >
             <ArrowRight size={11} />
-            {block.link_label || 'Visit'}
+            {block.link_label || "Visit"}
           </a>
         )}
       </div>
@@ -326,35 +438,61 @@ function CastSpotlightPreview({ block }: { block: Extract<Block, { type: 'cast_s
 
 /* ---------------- Module 3 ---------------- */
 
-function NarrativeTextPreview({ block }: { block: Extract<Block, { type: 'narrative_text' }> }) {
+function NarrativeTextPreview({
+  block,
+}: {
+  block: Extract<Block, { type: "narrative_text" }>;
+}) {
   return (
-    <div className={`text-${block.layout.align === 'full' ? 'left' : block.layout.align}`}>
+    <div
+      className={`text-${block.layout.align === "full" ? "left" : block.layout.align}`}
+    >
       {block.eyebrow && <div className="eyebrow mb-2">{block.eyebrow}</div>}
       {block.heading && (
-        <h3 className="font-display font-bold text-xl text-ink leading-tight">{block.heading}</h3>
+        <h3 className="font-display font-bold text-xl text-ink leading-tight">
+          {block.heading}
+        </h3>
       )}
-      <p className="mt-2 text-[14px] leading-relaxed text-ink-muted whitespace-pre-line">{block.body}</p>
+      <p className="mt-2 text-[14px] leading-relaxed text-ink-muted whitespace-pre-line">
+        {block.body}
+      </p>
     </div>
   );
 }
 
-function ImageStoryPreview({ block }: { block: Extract<Block, { type: 'image_story' }> }) {
+function ImageStoryPreview({
+  block,
+}: {
+  block: Extract<Block, { type: "image_story" }>;
+}) {
   return (
     <div>
-      <div className={block.image_position === 'top' ? 'space-y-3' : block.image_position === 'left' ? 'flex gap-3 items-start' : 'flex flex-row-reverse gap-3 items-start'}>
+      <div
+        className={
+          block.image_position === "top"
+            ? "space-y-3"
+            : block.image_position === "left"
+              ? "flex gap-3 items-start"
+              : "flex flex-row-reverse gap-3 items-start"
+        }
+      >
         {block.image && (
           <MediaRenderer
             src={block.image}
             className={
-              block.image_position === 'top'
-                ? 'w-full aspect-video object-cover rounded-lg bg-surface-sunken'
-                : 'w-24 h-24 object-cover rounded-lg bg-surface-sunken shrink-0'
+              block.image_position === "top"
+                ? "w-full aspect-video object-cover rounded-lg bg-surface-sunken"
+                : "w-24 h-24 object-cover rounded-lg bg-surface-sunken shrink-0"
             }
           />
         )}
         <div className="flex-1">
-          {block.caption && <div className="eyebrow mb-1.5">{block.caption}</div>}
-          <p className="text-[13.5px] text-ink-muted leading-relaxed whitespace-pre-line">{block.body}</p>
+          {block.caption && (
+            <div className="eyebrow mb-1.5">{block.caption}</div>
+          )}
+          <p className="text-[13.5px] text-ink-muted leading-relaxed whitespace-pre-line">
+            {block.body}
+          </p>
         </div>
       </div>
     </div>
@@ -363,11 +501,13 @@ function ImageStoryPreview({ block }: { block: Extract<Block, { type: 'image_sto
 
 /* ---------------- Module 4 ---------------- */
 
-function PollPreview({ block }: { block: Extract<Block, { type: 'poll' }> }) {
+function PollPreview({ block }: { block: Extract<Block, { type: "poll" }> }) {
   const [voted, setVoted] = useState<string | null>(null);
   return (
     <div className="rounded-xl border border-line bg-surface-sunken p-4">
-      <h4 className="font-display font-bold text-ink leading-tight">{block.question}</h4>
+      <h4 className="font-display font-bold text-ink leading-tight">
+        {block.question}
+      </h4>
       <ul className="mt-3 grid grid-cols-2 gap-2">
         {block.options.map((o) => (
           <li key={o.id}>
@@ -378,9 +518,10 @@ function PollPreview({ block }: { block: Extract<Block, { type: 'poll' }> }) {
                 setVoted(o.id);
               }}
               className={`w-full rounded-lg border px-3 py-2.5 text-sm font-semibold transition-all flex items-center justify-center gap-2
-                ${voted === o.id
-                  ? 'bg-primary text-ink-inverse border-primary'
-                  : 'bg-surface-raised text-ink border-line hover:border-primary/40'
+                ${
+                  voted === o.id
+                    ? "bg-primary text-ink-inverse border-primary"
+                    : "bg-surface-raised text-ink border-line hover:border-primary/40"
                 }`}
             >
               {o.emoji && <span className="text-base">{o.emoji}</span>}
@@ -390,14 +531,17 @@ function PollPreview({ block }: { block: Extract<Block, { type: 'poll' }> }) {
         ))}
       </ul>
       {voted && block.thank_you_message && (
-        <p className="mt-3 text-[12.5px] text-success font-semibold">{block.thank_you_message}</p>
+        <p className="mt-3 text-[12.5px] text-success font-semibold">
+          {block.thank_you_message}
+        </p>
       )}
       {block.show_results_live && (
         <div className="mt-4 space-y-2">
           {block.options.map((option, index) => {
             const results = block.results ?? [];
             const count = results[index]?.count ?? 0;
-            const total = results.reduce((acc, result) => acc + result.count, 0) || 1;
+            const total =
+              results.reduce((acc, result) => acc + result.count, 0) || 1;
             const width = `${Math.max(8, Math.round((count / total) * 100))}%`;
             return (
               <div key={option.id}>
@@ -406,7 +550,10 @@ function PollPreview({ block }: { block: Extract<Block, { type: 'poll' }> }) {
                   <span>{count}</span>
                 </div>
                 <div className="h-2 rounded-full bg-surface-raised overflow-hidden">
-                  <div className="h-full rounded-full bg-primary" style={{ width }} />
+                  <div
+                    className="h-full rounded-full bg-primary"
+                    style={{ width }}
+                  />
                 </div>
               </div>
             );
@@ -417,15 +564,23 @@ function PollPreview({ block }: { block: Extract<Block, { type: 'poll' }> }) {
   );
 }
 
-function ReviewPreview({ block }: { block: Extract<Block, { type: 'review' }> }) {
+function ReviewPreview({
+  block,
+}: {
+  block: Extract<Block, { type: "review" }>;
+}) {
   const [chars, setChars] = useState(0);
   const [submitted, setSubmitted] = useState(false);
   return (
     <div>
-      <h4 className="font-display font-bold text-ink leading-tight">{block.prompt}</h4>
+      <h4 className="font-display font-bold text-ink leading-tight">
+        {block.prompt}
+      </h4>
       {submitted ? (
         <div className="mt-3 rounded-xl bg-success/10 border border-success/30 p-4 text-center">
-          <p className="text-[13px] font-semibold text-success">Thanks for your review! ✓</p>
+          <p className="text-[13px] font-semibold text-success">
+            Thanks for your review! ✓
+          </p>
         </div>
       ) : (
         <>
@@ -443,10 +598,13 @@ function ReviewPreview({ block }: { block: Extract<Block, { type: 'review' }> })
           </div>
           <button
             type="button"
-            onClick={(e) => { e.stopPropagation(); setSubmitted(true); }}
+            onClick={(e) => {
+              e.stopPropagation();
+              setSubmitted(true);
+            }}
             className="w-full rounded-full bg-primary text-ink-inverse h-10 font-bold text-sm shadow-soft hover:bg-primary-700 transition-colors"
           >
-            {block.submit_label || 'Submit'}
+            {block.submit_label || "Submit"}
           </button>
         </>
       )}
@@ -456,17 +614,33 @@ function ReviewPreview({ block }: { block: Extract<Block, { type: 'review' }> })
 
 /* ---------------- Module 5 ---------------- */
 
-function MerchandisePreview({ block }: { block: Extract<Block, { type: 'merchandise' }> }) {
+function MerchandisePreview({
+  block,
+}: {
+  block: Extract<Block, { type: "merchandise" }>;
+}) {
   return (
     <div>
       <div className="eyebrow mb-3">{block.title}</div>
       <ul className="space-y-2.5">
         {block.items.map((it) => (
-          <li key={it.id} className="flex items-center gap-3 rounded-xl border border-line bg-surface-raised p-2.5">
-            {it.image && <MediaRenderer src={it.image} className="w-14 h-14 rounded-lg object-cover bg-surface-sunken" />}
+          <li
+            key={it.id}
+            className="flex items-center gap-3 rounded-xl border border-line bg-surface-raised p-2.5"
+          >
+            {it.image && (
+              <MediaRenderer
+                src={it.image}
+                className="w-14 h-14 rounded-lg object-cover bg-surface-sunken"
+              />
+            )}
             <div className="flex-1 min-w-0">
-              <div className="font-semibold text-ink text-sm truncate">{it.name}</div>
-              <div className="font-display font-bold tabular text-primary text-sm">{it.price}</div>
+              <div className="font-semibold text-ink text-sm truncate">
+                {it.name}
+              </div>
+              <div className="font-display font-bold tabular text-primary text-sm">
+                {it.price}
+              </div>
             </div>
             <button className="w-8 h-8 rounded-full bg-primary text-ink-inverse flex items-center justify-center">
               <ShoppingBag size={13} />
@@ -478,14 +652,26 @@ function MerchandisePreview({ block }: { block: Extract<Block, { type: 'merchand
   );
 }
 
-function FutureShowsPreview({ block }: { block: Extract<Block, { type: 'future_shows' }> }) {
+function FutureShowsPreview({
+  block,
+}: {
+  block: Extract<Block, { type: "future_shows" }>;
+}) {
   return (
     <div>
       <div className="eyebrow mb-3">{block.title}</div>
       <ul className="space-y-2.5">
         {block.shows.map((s) => (
-          <li key={s.id} className="rounded-xl overflow-hidden border border-line">
-            {s.image && <MediaRenderer src={s.image} className="w-full aspect-video object-cover" />}
+          <li
+            key={s.id}
+            className="rounded-xl overflow-hidden border border-line"
+          >
+            {s.image && (
+              <MediaRenderer
+                src={s.image}
+                className="w-full aspect-video object-cover"
+              />
+            )}
             <div className="p-3">
               <div className="font-semibold text-ink text-sm">{s.name}</div>
               <div className="text-[12px] text-ink-muted mt-0.5">{s.date}</div>
@@ -497,12 +683,19 @@ function FutureShowsPreview({ block }: { block: Extract<Block, { type: 'future_s
   );
 }
 
-function DonationPreview({ block }: { block: Extract<Block, { type: 'donation' }> }) {
+function DonationPreview({
+  block,
+}: {
+  block: Extract<Block, { type: "donation" }>;
+}) {
   const [selectedAmt, setSelectedAmt] = useState<number | null>(null);
   return (
     <div className="rounded-xl border border-line overflow-hidden">
       {block.image && (
-        <MediaRenderer src={block.image} className="w-full aspect-video object-cover" />
+        <MediaRenderer
+          src={block.image}
+          className="w-full aspect-video object-cover"
+        />
       )}
       <div className="p-4 bg-surface-sunken">
         {!block.image && <Heart size={18} className="text-accent mb-2" />}
@@ -513,37 +706,53 @@ function DonationPreview({ block }: { block: Extract<Block, { type: 'donation' }
             <button
               key={amt}
               type="button"
-              onClick={(e) => { e.stopPropagation(); setSelectedAmt(amt); }}
-              className={`rounded-lg border py-2 text-sm font-bold transition-all ${selectedAmt === amt
-                ? 'bg-primary text-ink-inverse border-primary shadow-soft'
-                : 'bg-surface-raised text-ink border-line hover:border-primary/50'
-                }`}
+              onClick={(e) => {
+                e.stopPropagation();
+                setSelectedAmt(amt);
+              }}
+              className={`rounded-lg border py-2 text-sm font-bold transition-all ${
+                selectedAmt === amt
+                  ? "bg-primary text-ink-inverse border-primary shadow-soft"
+                  : "bg-surface-raised text-ink border-line hover:border-primary/50"
+              }`}
             >
               £{amt}
             </button>
           ))}
         </div>
         <a
-          href={block.cta_url ? `${block.cta_url}${selectedAmt ? `?amount=${selectedAmt}` : ''}` : '#'}
+          href={
+            block.cta_url
+              ? `${block.cta_url}${selectedAmt ? `?amount=${selectedAmt}` : ""}`
+              : "#"
+          }
           target="_blank"
           rel="noopener noreferrer"
           onClick={(e) => e.stopPropagation()}
           className="mt-3 flex items-center justify-center w-full rounded-full bg-accent text-ink h-10 font-semibold text-sm hover:bg-accent-600 transition-colors"
         >
-          {block.cta_label}{selectedAmt ? ` — £${selectedAmt}` : ''}
+          {block.cta_label}
+          {selectedAmt ? ` — £${selectedAmt}` : ""}
         </a>
       </div>
     </div>
   );
 }
 
-function OffersPreview({ block }: { block: Extract<Block, { type: 'offers' }> }) {
+function OffersPreview({
+  block,
+}: {
+  block: Extract<Block, { type: "offers" }>;
+}) {
   return (
     <div>
       <div className="eyebrow mb-3">{block.title}</div>
       <ul className="space-y-2.5">
         {block.offers.map((o) => (
-          <li key={o.id} className="rounded-xl border-2 border-dashed border-accent/50 bg-accent/5 p-3">
+          <li
+            key={o.id}
+            className="rounded-xl border-2 border-dashed border-accent/50 bg-accent/5 p-3"
+          >
             <div className="font-semibold text-ink text-sm">{o.title}</div>
             <p className="text-[12.5px] text-ink-muted mt-1">{o.description}</p>
             {o.code && (
@@ -566,11 +775,11 @@ interface AdItem {
   redirectUrl: string;
 }
 
-function AdsPreview({ block }: { block: Extract<Block, { type: 'ads' }> }) {
+function AdsPreview({ block }: { block: Extract<Block, { type: "ads" }> }) {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const [ads, setAds] = useState<any[]>([]);
   const ids = useMemo(() => block.selected_items ?? [], [block.selected_items]);
-  const idsKey = ids.join(',');
+  const idsKey = ids.join(",");
 
   useEffect(() => {
     if (ids.length === 0) {
@@ -580,7 +789,7 @@ function AdsPreview({ block }: { block: Extract<Block, { type: 'ads' }> }) {
     let active = true;
     (async () => {
       const res = await nextFetch(`/ads/bulk-gets`, {
-        method: 'POST',
+        method: "POST",
         body: { ids },
       });
       if (active) {
@@ -598,26 +807,65 @@ function AdsPreview({ block }: { block: Extract<Block, { type: 'ads' }> }) {
     title: ad.title,
     description: ad.description,
     imageUrl: ad.image ?? ad.imageUrl ?? ad.cover_image,
-    redirectUrl: ad.redirect_url ?? ad.redirectUrl ?? ad.link ?? ad.url ?? ad.website ?? '#',
+    redirectUrl:
+      ad.redirect_url ??
+      ad.redirectUrl ??
+      ad.link ??
+      ad.url ??
+      ad.website ??
+      "#",
   }));
+
+  const handleAdClick = (
+    e: React.MouseEvent<HTMLAnchorElement>,
+    redirectUrl: string,
+    adId: string,
+  ) => {
+    e.preventDefault();
+    (async () => {
+      try {
+        if (adId) {
+          await nextFetch(`/ads/${adId}`, { method: "GET" });
+        }
+      } catch (err) {
+        console.error("Failed to track ad click:", err);
+      } finally {
+        if (redirectUrl && redirectUrl !== "#") {
+          window.open(redirectUrl, "_blank", "noopener,noreferrer");
+        }
+      }
+    })();
+  };
 
   return (
     <div>
       <div className="eyebrow mb-3">{block.title}</div>
       <ul className="space-y-3 flex flex-col">
-        {displayItems.map((s) => (
-          <a key={s.id} href={s.redirectUrl} target="_blank" rel="noopener noreferrer" className="block">
+        {displayItems?.map((s) => (
+          <a
+            key={s.id}
+            href={s.redirectUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            onClick={(e) => handleAdClick(e, s.redirectUrl, s.id)}
+            className="block"
+          >
             <li className="rounded-xl overflow-hidden border border-line bg-surface-raised transition-all hover:shadow-md">
               {s.imageUrl && (
                 <div className="relative w-full aspect-video">
-                  <MediaRenderer src={getImageUrl(s.imageUrl)} className="w-full h-full object-cover" />
+                  <MediaRenderer
+                    src={getImageUrl(s.imageUrl)}
+                    className="w-full h-full object-cover"
+                  />
                   <div className="absolute top-2 right-2 bg-black/60 text-white text-[9px] uppercase tracking-widest font-bold px-2 py-0.5 rounded-sm">
                     Sponsored
                   </div>
                 </div>
               )}
               <div className="p-3">
-                <div className="font-semibold text-ink text-sm leading-tight">{s.title}</div>
+                <div className="font-semibold text-ink text-sm leading-tight">
+                  {s.title}
+                </div>
                 {s.description && (
                   <p className="text-[12px] text-ink-muted mt-1 leading-snug line-clamp-2">
                     {s.description}
@@ -642,8 +890,12 @@ function AdsPreview({ block }: { block: Extract<Block, { type: 'ads' }> }) {
 
 /* ---------------- Module 6 ---------------- */
 
-function MemoryCapturePreview({ block }: { block: Extract<Block, { type: 'memory_capture' }> }) {
-  const [text, setText] = useState('');
+function MemoryCapturePreview({
+  block,
+}: {
+  block: Extract<Block, { type: "memory_capture" }>;
+}) {
+  const [text, setText] = useState("");
   const [imagePreview, setImagePreview] = useState<string | null>(null);
   const [generatedCard, setGeneratedCard] = useState<string | null>(null);
   const [generating, setGenerating] = useState(false);
@@ -659,15 +911,22 @@ function MemoryCapturePreview({ block }: { block: Extract<Block, { type: 'memory
     }
   };
 
-  const wrapText = (ctx: CanvasRenderingContext2D, text: string, x: number, y: number, maxWidth: number, lineHeight: number) => {
-    const words = text.split(' ');
-    let line = '';
+  const wrapText = (
+    ctx: CanvasRenderingContext2D,
+    text: string,
+    x: number,
+    y: number,
+    maxWidth: number,
+    lineHeight: number,
+  ) => {
+    const words = text.split(" ");
+    let line = "";
     let currentY = y;
     for (const word of words) {
-      const testLine = line + word + ' ';
-      if (ctx.measureText(testLine).width > maxWidth && line !== '') {
+      const testLine = line + word + " ";
+      if (ctx.measureText(testLine).width > maxWidth && line !== "") {
         ctx.fillText(line.trim(), x, currentY);
-        line = word + ' ';
+        line = word + " ";
         currentY += lineHeight;
       } else {
         line = testLine;
@@ -680,15 +939,15 @@ function MemoryCapturePreview({ block }: { block: Extract<Block, { type: 'memory
   const generateMemoryCard = async () => {
     setGenerating(true);
     const canvas = canvasRef.current!;
-    const ctx = canvas.getContext('2d')!;
+    const ctx = canvas.getContext("2d")!;
     canvas.width = 800;
     canvas.height = 1050;
 
     // ── Background ──
     const bg = ctx.createLinearGradient(0, 0, 800, 1050);
-    bg.addColorStop(0, '#012d31');
-    bg.addColorStop(0.55, '#011a1d');
-    bg.addColorStop(1, '#010e10');
+    bg.addColorStop(0, "#012d31");
+    bg.addColorStop(0.55, "#011a1d");
+    bg.addColorStop(1, "#010e10");
     ctx.fillStyle = bg;
     ctx.beginPath();
     ctx.roundRect(0, 0, 800, 1050, 28);
@@ -697,22 +956,26 @@ function MemoryCapturePreview({ block }: { block: Extract<Block, { type: 'memory
     // ── Decorative circles ──
     ctx.save();
     ctx.globalAlpha = 0.07;
-    ctx.fillStyle = '#F5A800';
-    ctx.beginPath(); ctx.arc(720, 180, 220, 0, Math.PI * 2); ctx.fill();
-    ctx.beginPath(); ctx.arc(80, 900, 160, 0, Math.PI * 2); ctx.fill();
+    ctx.fillStyle = "#F5A800";
+    ctx.beginPath();
+    ctx.arc(720, 180, 220, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.beginPath();
+    ctx.arc(80, 900, 160, 0, Math.PI * 2);
+    ctx.fill();
     ctx.globalAlpha = 1;
     ctx.restore();
 
     // ── Accent corner bar ──
-    ctx.fillStyle = '#F5A800';
+    ctx.fillStyle = "#F5A800";
     ctx.fillRect(60, 56, 60, 4);
 
     // ── Header text ──
-    ctx.fillStyle = '#F5A800';
-    ctx.font = 'bold 13px system-ui, -apple-system, sans-serif';
-    ctx.letterSpacing = '3px';
-    ctx.fillText('MY SHOWE MEMORY', 60, 86);
-    ctx.letterSpacing = '0px';
+    ctx.fillStyle = "#F5A800";
+    ctx.font = "bold 13px system-ui, -apple-system, sans-serif";
+    ctx.letterSpacing = "3px";
+    ctx.fillText("MY SHOWE MEMORY", 60, 86);
+    ctx.letterSpacing = "0px";
 
     // ── Photo ──
     const hasPhoto = !!imagePreview;
@@ -722,7 +985,10 @@ function MemoryCapturePreview({ block }: { block: Extract<Block, { type: 'memory
     if (hasPhoto) {
       const img = new Image();
       img.src = imagePreview!;
-      await new Promise<void>((resolve) => { img.onload = () => resolve(); img.onerror = () => resolve(); });
+      await new Promise<void>((resolve) => {
+        img.onload = () => resolve();
+        img.onerror = () => resolve();
+      });
 
       ctx.save();
       ctx.beginPath();
@@ -737,9 +1003,14 @@ function MemoryCapturePreview({ block }: { block: Extract<Block, { type: 'memory
       ctx.drawImage(img, sx, sy, sw, sh);
 
       // linear vignette at bottom of photo
-      const vign = ctx.createLinearGradient(60, photoY + photoH - 120, 60, photoY + photoH);
-      vign.addColorStop(0, 'rgba(1,26,29,0)');
-      vign.addColorStop(1, 'rgba(1,26,29,0.65)');
+      const vign = ctx.createLinearGradient(
+        60,
+        photoY + photoH - 120,
+        60,
+        photoY + photoH,
+      );
+      vign.addColorStop(0, "rgba(1,26,29,0)");
+      vign.addColorStop(1, "rgba(1,26,29,0.65)");
       ctx.fillStyle = vign;
       ctx.fillRect(60, photoY, 680, photoH);
       ctx.restore();
@@ -749,70 +1020,93 @@ function MemoryCapturePreview({ block }: { block: Extract<Block, { type: 'memory
     const textStartY = hasPhoto ? photoY + photoH + 50 : 160;
 
     // opening quote
-    ctx.fillStyle = 'rgba(245,168,0,0.35)';
-    ctx.font = 'italic 72px Georgia, serif';
-    ctx.fillText('\u201C', 52, textStartY + 8);
+    ctx.fillStyle = "rgba(245,168,0,0.35)";
+    ctx.font = "italic 72px Georgia, serif";
+    ctx.fillText("\u201C", 52, textStartY + 8);
 
     // memory body
-    ctx.fillStyle = '#FBFAF7';
-    ctx.font = '400 26px Georgia, serif';
-    const lastY = wrapText(ctx, text || block.placeholder, 88, textStartY + 12, 624, 40);
+    ctx.fillStyle = "#FBFAF7";
+    ctx.font = "400 26px Georgia, serif";
+    const lastY = wrapText(
+      ctx,
+      text || block.placeholder,
+      88,
+      textStartY + 12,
+      624,
+      40,
+    );
 
     // closing quote
-    ctx.fillStyle = 'rgba(245,168,0,0.35)';
-    ctx.font = 'italic 72px Georgia, serif';
-    ctx.fillText('\u201D', 680, lastY + 48);
+    ctx.fillStyle = "rgba(245,168,0,0.35)";
+    ctx.font = "italic 72px Georgia, serif";
+    ctx.fillText("\u201D", 680, lastY + 48);
 
     // ── Divider ──
     const divY = lastY + 100;
     const divGrad = ctx.createLinearGradient(60, divY, 740, divY);
-    divGrad.addColorStop(0, 'rgba(245,168,0,0)');
-    divGrad.addColorStop(0.5, 'rgba(245,168,0,0.45)');
-    divGrad.addColorStop(1, 'rgba(245,168,0,0)');
+    divGrad.addColorStop(0, "rgba(245,168,0,0)");
+    divGrad.addColorStop(0.5, "rgba(245,168,0,0.45)");
+    divGrad.addColorStop(1, "rgba(245,168,0,0)");
     ctx.strokeStyle = divGrad;
     ctx.lineWidth = 1;
-    ctx.beginPath(); ctx.moveTo(60, divY); ctx.lineTo(740, divY); ctx.stroke();
+    ctx.beginPath();
+    ctx.moveTo(60, divY);
+    ctx.lineTo(740, divY);
+    ctx.stroke();
 
     // ── Branding ──
     const brandY = divY + 42;
     const logoImg = new Image();
-    logoImg.src = '/favicon.ico';
-    await new Promise<void>((resolve) => { logoImg.onload = () => resolve(); logoImg.onerror = () => resolve(); });
+    logoImg.src = "/favicon.ico";
+    await new Promise<void>((resolve) => {
+      logoImg.onload = () => resolve();
+      logoImg.onerror = () => resolve();
+    });
 
     if (logoImg.complete && logoImg.naturalWidth > 0) {
       // Draw logo with rounded background
       ctx.save();
-      ctx.fillStyle = 'rgba(245,168,0,0.15)';
-      ctx.beginPath(); ctx.roundRect(58, brandY - 18, 36, 36, 8); ctx.fill();
+      ctx.fillStyle = "rgba(245,168,0,0.15)";
+      ctx.beginPath();
+      ctx.roundRect(58, brandY - 18, 36, 36, 8);
+      ctx.fill();
       ctx.drawImage(logoImg, 62, brandY - 14, 28, 28);
       ctx.restore();
     }
 
-    const logoOffset = (logoImg.complete && logoImg.naturalWidth > 0) ? 106 : 60;
-    ctx.fillStyle = '#FBFAF7';
-    ctx.font = 'bold 22px system-ui, sans-serif';
-    ctx.fillText('Showe', logoOffset, brandY + 8);
+    const logoOffset = logoImg.complete && logoImg.naturalWidth > 0 ? 106 : 60;
+    ctx.fillStyle = "#FBFAF7";
+    ctx.font = "bold 22px system-ui, sans-serif";
+    ctx.fillText("Showe", logoOffset, brandY + 8);
 
-    ctx.fillStyle = 'rgba(251,250,247,0.4)';
-    ctx.font = '400 14px system-ui, sans-serif';
-    ctx.fillText('Captured at the event', logoOffset, brandY + 28);
+    ctx.fillStyle = "rgba(251,250,247,0.4)";
+    ctx.font = "400 14px system-ui, sans-serif";
+    ctx.fillText("Captured at the event", logoOffset, brandY + 28);
 
     // Timestamp right side
-    ctx.textAlign = 'right';
-    ctx.fillStyle = 'rgba(251,250,247,0.3)';
-    ctx.font = '400 13px system-ui, sans-serif';
-    ctx.fillText(new Date().toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' }), 740, brandY + 8);
-    ctx.textAlign = 'left';
+    ctx.textAlign = "right";
+    ctx.fillStyle = "rgba(251,250,247,0.3)";
+    ctx.font = "400 13px system-ui, sans-serif";
+    ctx.fillText(
+      new Date().toLocaleDateString("en-GB", {
+        day: "numeric",
+        month: "long",
+        year: "numeric",
+      }),
+      740,
+      brandY + 8,
+    );
+    ctx.textAlign = "left";
 
-    setGeneratedCard(canvas.toDataURL('image/png'));
+    setGeneratedCard(canvas.toDataURL("image/png"));
     setGenerating(false);
   };
 
   const downloadCard = () => {
     if (!generatedCard) return;
-    const a = document.createElement('a');
+    const a = document.createElement("a");
     a.href = generatedCard;
-    a.download = 'my-showe-memory.png';
+    a.download = "my-showe-memory.png";
     a.click();
   };
 
@@ -826,20 +1120,36 @@ function MemoryCapturePreview({ block }: { block: Extract<Block, { type: 'memory
             <Sparkles size={13} className="text-accent" />
           </div>
           <div>
-            <div className="text-[11px] font-bold text-accent uppercase tracking-wider">Memory Created!</div>
-            <p className="text-[11.5px] text-ink-inverse/70">{block.success_message}</p>
+            <div className="text-[11px] font-bold text-accent uppercase tracking-wider">
+              Memory Created!
+            </div>
+            <p className="text-[11.5px] text-ink-inverse/70">
+              {block.success_message}
+            </p>
           </div>
         </div>
         <div className="p-4 bg-surface-raised space-y-3">
-          <img src={generatedCard} alt="Your Showe memory" className="w-full rounded-xl shadow-large border border-line/50" />
+          <img
+            src={generatedCard}
+            alt="Your Showe memory"
+            className="w-full rounded-xl shadow-large border border-line/50"
+          />
           <button
-            onClick={(e) => { e.stopPropagation(); downloadCard(); }}
+            onClick={(e) => {
+              e.stopPropagation();
+              downloadCard();
+            }}
             className="w-full rounded-full bg-primary text-ink-inverse h-11 font-bold text-[13px] flex items-center justify-center gap-2 hover:bg-primary-700 transition-all shadow-medium hover:shadow-large hover:scale-[1.01]"
           >
             <Download size={14} /> Save Memory
           </button>
           <button
-            onClick={(e) => { e.stopPropagation(); setGeneratedCard(null); setText(''); setImagePreview(null); }}
+            onClick={(e) => {
+              e.stopPropagation();
+              setGeneratedCard(null);
+              setText("");
+              setImagePreview(null);
+            }}
             className="w-full rounded-full border border-line text-ink-muted h-9 font-semibold text-[12px] hover:border-line-strong hover:text-ink transition-colors"
           >
             Create Another
@@ -859,24 +1169,43 @@ function MemoryCapturePreview({ block }: { block: Extract<Block, { type: 'memory
         <div className="relative z-[1]">
           <div className="flex items-center gap-1.5 mb-2">
             <Sparkles size={12} className="text-accent" />
-            <span className="text-[10px] font-bold text-accent uppercase tracking-widest">Memory Capture</span>
+            <span className="text-[10px] font-bold text-accent uppercase tracking-widest">
+              Memory Capture
+            </span>
           </div>
-          <h3 className="font-display font-bold text-ink-inverse leading-tight text-[16px]">{block.title}</h3>
-          <p className="text-[12px] text-ink-inverse/65 mt-1 leading-relaxed">{block.prompt}</p>
+          <h3 className="font-display font-bold text-ink-inverse leading-tight text-[16px]">
+            {block.title}
+          </h3>
+          <p className="text-[12px] text-ink-inverse/65 mt-1 leading-relaxed">
+            {block.prompt}
+          </p>
         </div>
       </div>
 
       <div className="p-4 bg-surface-raised space-y-3">
-        <input type="file" accept="image/*" ref={fileRef} onChange={handleImageFile} className="hidden" />
+        <input
+          type="file"
+          accept="image/*"
+          ref={fileRef}
+          onChange={handleImageFile}
+          className="hidden"
+        />
 
         {/* Photo upload */}
-        {block.allow_image && (
-          imagePreview ? (
+        {block.allow_image &&
+          (imagePreview ? (
             <div
               className="relative rounded-xl overflow-hidden border border-line group cursor-pointer"
-              onClick={(e) => { e.stopPropagation(); fileRef.current?.click(); }}
+              onClick={(e) => {
+                e.stopPropagation();
+                fileRef.current?.click();
+              }}
             >
-              <img src={imagePreview} alt="" className="w-full aspect-[4/3] object-cover" />
+              <img
+                src={imagePreview}
+                alt=""
+                className="w-full aspect-[4/3] object-cover"
+              />
               <div className="absolute inset-0 bg-black/0 group-hover:bg-black/50 transition-colors flex items-center justify-center">
                 <span className="opacity-0 group-hover:opacity-100 text-white text-[12px] font-bold transition-opacity flex items-center gap-1.5 bg-black/50 rounded-full px-3 py-1.5">
                   <Camera size={13} /> Change photo
@@ -884,7 +1213,10 @@ function MemoryCapturePreview({ block }: { block: Extract<Block, { type: 'memory
               </div>
               <button
                 type="button"
-                onClick={(e) => { e.stopPropagation(); setImagePreview(null); }}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setImagePreview(null);
+                }}
                 className="absolute top-2 right-2 w-6 h-6 rounded-full bg-black/60 text-white flex items-center justify-center hover:bg-black/80 transition-colors"
               >
                 <XIcon size={10} />
@@ -893,19 +1225,28 @@ function MemoryCapturePreview({ block }: { block: Extract<Block, { type: 'memory
           ) : (
             <button
               type="button"
-              onClick={(e) => { e.stopPropagation(); fileRef.current?.click(); }}
+              onClick={(e) => {
+                e.stopPropagation();
+                fileRef.current?.click();
+              }}
               className="w-full aspect-[4/3] rounded-xl border-2 border-dashed border-line hover:border-primary bg-surface-sunken hover:bg-primary/5 flex flex-col items-center justify-center gap-2 transition-all group"
             >
               <div className="w-14 h-14 rounded-full bg-surface-raised group-hover:bg-primary/10 border border-line flex items-center justify-center transition-colors">
-                <Camera size={22} className="text-ink-faint group-hover:text-primary transition-colors" />
+                <Camera
+                  size={22}
+                  className="text-ink-faint group-hover:text-primary transition-colors"
+                />
               </div>
               <div className="text-center">
-                <div className="text-[13px] font-bold text-ink-muted group-hover:text-primary transition-colors">Add your photo</div>
-                <div className="text-[11px] text-ink-faint mt-0.5">Tap to choose from your gallery</div>
+                <div className="text-[13px] font-bold text-ink-muted group-hover:text-primary transition-colors">
+                  Add your photo
+                </div>
+                <div className="text-[11px] text-ink-faint mt-0.5">
+                  Tap to choose from your gallery
+                </div>
               </div>
             </button>
-          )
-        )}
+          ))}
 
         {/* Text input */}
         {block.allow_text && (
@@ -918,7 +1259,9 @@ function MemoryCapturePreview({ block }: { block: Extract<Block, { type: 'memory
               onChange={(e) => setText(e.target.value)}
               className="w-full rounded-xl border border-line bg-surface-base p-3 text-sm outline-none focus:border-primary transition-colors resize-none"
             />
-            <div className="absolute bottom-2 right-3 text-[10px] text-ink-faint">{text.length} chars</div>
+            <div className="absolute bottom-2 right-3 text-[10px] text-ink-faint">
+              {text.length} chars
+            </div>
           </div>
         )}
 
@@ -927,11 +1270,15 @@ function MemoryCapturePreview({ block }: { block: Extract<Block, { type: 'memory
           <button
             type="button"
             disabled={!hasContent || generating}
-            onClick={(e) => { e.stopPropagation(); generateMemoryCard(); }}
-            className={`w-full rounded-full h-11 font-bold text-[13px] flex items-center justify-center gap-2 transition-all ${hasContent && !generating
-              ? 'bg-linear-to-r from-primary to-primary-700 text-ink-inverse shadow-medium hover:shadow-large hover:scale-[1.01]'
-              : 'bg-surface-sunken text-ink-faint border border-line cursor-not-allowed'
-              }`}
+            onClick={(e) => {
+              e.stopPropagation();
+              generateMemoryCard();
+            }}
+            className={`w-full rounded-full h-11 font-bold text-[13px] flex items-center justify-center gap-2 transition-all ${
+              hasContent && !generating
+                ? "bg-linear-to-r from-primary to-primary-700 text-ink-inverse shadow-medium hover:shadow-large hover:scale-[1.01]"
+                : "bg-surface-sunken text-ink-faint border border-line cursor-not-allowed"
+            }`}
           >
             {generating ? (
               <>
@@ -941,13 +1288,15 @@ function MemoryCapturePreview({ block }: { block: Extract<Block, { type: 'memory
             ) : (
               <>
                 <Sparkles size={14} />
-                {block.submit_label || 'Create my memory'}
+                {block.submit_label || "Create my memory"}
               </>
             )}
           </button>
         )}
 
-        <p className="text-[10.5px] text-ink-faint text-center">{block.privacy_note}</p>
+        <p className="text-[10.5px] text-ink-faint text-center">
+          {block.privacy_note}
+        </p>
       </div>
 
       <canvas ref={canvasRef} className="hidden" />
@@ -961,7 +1310,7 @@ function RecapPreview({
   block,
   context,
 }: {
-  block: Extract<Block, { type: 'recap' }>;
+  block: Extract<Block, { type: "recap" }>;
   context?: { programme?: ProgrammeDoc | null; page?: ProgrammePage | null };
 }) {
   const programme = context?.programme;
@@ -973,13 +1322,16 @@ function RecapPreview({
     return Date.now() >= unlockAt;
   })();
 
-
   const allPolls =
     programme?.pages.flatMap((pg) =>
-      pg.blocks.filter((b): b is Extract<Block, { type: 'poll' }> => b.type === 'poll')
+      pg.blocks.filter(
+        (b): b is Extract<Block, { type: "poll" }> => b.type === "poll",
+      ),
     ) ?? [];
   const pagePolls =
-    page?.blocks.filter((b): b is Extract<Block, { type: 'poll' }> => b.type === 'poll') ?? [];
+    page?.blocks.filter(
+      (b): b is Extract<Block, { type: "poll" }> => b.type === "poll",
+    ) ?? [];
   const scopedPolls = block.poll_ids_to_include.length
     ? allPolls.filter((poll) => block.poll_ids_to_include.includes(poll.id))
     : pagePolls;
@@ -998,10 +1350,15 @@ function RecapPreview({
     <div className="rounded-xl panel-deep p-4">
       <div className="relative z-[1]">
         <div className="eyebrow !text-accent mb-2">Recap</div>
-        <h3 className="font-display font-bold text-ink-inverse leading-tight">{block.title}</h3>
-        <p className="text-[13px] text-ink-inverse/75 mt-2">{block.description}</p>
+        <h3 className="font-display font-bold text-ink-inverse leading-tight">
+          {block.title}
+        </h3>
+        <p className="text-[13px] text-ink-inverse/75 mt-2">
+          {block.description}
+        </p>
         <div className="mt-3 flex items-center gap-2 text-[11.5px] text-accent-300 font-semibold">
-          <Bell size={11} /> Available {block.release_after_hours}h after the event
+          <Bell size={11} /> Available {block.release_after_hours}h after the
+          event
         </div>
         {block.results_api_url && (
           <div className="mt-2 rounded-lg border border-white/10 bg-white/5 px-3 py-2 text-[11px] text-ink-inverse/70">
@@ -1014,16 +1371,25 @@ function RecapPreview({
               <div className="space-y-3">
                 {summary.map(({ poll, totalVotes, options }) => (
                   <div key={poll.id}>
-                    <div className="text-[11px] uppercase tracking-wider text-ink-inverse/55 font-bold">Poll result</div>
-                    <div className="mt-1 text-sm font-semibold text-ink-inverse">{poll.question}</div>
+                    <div className="text-[11px] uppercase tracking-wider text-ink-inverse/55 font-bold">
+                      Poll result
+                    </div>
+                    <div className="mt-1 text-sm font-semibold text-ink-inverse">
+                      {poll.question}
+                    </div>
                     <div className="mt-2 space-y-2">
                       {options.map(({ option, count }) => {
-                        const percent = totalVotes > 0 ? Math.round((count / totalVotes) * 100) : 0;
+                        const percent =
+                          totalVotes > 0
+                            ? Math.round((count / totalVotes) * 100)
+                            : 0;
                         return (
                           <div key={option.id}>
                             <div className="flex items-center justify-between text-[12px] text-ink-inverse/75">
                               <span>{option.label}</span>
-                              <span>{count} {totalVotes > 0 ? `(${percent}%)` : ''}</span>
+                              <span>
+                                {count} {totalVotes > 0 ? `(${percent}%)` : ""}
+                              </span>
                             </div>
                             <div className="mt-1 h-2 rounded-full bg-white/10 overflow-hidden">
                               <div
@@ -1056,11 +1422,15 @@ function RecapPreview({
 
 /* ---------------- Module 8 ---------------- */
 
-function RecommendationsPreview({ block }: { block: Extract<Block, { type: 'recommendations' }> }) {
+function RecommendationsPreview({
+  block,
+}: {
+  block: Extract<Block, { type: "recommendations" }>;
+}) {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const [recResponse, setRecResponse] = useState<any[]>([]);
   const ids = useMemo(() => block.selected_items ?? [], [block.selected_items]);
-  const idsKey = ids.join(',');
+  const idsKey = ids.join(",");
 
   useEffect(() => {
     if (ids.length === 0) {
@@ -1070,7 +1440,7 @@ function RecommendationsPreview({ block }: { block: Extract<Block, { type: 'reco
     let active = true;
     (async () => {
       const res = await nextFetch(`/recommendations/bulk-gets`, {
-        method: 'POST',
+        method: "POST",
         body: { ids },
       });
       if (active) {
@@ -1094,23 +1464,27 @@ function RecommendationsPreview({ block }: { block: Extract<Block, { type: 'reco
         distance: rec.distance,
         url: rec.website ?? rec.url,
       };
-      const cat = (mapped.category || '').toLowerCase().trim();
+      const cat = (mapped.category || "").toLowerCase().trim();
       let icon = Wine;
-      let tag = 'Recommendation';
-      let color = 'bg-gray-500/10 text-gray-600 border-gray-500/20';
+      let tag = "Recommendation";
+      let color = "bg-gray-500/10 text-gray-600 border-gray-500/20";
 
-      if (cat === 'restrudants' || cat === 'restaurant' || cat === 'restaurants') {
+      if (
+        cat === "restrudants" ||
+        cat === "restaurant" ||
+        cat === "restaurants"
+      ) {
         icon = Utensils;
-        tag = 'Restaurant';
-        color = 'bg-orange-500/10 text-orange-600 border-orange-500/20';
-      } else if (cat === 'hotel' || cat === 'hotels') {
+        tag = "Restaurant";
+        color = "bg-orange-500/10 text-orange-600 border-orange-500/20";
+      } else if (cat === "hotel" || cat === "hotels") {
         icon = BedDouble;
-        tag = 'Hotel';
-        color = 'bg-indigo-500/10 text-indigo-600 border-indigo-500/20';
-      } else if (cat === 'bar' || cat === 'bars') {
+        tag = "Hotel";
+        color = "bg-indigo-500/10 text-indigo-600 border-indigo-500/20";
+      } else if (cat === "bar" || cat === "bars") {
         icon = Wine;
-        tag = 'Bar';
-        color = 'bg-purple/10 text-purple border-purple/20';
+        tag = "Bar";
+        color = "bg-purple/10 text-purple border-purple/20";
       }
 
       return {
@@ -1123,6 +1497,28 @@ function RecommendationsPreview({ block }: { block: Extract<Block, { type: 'reco
   }, [recResponse]);
 
   const displayItems = recommendations;
+
+  const handleRecommendationClick = (
+    e: React.MouseEvent<HTMLAnchorElement>,
+    redirectUrl?: string,
+    recId?: string,
+  ) => {
+    e.preventDefault();
+    (async () => {
+      try {
+        if (recId) {
+          await nextFetch(`/recommendations/${recId}`, { method: "GET" });
+        }
+      } catch (err) {
+        console.error("Failed to track recommendation click:", err);
+      } finally {
+        if (redirectUrl && redirectUrl !== "#") {
+          window.open(redirectUrl, "_blank", "noopener,noreferrer");
+        }
+      }
+    })();
+  };
+
   return (
     <div>
       <div className="eyebrow mb-3">{block.title}</div>
@@ -1130,18 +1526,35 @@ function RecommendationsPreview({ block }: { block: Extract<Block, { type: 'reco
         {displayItems.map((s) => {
           const Icon = s._icon;
           return (
-            <a key={s.id} href={s?.url} target="_blank" rel="noopener noreferrer" className=' '>
+            <a
+              key={s.id}
+              href={s?.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={(e) => handleRecommendationClick(e, s?.url, s.id)}
+              className=" "
+            >
               <li className="flex items-center gap-3 rounded-xl border border-line bg-surface-raised p-2.5">
-                <img src={getImageUrl(s.image)} alt={s.name} className="w-14 h-14 rounded-lg object-cover shadow-sm" />
+                <img
+                  src={getImageUrl(s.image)}
+                  alt={s.name}
+                  className="w-14 h-14 rounded-lg object-cover shadow-sm"
+                />
                 <div className="flex-1 min-w-0">
                   <div className="flex items-center gap-2 mb-1">
-                    <div className="font-semibold text-ink text-sm truncate">{s.name}</div>
-                    <div className={`shrink-0 flex items-center gap-1 px-1.5 py-0.5 rounded-md border text-[8px] font-bold uppercase tracking-wider ${s._color}`}>
+                    <div className="font-semibold text-ink text-sm truncate">
+                      {s.name}
+                    </div>
+                    <div
+                      className={`shrink-0 flex items-center gap-1 px-1.5 py-0.5 rounded-md border text-[8px] font-bold uppercase tracking-wider ${s._color}`}
+                    >
                       <Icon size={10} strokeWidth={2.5} />
                       {s._tag}
                     </div>
                   </div>
-                  <div className="text-[11px] text-ink-faint uppercase">{s.category}</div>
+                  <div className="text-[11px] text-ink-faint uppercase">
+                    {s.category}
+                  </div>
                   <div className="text-[11px] text-ink-muted mt-0.5 flex items-center gap-2">
                     {block.show_rating && (
                       <span className="inline-flex items-center gap-0.5 font-medium text-ink">
@@ -1168,19 +1581,25 @@ function RecommendationsPreview({ block }: { block: Extract<Block, { type: 'reco
 
 /* ---------------- Module 9 ---------------- */
 
-function PushNotificationPreview({ block }: { block: Extract<Block, { type: 'push_notification' }> }) {
+function PushNotificationPreview({
+  block,
+}: {
+  block: Extract<Block, { type: "push_notification" }>;
+}) {
   const getTriggerLabel = () => {
     switch (block.trigger) {
-      case 'immediate': return 'Immediate';
-      case 'scheduled':
+      case "immediate":
+        return "Immediate";
+      case "scheduled":
         return block.scheduled_at
-          ? `Scheduled for ${new Date(block.scheduled_at).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}`
-          : 'Scheduled';
-      case 'pre_event':
+          ? `Scheduled for ${new Date(block.scheduled_at).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })}`
+          : "Scheduled";
+      case "pre_event":
         return `${block.offset_minutes || 0}m before event`;
-      case 'post_event':
+      case "post_event":
         return `${block.offset_minutes || 0}m after event`;
-      default: return block.trigger;
+      default:
+        return block.trigger;
     }
   };
 
@@ -1188,16 +1607,24 @@ function PushNotificationPreview({ block }: { block: Extract<Block, { type: 'pus
     <div className="rounded-xl bg-surface-raised border border-line p-3 shadow-soft">
       <div className="flex items-center justify-between gap-2 mb-1.5">
         <div className="flex items-center gap-2 text-[10px] text-ink-faint">
-          <span className="w-4 h-4 rounded bg-primary text-ink-inverse flex items-center justify-center text-[7px] font-bold">S</span>
+          <span className="w-4 h-4 rounded bg-primary text-ink-inverse flex items-center justify-center text-[7px] font-bold">
+            S
+          </span>
           SHOWE · {getTriggerLabel()}
         </div>
         {block.event_date && (
           <span className="text-[9px] text-ink-faint">
-            Event: {new Date(block.event_date).toLocaleDateString([], { day: 'numeric', month: 'short' })}
+            Event:{" "}
+            {new Date(block.event_date).toLocaleDateString([], {
+              day: "numeric",
+              month: "short",
+            })}
           </span>
         )}
       </div>
-      <div className="font-semibold text-ink text-[13px] leading-tight">{block.title}</div>
+      <div className="font-semibold text-ink text-[13px] leading-tight">
+        {block.title}
+      </div>
       <p className="text-[12px] text-ink-muted mt-0.5">{block.message}</p>
     </div>
   );
@@ -1205,17 +1632,18 @@ function PushNotificationPreview({ block }: { block: Extract<Block, { type: 'pus
 
 /* ---------------- Module 10 ---------------- */
 
-function MapPreview({ block }: { block: Extract<Block, { type: 'map' }> }) {
-  const hasCoordinates = typeof block.lat === 'number' && typeof block.lng === 'number';
+function MapPreview({ block }: { block: Extract<Block, { type: "map" }> }) {
+  const hasCoordinates =
+    typeof block.lat === "number" && typeof block.lng === "number";
   const addressQuery = block.address.trim();
   const embedQuery = hasCoordinates
     ? `${block.lat},${block.lng}`
     : addressQuery
       ? encodeURIComponent(addressQuery)
-      : '';
+      : "";
   const embedSrc = embedQuery
     ? `https://www.google.com/maps?q=${embedQuery}&output=embed`
-    : '';
+    : "";
 
   return (
     <div>
@@ -1224,7 +1652,7 @@ function MapPreview({ block }: { block: Extract<Block, { type: 'map' }> }) {
         <div className="relative aspect-[4/3] bg-surface-sunken">
           {embedSrc ? (
             <iframe
-              title={block.title || 'Map preview'}
+              title={block.title || "Map preview"}
               src={embedSrc}
               className="absolute inset-0 h-full w-full"
               loading="lazy"
@@ -1236,7 +1664,7 @@ function MapPreview({ block }: { block: Extract<Block, { type: 'map' }> }) {
               className="absolute inset-0 opacity-60"
               style={{
                 backgroundImage:
-                  'radial-linear(circle at 30% 40%, rgba(1, 75, 82, 0.18), transparent 50%), linear-linear(135deg, #ECE7DD 0%, #DCD4C5 100%)',
+                  "radial-linear(circle at 30% 40%, rgba(1, 75, 82, 0.18), transparent 50%), linear-linear(135deg, #ECE7DD 0%, #DCD4C5 100%)",
               }}
             />
           )}
@@ -1250,8 +1678,12 @@ function MapPreview({ block }: { block: Extract<Block, { type: 'map' }> }) {
           )}
 
           <div className="absolute bottom-2 left-2 right-2 rounded-lg bg-surface-sunken backdrop-blur p-2.5 text-[12px]">
-            <div className="font-semibold text-ink">{block.address.split(',')[0] || 'Venue location'}</div>
-            <div className="text-ink-faint truncate">{block.address || 'Add an address to preview the map.'}</div>
+            <div className="font-semibold text-ink">
+              {block.address.split(",")[0] || "Venue location"}
+            </div>
+            <div className="text-ink-faint truncate">
+              {block.address || "Add an address to preview the map."}
+            </div>
           </div>
         </div>
 
@@ -1272,11 +1704,14 @@ function MapPreview({ block }: { block: Extract<Block, { type: 'map' }> }) {
           </div>
 
           <div className="flex items-start gap-2 text-[11.5px] text-ink-muted">
-            <CheckCircle2 size={13} className="mt-0.5 shrink-0 text-emerald-600" />
+            <CheckCircle2
+              size={13}
+              className="mt-0.5 shrink-0 text-emerald-600"
+            />
             <span>
               {hasCoordinates
                 ? `Preview anchored at ${block.lat?.toFixed(5)}, ${block.lng?.toFixed(5)}`
-                : 'Preview is using the address only. Add coordinates for a more precise embed.'}
+                : "Preview is using the address only. Add coordinates for a more precise embed."}
             </span>
           </div>
         </div>
@@ -1285,32 +1720,44 @@ function MapPreview({ block }: { block: Extract<Block, { type: 'map' }> }) {
   );
 }
 
-function DirectionsPreview({ block }: { block: Extract<Block, { type: 'directions' }> }) {
+function DirectionsPreview({
+  block,
+}: {
+  block: Extract<Block, { type: "directions" }>;
+}) {
   return (
     <div>
       <div className="eyebrow mb-3">{block.title}</div>
       <ul className="space-y-2">
         {block.by_train && (
           <li className="rounded-lg bg-surface-sunken p-3 text-sm">
-            <div className="font-semibold text-ink text-[12.5px] uppercase tracking-wider">By train</div>
+            <div className="font-semibold text-ink text-[12.5px] uppercase tracking-wider">
+              By train
+            </div>
             <div className="text-ink-muted mt-0.5">{block.by_train}</div>
           </li>
         )}
         {block.by_car && (
           <li className="rounded-lg bg-surface-sunken p-3 text-sm">
-            <div className="font-semibold text-ink text-[12.5px] uppercase tracking-wider">By car</div>
+            <div className="font-semibold text-ink text-[12.5px] uppercase tracking-wider">
+              By car
+            </div>
             <div className="text-ink-muted mt-0.5">{block.by_car}</div>
           </li>
         )}
         {block.by_bus && (
           <li className="rounded-lg bg-surface-sunken p-3 text-sm">
-            <div className="font-semibold text-ink text-[12.5px] uppercase tracking-wider">By bus</div>
+            <div className="font-semibold text-ink text-[12.5px] uppercase tracking-wider">
+              By bus
+            </div>
             <div className="text-ink-muted mt-0.5">{block.by_bus}</div>
           </li>
         )}
         {block.parking_info && (
           <li className="rounded-lg bg-surface-sunken p-3 text-sm">
-            <div className="font-semibold text-ink text-[12.5px] uppercase tracking-wider">Parking</div>
+            <div className="font-semibold text-ink text-[12.5px] uppercase tracking-wider">
+              Parking
+            </div>
             <div className="text-ink-muted mt-0.5">{block.parking_info}</div>
           </li>
         )}
@@ -1318,6 +1765,3 @@ function DirectionsPreview({ block }: { block: Extract<Block, { type: 'direction
     </div>
   );
 }
-
-
-

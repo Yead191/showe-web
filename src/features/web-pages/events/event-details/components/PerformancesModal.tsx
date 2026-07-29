@@ -1,10 +1,11 @@
 "use client"
 
 import * as React from "react"
-import { Heart, Clock, CalendarDays, Check } from "lucide-react"
+import { Heart, Clock, CalendarDays, Check, Loader2 } from "lucide-react"
 import { format, parseISO } from "date-fns"
 import { toast } from "sonner"
 import { cn } from "@/lib/utils"
+import { nextFetch } from "@/helpers/next-fetch/NextFetch"
 import { EventPerformance } from "../types"
 import {
     Dialog,
@@ -26,6 +27,7 @@ interface PerformancesModalProps {
     onOpenChange: (open: boolean) => void
     performances?: EventPerformance[]
     eventTitle?: string
+    eventId?: string
 }
 
 export function PerformancesModal({
@@ -33,21 +35,60 @@ export function PerformancesModal({
     onOpenChange,
     performances,
     eventTitle,
+    eventId,
 }: PerformancesModalProps) {
-    const [favoriteId, setFavoriteId] = React.useState<string | null>(null)
+    const [selectedPerformanceId, setSelectedPerformanceId] = React.useState<string | null>(null)
+    const [submittingId, setSubmittingId] = React.useState<string | null>(null)
 
-    const toggleFavorite = (perf: EventPerformance) => {
-        setFavoriteId((prev) => {
-            const nowFav = prev !== perf._id
-            const label = perf.date
-                ? format(parseISO(perf.date), "EEE, MMM dd")
-                : "this slot"
-            toast[nowFav ? "success" : "info"](
-                nowFav ? `Marked ${label} as your favourite` : `Removed ${label} from favourites`,
-                { id: "perf-fav" }
-            )
-            return nowFav ? perf._id : null
-        })
+    const storageKey = React.useMemo(() => {
+        return eventId ? `saved_performance_${eventId}` : "saved_performance_id"
+    }, [eventId])
+
+    React.useEffect(() => {
+        if (typeof window !== "undefined") {
+            const saved = localStorage.getItem(storageKey) || localStorage.getItem("saved_performance_id")
+            if (saved) {
+                setSelectedPerformanceId(saved)
+            }
+        }
+    }, [storageKey, open])
+
+    const handleSelectPerformance = async (perf: EventPerformance) => {
+        if (submittingId) return
+
+        setSubmittingId(perf._id)
+        try {
+            const res = await nextFetch(`/event/interest/${perf._id}`, {
+                method: "POST",
+                body: {
+                    type: "Performances",
+                },
+            })
+
+            if (res?.success) {
+                setSelectedPerformanceId(perf._id)
+                if (typeof window !== "undefined") {
+                    localStorage.setItem(storageKey, perf._id)
+                    localStorage.setItem("saved_performance_id", perf._id)
+                }
+                const label = perf.date
+                    ? format(parseISO(perf.date), "EEE, MMM dd")
+                    : "this slot"
+                toast.success(res?.message || `Selected ${label} performance`, {
+                    id: "perf-select",
+                })
+            } else {
+                toast.error(res?.message || res?.error || "Failed to update performance selection", {
+                    id: "perf-select",
+                })
+            }
+        } catch {
+            toast.error("Something went wrong selecting the performance.", {
+                id: "perf-select",
+            })
+        } finally {
+            setSubmittingId(null)
+        }
     }
 
     return (
@@ -72,14 +113,16 @@ export function PerformancesModal({
                     )}
 
                     {performances?.map((perf) => {
-                        const isFav = favoriteId === perf._id
+                        const isSelected = selectedPerformanceId === perf._id
+                        const isSubmitting = submittingId === perf._id
                         const dateObj = perf.date ? parseISO(perf.date) : null
                         return (
                             <div
                                 key={perf._id}
+                                onClick={() => handleSelectPerformance(perf)}
                                 className={cn(
-                                    "flex items-center gap-4 p-4 rounded-2xl border transition-all",
-                                    isFav
+                                    "flex items-center gap-4 p-4 rounded-2xl border transition-all cursor-pointer",
+                                    isSelected
                                         ? "border-[#F5A800] bg-[#F5A800]/5 shadow-sm"
                                         : "border-gray-100 bg-white hover:border-gray-200"
                                 )}
@@ -109,18 +152,27 @@ export function PerformancesModal({
                                     </p>
                                 </div>
 
-                                {/* Favorite toggle */}
+                                {/* Selection / Favorite button */}
                                 <button
-                                    onClick={() => toggleFavorite(perf)}
-                                    aria-pressed={isFav}
+                                    type="button"
+                                    disabled={isSubmitting}
+                                    onClick={(e) => {
+                                        e.stopPropagation()
+                                        handleSelectPerformance(perf)
+                                    }}
+                                    aria-pressed={isSelected}
                                     className={cn(
                                         "h-11 w-11 rounded-full flex items-center justify-center shrink-0 transition-all active:scale-90 cursor-pointer border",
-                                        isFav
+                                        isSelected
                                             ? "bg-red-500 border-red-500 text-white"
                                             : "bg-white border-gray-200 text-gray-400 hover:text-red-500 hover:border-red-200"
                                     )}
                                 >
-                                    <Heart className={cn("h-5 w-5", isFav && "fill-white")} />
+                                    {isSubmitting ? (
+                                        <Loader2 className="h-5 w-5 animate-spin" />
+                                    ) : (
+                                        <Heart className={cn("h-5 w-5", isSelected && "fill-white")} />
+                                    )}
                                 </button>
                             </div>
                         )
@@ -131,9 +183,10 @@ export function PerformancesModal({
                     <div className="p-4 md:p-5 border-t border-gray-100 bg-gray-50/60 flex items-center justify-between">
                         <p className="text-xs font-bold text-gray-500 flex items-center gap-1.5">
                             <Check className="h-4 w-4 text-[#F5A800]" />
-                            {favoriteId ? "1 selected" : "None selected"}
+                            {selectedPerformanceId ? "1 selected" : "None selected"}
                         </p>
                         <button
+                            type="button"
                             onClick={() => onOpenChange(false)}
                             className="h-10 px-6 rounded-full bg-[#014B52] hover:bg-[#023a40] text-white text-xs font-black uppercase tracking-widest transition-colors cursor-pointer"
                         >
@@ -145,3 +198,4 @@ export function PerformancesModal({
         </Dialog>
     )
 }
+
