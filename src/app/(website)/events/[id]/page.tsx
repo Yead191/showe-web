@@ -1,4 +1,5 @@
 import EventDetails from "@/features/web-pages/events/event-details";
+import EventNotFound from "@/features/web-pages/events/event-details/components/EventNotFound";
 import type { EventDetail } from "@/features/web-pages/events/event-details/types";
 import getProfile from "@/helpers/next-fetch/getProfile";
 import { nextFetch } from "@/helpers/next-fetch/NextFetch";
@@ -60,9 +61,9 @@ export default async function page({
 }) {
   const { id } = await params;
   const [event, user] = await Promise.all([getEvent(id), getProfile()]);
-  if (!event?.success) {
-    return <div>Event not found</div>;
+  if (!event?.success || !event.data) {
+    return <EventNotFound />;
   }
 
-  return <EventDetails event={event.data ?? ({} as EventDetail)} user={user} />;
+  return <EventDetails event={event.data} user={user} />;
 }

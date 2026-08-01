@@ -1,46 +1,58 @@
 'use client';
 
-import { useState } from 'react';
-import { ArrowLeft, ChevronLeft, ChevronRight, BookOpen,  } from 'lucide-react';
+import { useCallback } from 'react';
+import { ArrowLeft, ChevronLeft, ChevronRight, BookOpen } from 'lucide-react';
+import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 
 import { cn } from '@/lib/utils';
 import { Block, ProgrammeDoc, ProgrammePage } from '@/types/programme';
 import { useReveal } from './animation';
 import { renderBlockPreview } from './BlockPreviews';
 import ProgrammeNotFound from './ProgrammeNotFound';
-import { useRouter } from 'next/navigation';
 
 export default function ReaderPage({ programme }: { programme: ProgrammeDoc }) {
-  const [pageIndex, setPageIndex] = useState(0);
   const router = useRouter();
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
 
-  if (!programme || !programme.pages || programme.pages.length === 0) {
+  const pages = programme?.pages ?? [];
+  const totalPages = pages.length;
+  // URL uses 1-based `page` (e.g. ?page=2). Invalid / missing → first page.
+  const rawPage = Number(searchParams.get('page'));
+  const pageIndex =
+    totalPages > 0 && Number.isFinite(rawPage) && rawPage >= 1
+      ? Math.min(Math.floor(rawPage) - 1, totalPages - 1)
+      : 0;
+
+  const goToPage = useCallback(
+    (index: number) => {
+      if (totalPages === 0) return;
+      const next = Math.max(0, Math.min(index, totalPages - 1));
+      if (next === pageIndex) return;
+
+      const params = new URLSearchParams(searchParams.toString());
+      params.set('page', String(next + 1));
+      router.replace(`${pathname}?${params.toString()}`, { scroll: false });
+    },
+    [pageIndex, pathname, router, searchParams, totalPages],
+  );
+
+  if (!programme || totalPages === 0) {
     return <ProgrammeNotFound />;
   }
 
-  const page = programme.pages[pageIndex] ?? programme.pages[0]!;
-  const totalPages = programme.pages.length;
-  const goPrev = () => {
-    if (pageIndex > 0) {
-      setPageIndex((i) => i - 1);
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    }
-  };
-  const goNext = () => {
-    if (pageIndex < totalPages - 1) {
-      setPageIndex((i) => i + 1);
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    }
-  };
+  const page = pages[pageIndex] ?? pages[0]!;
+  const goPrev = () => goToPage(pageIndex - 1);
+  const goNext = () => goToPage(pageIndex + 1);
 
   return (
-    <div className="programme-reader min-h-dvh bg-ink/95 text-ink-inverse relative hide-scrollbar!">
-      {/* Brand strip — discreet header */}
-      <div className="px-5 py-2 border-b border-white/8 flex items-center justify-between fixed top-0 w-full backdrop-blur-2xl z-50">
-        <div className={cn('inline-flex items-center gap-2.5',)}>
-          <img src="/logo.png" alt="" className={cn('object-contain w-full h-12')} />
+    <div className="programme-reader min-h-dvh bg-surface-raised md:bg-ink/95 text-ink-inverse relative hide-scrollbar!">
+      {/* Brand strip — desktop/tablet only; mobile is edge-to-edge */}
+      <div className="hidden md:flex px-5 py-2 border-b border-white/8 items-center justify-between fixed top-0 w-full backdrop-blur-2xl z-50">
+        <div className="inline-flex items-center gap-2.5">
+          <img src="/logo.png" alt="" className="object-contain w-full h-12" />
         </div>
-        <div className='flex justify-center items-center'>
+        <div className="flex justify-center items-center">
           <h1 className="font-display font-extrabold text-xl md:text-2xl mt-1.5 text-ink-inverse text-center">
             {programme.title}
           </h1>
@@ -48,27 +60,28 @@ export default function ReaderPage({ programme }: { programme: ProgrammeDoc }) {
         <div className="flex items-center gap-2">
           <div
             onClick={() => router.back()}
-            className="hidden sm:inline-flex items-center gap-1.5 text-[12px] font-semibold text-white/70 hover:text-white transition-colors cursor-pointer"
+            className="inline-flex items-center gap-1.5 text-[12px] font-semibold text-white/70 hover:text-white transition-colors cursor-pointer"
           >
             <ArrowLeft size={12} /> Back to programmes
           </div>
-      
         </div>
       </div>
 
-
-      {/* Phone frame on desktop, full-width on mobile */}
-      <div className="px-4 pt-[72px]  2xl:pt-20 2xl:pb-16">
-        <div className="mx-auto" style={{ maxWidth: 420 }}>
+      {/* Full-bleed on mobile; phone frame on md+ */}
+      <div className="md:px-4 md:pt-18 2xl:pt-20 2xl:pb-16">
+        <div className="mx-auto md:max-w-105">
           <div className="md:p-2.5 md:bg-ink md:rounded-[40px] md:shadow-2xl">
-            <div className="md:rounded-[32px] md:overflow-hidden bg-surface-raised text-ink rounded-2xl overflow-hidden">
+            <div className="bg-surface-raised text-ink overflow-hidden md:rounded-[32px] md:overflow-hidden">
               {/* Notch (desktop only) */}
               <div className="hidden md:block relative">
                 <div className="absolute top-2 left-1/2 -translate-x-1/2 w-24 h-5 bg-ink rounded-full z-10" />
               </div>
 
-              {/* Page content */}
-              <div className="h-[calc(100dvh-137px)] 2xl:h-[calc(100vh-180px)] overflow-auto no-scrollbar!" key={page.id}>
+              {/* Page content — full viewport on mobile */}
+              <div
+                className="h-dvh md:h-[calc(100dvh-137px)] 2xl:h-[calc(100vh-180px)] overflow-auto no-scrollbar!"
+                key={page.id}
+              >
                 {page.blocks.length === 0 ? (
                   <div className="px-6 py-20 text-center text-ink-muted">
                     <BookOpen size={28} className="mx-auto mb-3 text-ink-faint" />
@@ -91,7 +104,7 @@ export default function ReaderPage({ programme }: { programme: ProgrammeDoc }) {
               {programme.pages.map((p, i) => (
                 <button
                   key={p.id}
-                  onClick={() => setPageIndex(i)}
+                  onClick={() => goToPage(i)}
                   className={cn(
                     'h-1.5 rounded-full transition-all',
                     i === pageIndex ? 'w-6 bg-accent' : 'w-1.5 bg-white/30 hover:bg-white/50'

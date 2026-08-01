@@ -58,11 +58,11 @@ export default function EventDetails({ event, user }: { event: EventDetail; user
             <div className="lg:hidden fixed bottom-0 left-0 right-0 z-50 bg-white/90 backdrop-blur-xl border-t border-gray-100 p-4 shadow-[0_-20px_50px_rgba(0,0,0,0.1)] flex items-center justify-between gap-12 animate-in slide-in-from-bottom duration-500">
                 <div className="space-y-0.5">
                     <p className="text-[10px] font-black text-gray-400 uppercase tracking-widest leading-none">Starting From</p>
-                    <p className="text-xl font-black text-[#F5A800] tracking-tight">${event.price}</p>
+                    <p className="text-xl font-black text-accent-400 tracking-tight">${event.price}</p>
                 </div>
                 <Button
                     onClick={handleGetTicket}
-                    className="flex-1 h-12 bg-[#014B52] hover:bg-[#023a40] text-white font-black text-sm rounded-2xl flex items-center justify-center gap-2 active:scale-95 transition-all shadow-lg shadow-[#014B52]/20"
+                    className="flex-1 h-12 bg-primary-600 hover:bg-[#023a40] text-white font-black text-sm rounded-2xl flex items-center justify-center gap-2 active:scale-95 transition-all shadow-lg shadow-primary-600/20"
                 >
                     Get Your Ticket
                     <ChevronRight className="h-4 w-4" />
