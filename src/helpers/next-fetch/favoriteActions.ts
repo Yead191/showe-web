@@ -3,19 +3,37 @@
 import { nextFetch } from "./NextFetch";
 import { revalidateTags } from "./revalidateTags";
 
-/** POST /event/interest/:id  body: { type: "Venue" } */
-export async function toggleVenueFavorite(venueId: string) {
-  const res = await nextFetch(`/event/interest/${venueId}`, {
+export type InterestType = "Venue" | "Event" | "Performances" | "Recommendations";
+
+/** POST /event/interest/:id  body: { type } */
+export async function toggleInterest(id: string, type: InterestType) {
+  const res = await nextFetch(`/event/interest/${id}`, {
     method: "POST",
-    body: {
-      type: "Venue",
-    },
+    body: { type },
   });
-console.log(res, "res");
-  // Revalidate so next render pulls fresh isFavorited from backend
+
   if (res?.success) {
-    await revalidateTags(["venues", "venue-details", "user-favourites"]);
+    await revalidateTags(["venues", "venue-details", "user-favourites", "events"]);
   }
 
   return res;
+}
+
+/** POST /event/interest/:id  body: { type: "Venue" } */
+export async function toggleVenueFavorite(venueId: string) {
+  return toggleInterest(venueId, "Venue");
+}
+
+/** POST /event/interest/:id  body: { type: "Event" } */
+export async function toggleEventFavorite(eventId: string) {
+  return toggleInterest(eventId, "Event");
+}
+
+/** GET /event/interest?type=Venue | Event | ... */
+export async function getFavouriteList(type: InterestType) {
+  return nextFetch(`/event/interest?type=${type}`, {
+    method: "GET",
+    cache: "no-store",
+    tags: ["user-favourites"],
+  });
 }
