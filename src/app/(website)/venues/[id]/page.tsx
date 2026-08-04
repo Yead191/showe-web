@@ -6,10 +6,12 @@ import { notFound } from "next/navigation"
 import { cache } from "react"
 
 const getVenue = cache(async (id: string) => {
+    // User-specific isFavorited — no-store + tag for refresh after favourite toggle
+    const opts = { method: "GET" as const, cache: "no-store" as const, tags: ["venue-details"] }
     // Try /vanue/:id first (backend route), fallback to /venue/:id if needed
-    const res = await nextFetch<Venue>(`/vanue/${id}`, { method: "GET" })
+    const res = await nextFetch<Venue>(`/vanue/${id}`, opts)
     if (res.success && res.data) return res
-    return await nextFetch<Venue>(`/venue/${id}`, { method: "GET" })
+    return await nextFetch<Venue>(`/venue/${id}`, opts)
 })
 
 export async function generateMetadata({ params }: { params: Promise<{ id: string }> }) {

@@ -39,14 +39,12 @@ export default async function page() {
         }),
         nextFetch("/vanue", {
             method: "GET",
-            cache: "force-cache",
-            next: {
-                revalidate: 60 * 60 // 1 hour
-            }
+            // User-specific isFavorited — must not be shared cache
+            cache: "no-store",
+            tags: ["venues"],
         })
     ]);
-  
-    console.log("venues", venues);
+    console.log(venues.data);
     return (
         <Home
             events={events.data ?? []}

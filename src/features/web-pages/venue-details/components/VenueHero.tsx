@@ -2,6 +2,7 @@
 
 import { useState } from "react"
 import Image from "next/image"
+import { useRouter } from "next/navigation"
 import { MapPin, Globe, Share2, Heart } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { getImageUrl } from "@/lib/getImageUrl"
@@ -10,8 +11,10 @@ import type { Venue } from "../index"
 import { toast } from "sonner"
 
 export function VenueHero({ venue }: { venue: Venue }) {
-    const [isFavorited, setIsFavorited] = useState<boolean>(!!(venue.isFavorited ?? (venue as any).isFavorite))
+    const router = useRouter()
     const [isSubmitting, setIsSubmitting] = useState(false)
+    // Backend source of truth
+    const isFavorited = !!venue.isFavorited
 
     const rawImage = venue.cover_image || venue.logo
     const coverImage = rawImage ? getImageUrl(rawImage) : "/assets/images/events/event3.jpg"
@@ -24,7 +27,7 @@ export function VenueHero({ venue }: { venue: Venue }) {
             navigator.share({
                 title: venue.name,
                 url: window.location.href,
-            }).catch(() => {})
+            }).catch(() => { })
         } else {
             navigator.clipboard.writeText(window.location.href)
             toast.success("Link copied to clipboard!")
@@ -35,19 +38,23 @@ export function VenueHero({ venue }: { venue: Venue }) {
         if (!venue._id || isSubmitting) return
 
         setIsSubmitting(true)
-        const prev = isFavorited
-        setIsFavorited(!prev)
-
         try {
+            // POST /event/interest/:id  body: { type: "Venue" }
             const res = await toggleVenueFavorite(venue._id)
             if (res?.success) {
-                toast.success(res.message || (!prev ? "Added to favourites" : "Removed from favourites"))
+                toast.success(
+                    res.message ||
+                    (!isFavorited ? "Added to favourites" : "Removed from favourites")
+                )
+                // Pull fresh venue (with updated isFavorited) from backend
+                router.refresh()
             } else {
-                setIsFavorited(prev)
-                toast.error(res?.message || res?.error || "Failed to update favourites")
+                toast.error(
+                    (typeof res?.error === "string" ? res.error : res?.message) ||
+                    "Failed to update favourites"
+                )
             }
         } catch {
-            setIsFavorited(prev)
             toast.error("Something went wrong. Please try again.")
         } finally {
             setIsSubmitting(false)
@@ -123,19 +130,20 @@ export function VenueHero({ venue }: { venue: Venue }) {
 
                     {/* Action Buttons */}
                     <div className="flex items-center gap-3 w-full md:w-auto">
-                        <Button
-                            variant="outline"
+                        <button
+                            type="button"
                             onClick={handleToggleFavorite}
                             disabled={isSubmitting}
-                            className={`h-12 px-5 rounded-2xl border transition-all gap-2 cursor-pointer ${
+                            aria-pressed={isFavorited}
+                            className={`inline-flex h-12 items-center gap-2 px-5 rounded-2xl border font-bold text-xs transition-all cursor-pointer disabled:opacity-50 disabled:pointer-events-none ${
                                 isFavorited
-                                    ? "border-red-200 bg-red-50 text-red-600 hover:bg-red-100"
-                                    : "border-gray-200 text-gray-700 hover:bg-gray-50"
+                                    ? "border-red-500 bg-red-500 text-white hover:bg-red-600 hover:border-red-600 shadow-lg shadow-red-500/25"
+                                    : "border-gray-200 bg-white text-gray-700 hover:bg-gray-50"
                             }`}
                         >
-                            <Heart className={`h-5 w-5 transition-transform active:scale-125 ${isFavorited ? "fill-red-600 text-red-600" : ""}`} />
-                            <span className="font-bold text-xs">{isFavorited ? "Favorited" : "Favorite"}</span>
-                        </Button>
+                            <Heart className={`h-5 w-5 ${isFavorited ? "fill-white text-white" : "text-gray-700"}`} />
+                            <span>{isFavorited ? "Favorited" : "Favorite"}</span>
+                        </button>
 
                         {venue.website && (
                             <a
@@ -153,10 +161,10 @@ export function VenueHero({ venue }: { venue: Venue }) {
                         <Button
                             variant="outline"
                             onClick={handleShare}
-                            className="h-12 w-12 rounded-2xl border-gray-200 text-gray-700 hover:bg-gray-50 p-0 cursor-pointer"
+                            className="h-12 px-5 rounded-2xl border-gray-200 text-gray-700 hover:bg-gray-50 cursor-pointer"
                             title="Share"
                         >
-                            <Share2 className="h-5 w-5" />
+                            <Share2 className="h-5 w-5" /> Share
                         </Button>
                     </div>
                 </div>
