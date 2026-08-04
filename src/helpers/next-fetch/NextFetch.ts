@@ -52,6 +52,7 @@ export const nextFetch = async <T = any>(
   };
 
   try {
+
     const res = await fetch(`${process.env.BASE_URL}${url}`, {
       method,
       headers: reqHeaders,
