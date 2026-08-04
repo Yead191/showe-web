@@ -11,7 +11,7 @@ export async function toggleVenueFavorite(venueId: string) {
       type: "Venue",
     },
   });
-
+console.log(res, "res");
   // Revalidate so next render pulls fresh isFavorited from backend
   if (res?.success) {
     await revalidateTags(["venues", "venue-details", "user-favourites"]);
