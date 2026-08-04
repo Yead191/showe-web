@@ -1,13 +1,18 @@
 "use client"
 
+import { useState } from "react"
 import Image from "next/image"
-import { MapPin, Globe, Share2 } from "lucide-react"
+import { MapPin, Globe, Share2, Heart } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { getImageUrl } from "@/lib/getImageUrl"
+import { toggleVenueFavorite } from "@/helpers/next-fetch/favoriteActions"
 import type { Venue } from "../index"
 import { toast } from "sonner"
 
 export function VenueHero({ venue }: { venue: Venue }) {
+    const [isFavorited, setIsFavorited] = useState<boolean>(!!(venue.isFavorited ?? (venue as any).isFavorite))
+    const [isSubmitting, setIsSubmitting] = useState(false)
+
     const rawImage = venue.cover_image || venue.logo
     const coverImage = rawImage ? getImageUrl(rawImage) : "/assets/images/events/event3.jpg"
     const logoImage = venue.logo ? getImageUrl(venue.logo) : (venue.cover_image ? getImageUrl(venue.cover_image) : null)
@@ -23,6 +28,29 @@ export function VenueHero({ venue }: { venue: Venue }) {
         } else {
             navigator.clipboard.writeText(window.location.href)
             toast.success("Link copied to clipboard!")
+        }
+    }
+
+    const handleToggleFavorite = async () => {
+        if (!venue._id || isSubmitting) return
+
+        setIsSubmitting(true)
+        const prev = isFavorited
+        setIsFavorited(!prev)
+
+        try {
+            const res = await toggleVenueFavorite(venue._id)
+            if (res?.success) {
+                toast.success(res.message || (!prev ? "Added to favourites" : "Removed from favourites"))
+            } else {
+                setIsFavorited(prev)
+                toast.error(res?.message || res?.error || "Failed to update favourites")
+            }
+        } catch {
+            setIsFavorited(prev)
+            toast.error("Something went wrong. Please try again.")
+        } finally {
+            setIsSubmitting(false)
         }
     }
 
@@ -95,6 +123,20 @@ export function VenueHero({ venue }: { venue: Venue }) {
 
                     {/* Action Buttons */}
                     <div className="flex items-center gap-3 w-full md:w-auto">
+                        <Button
+                            variant="outline"
+                            onClick={handleToggleFavorite}
+                            disabled={isSubmitting}
+                            className={`h-12 px-5 rounded-2xl border transition-all gap-2 cursor-pointer ${
+                                isFavorited
+                                    ? "border-red-200 bg-red-50 text-red-600 hover:bg-red-100"
+                                    : "border-gray-200 text-gray-700 hover:bg-gray-50"
+                            }`}
+                        >
+                            <Heart className={`h-5 w-5 transition-transform active:scale-125 ${isFavorited ? "fill-red-600 text-red-600" : ""}`} />
+                            <span className="font-bold text-xs">{isFavorited ? "Favorited" : "Favorite"}</span>
+                        </Button>
+
                         {venue.website && (
                             <a
                                 href={venue.website.startsWith("http") ? venue.website : `https://${venue.website}`}

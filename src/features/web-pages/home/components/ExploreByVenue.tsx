@@ -1,13 +1,56 @@
 "use client"
 
+import { useState, useEffect } from "react"
 import Image from "next/image"
 import Link from "next/link"
-import { MapPin, ArrowUpRight } from "lucide-react"
+import { MapPin, ArrowUpRight, Heart } from "lucide-react"
 import { VENUES } from "@/constants/events/venus"
 import { getImageUrl } from "@/lib/getImageUrl"
+import { toggleVenueFavorite } from "@/helpers/next-fetch/favoriteActions"
+import { toast } from "sonner"
 
 export default function ExploreByVenue({ venues }: { venues?: any[] }) {
     const venueList = (venues && venues.length > 0) ? venues : VENUES
+
+    const [favoriteStates, setFavoriteStates] = useState<Record<string, boolean>>({})
+
+    useEffect(() => {
+        if (venues && venues.length > 0) {
+            const initial: Record<string, boolean> = {}
+            venues.forEach((v: any) => {
+                const id = v._id || v.id
+                if (id) {
+                    initial[id] = !!(v.isFavorited ?? v.isFavorite)
+                }
+            })
+            setFavoriteStates(initial)
+        }
+    }, [venues])
+
+    const handleToggleFavorite = async (e: React.MouseEvent, venueId: string) => {
+        e.preventDefault()
+        e.stopPropagation()
+
+        if (!venueId) return
+
+        const currentState = favoriteStates[venueId] ?? false
+        // Optimistic UI toggle
+        setFavoriteStates((prev) => ({ ...prev, [venueId]: !currentState }))
+
+        try {
+            const res = await toggleVenueFavorite(venueId)
+            if (res?.success) {
+                toast.success(res.message || (!currentState ? "Added to favourites" : "Removed from favourites"))
+            } else {
+                // Revert on failure
+                setFavoriteStates((prev) => ({ ...prev, [venueId]: currentState }))
+                toast.error(res?.message || res?.error || "Failed to update favourites")
+            }
+        } catch {
+            setFavoriteStates((prev) => ({ ...prev, [venueId]: currentState }))
+            toast.error("Something went wrong. Please try again.")
+        }
+    }
 
     return (
         <section className="container py-12 lg:py-16">
@@ -40,6 +83,7 @@ export default function ExploreByVenue({ venues }: { venues?: any[] }) {
 
                     const eventCount = venue.events_count ?? venue.programmes_count ?? venue.eventCount ?? 0
                     const href = venue._id ? `/venues/${venue._id}` : `/events?location=${encodeURIComponent(venue.name || venue.city || "")}`
+                    const isFav = favoriteStates[id] ?? !!(venue.isFavorited ?? venue.isFavorite)
 
                     return (
                         <Link
@@ -55,6 +99,22 @@ export default function ExploreByVenue({ venues }: { venues?: any[] }) {
                                 unoptimized
                             />
                             <div className="absolute inset-0 bg-linear-to-t from-black/80 via-black/20 to-transparent" />
+
+                            {/* Favorite Button */}
+                            {venue._id && (
+                                <button
+                                    type="button"
+                                    onClick={(e) => handleToggleFavorite(e, venue._id)}
+                                    className="absolute top-4 right-4 z-20 h-10 w-10 rounded-full bg-black/40 backdrop-blur-md border border-white/20 flex items-center justify-center text-white hover:bg-black/60 hover:scale-110 active:scale-95 transition-all duration-300 cursor-pointer"
+                                    title={isFav ? "Remove from favourites" : "Add to favourites"}
+                                >
+                                    <Heart
+                                        className={`h-5 w-5 transition-colors ${
+                                            isFav ? "fill-red-500 text-red-500" : "text-white"
+                                        }`}
+                                    />
+                                </button>
+                            )}
 
                             <div className="absolute bottom-0 left-0 right-0 p-6 space-y-2 transform transition-transform duration-500">
                                 <div className="flex items-center gap-2 text-[#F5A800]">
