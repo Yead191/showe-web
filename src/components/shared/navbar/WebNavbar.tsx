@@ -29,7 +29,7 @@ import { getImageUrl } from "@/lib/getImageUrl";
 const webNavItems = [
   { label: "Home", href: "/for-users" },
   { label: "Explore", href: "/home" },
-  { label: "Events", href: "/events" },
+  // { label: "Events", href: "/events" },
   { label: "Programmes", href: "/programmes", requiresAuth: true },
   { label: "About us", href: "/about" },
   { label: "Support", href: "/support" },
