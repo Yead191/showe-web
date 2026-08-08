@@ -155,7 +155,7 @@ export function EventSidebar({ event, user }: EventSidebarProps) {
                         <div className="flex -space-x-3.5">
                             {interestedPeople.map((user, idx) => (
                                 <div
-                                    key={user._id}
+                                    key={user?._id || idx}
                                     className="h-12 w-12 rounded-full border-4 border-white bg-gray-100 overflow-hidden relative shadow-sm"
                                     style={{ zIndex: 3 - idx }}
                                 >

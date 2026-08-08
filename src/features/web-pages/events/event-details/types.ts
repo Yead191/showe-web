@@ -46,7 +46,7 @@ export interface NearbyPlace {
     price: string
     location: string
     description: string
-    website: string
+    website?: string
 }
 
 export interface InterestPerson {
