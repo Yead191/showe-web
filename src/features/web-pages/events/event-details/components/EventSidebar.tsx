@@ -43,16 +43,16 @@ export function EventSidebar({ event, user }: EventSidebarProps) {
                     <div className="flex items-center justify-between">
                         <div className="space-y-1">
                             <p className="text-[10px] font-black text-gray-400 uppercase tracking-[0.2em]">Ticket starting from</p>
-                            <p className="text-4xl font-black text-[#F5A800] tracking-tight">${event.price}</p>
+                            <p className="text-4xl font-black text-accent-400 tracking-tight">${event.price}</p>
                         </div>
-                        <div className="bg-[#F5A800]/10 text-[#F5A800] px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-wider">
+                        <div className="bg-accent-400/10 text-accent-400 px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-wider">
                             Best Deal
                         </div>
                     </div>
 
                     <Button
                         onClick={handleGetTicket}
-                        className="w-full h-16 bg-[#014B52] hover:bg-[#023a40] text-white font-black text-lg rounded-2xl transition-all active:scale-[0.98] shadow-xl shadow-[#014B52]/20 flex items-center justify-center gap-2 group-hover:gap-4 duration-300"
+                        className="w-full h-16 bg-primary-600 hover:bg-[#023a40] text-white font-black text-lg rounded-2xl transition-all active:scale-[0.98] shadow-xl shadow-primary-600/20 flex items-center justify-center gap-2 group-hover:gap-4 duration-300"
                     >
                         Get Your Ticket
                         <ChevronRight className="h-5 w-5" />
@@ -64,7 +64,7 @@ export function EventSidebar({ event, user }: EventSidebarProps) {
                     <div className="space-y-5 pt-2">
                         <div className="flex items-start gap-4">
                             <div className="bg-gray-50 p-3.5 rounded-2xl flex shrink-0 shadow-sm border border-gray-100">
-                                <Calendar className="h-6 w-6 text-[#014B52]" />
+                                <Calendar className="h-6 w-6 text-primary-600" />
                             </div>
                             <div className="space-y-1 pt-1">
                                 <p className="text-sm font-black text-gray-900 leading-tight">
@@ -80,7 +80,7 @@ export function EventSidebar({ event, user }: EventSidebarProps) {
 
                         <div className="flex items-start gap-4">
                             <div className="bg-gray-50 p-3.5 rounded-2xl flex shrink-0 shadow-sm border border-gray-100">
-                                <MapPin className="h-6 w-6 text-[#014B52]" />
+                                <MapPin className="h-6 w-6 text-primary-600" />
                             </div>
                             <div className="space-y-1 pt-1">
                                 <p className="text-sm font-black text-gray-900 leading-tight">{event.vanue?.name}</p>
@@ -114,7 +114,7 @@ export function EventSidebar({ event, user }: EventSidebarProps) {
                                 <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest leading-none mb-2">Event Host</p>
                                 <p className="text-xs font-bold text-gray-500">{(event.author.followers_count ?? 0).toLocaleString()} Followers</p>
                             </div>
-                            <Button variant="outline" size="sm" className="rounded-full text-[10px] font-black uppercase tracking-widest border-gray-200 hover:border-[#F5A800] hover:text-[#F5A800] transition-colors">
+                            <Button variant="outline" size="sm" className="rounded-full text-[10px] font-black uppercase tracking-widest border-gray-200 hover:border-accent-400 hover:text-accent-400 transition-colors">
                                 {event.author.following ? "Following" : "Follow"}
                             </Button>
                         </div>
@@ -138,7 +138,7 @@ export function EventSidebar({ event, user }: EventSidebarProps) {
                         <div className="flex-1 min-w-0">
                             <p className="text-base font-black text-gray-900 leading-tight truncate">{event.artist.name}</p>
                             {event.artist.type && (
-                                <span className="mt-1.5 inline-flex items-center rounded-full bg-[#F5A800]/10 text-[#F5A800] px-3 py-1 text-[10px] font-black uppercase tracking-widest">
+                                <span className="mt-1.5 inline-flex items-center rounded-full bg-accent-400/10 text-accent-400 px-3 py-1 text-[10px] font-black uppercase tracking-widest">
                                     {event.artist.type}
                                 </span>
                             )}
@@ -159,11 +159,11 @@ export function EventSidebar({ event, user }: EventSidebarProps) {
                                     className="h-12 w-12 rounded-full border-4 border-white bg-gray-100 overflow-hidden relative shadow-sm"
                                     style={{ zIndex: 3 - idx }}
                                 >
-                                    <Image src={getImageUrl(user.image)} alt={user.name} fill className="object-cover" />
+                                    <Image src={getImageUrl(user?.image || "")} alt={user?.name || ""} fill className="object-cover" />
                                 </div>
                             ))}
                             {extraInterested > 0 && (
-                                <div className="h-12 w-12 rounded-full border-4 border-white bg-[#F5A800] flex items-center justify-center text-[11px] font-black text-white relative z-0 shadow-sm">
+                                <div className="h-12 w-12 rounded-full border-4 border-white bg-accent-400 flex items-center justify-center text-[11px] font-black text-white relative z-0 shadow-sm">
                                     +{extraInterested}
                                 </div>
                             )}

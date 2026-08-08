@@ -22,6 +22,7 @@ import {
 } from "@/components/ui/sheet";
 import { Menu, LayoutDashboard, LogOut } from "lucide-react";
 import AuthModal from "@/features/auth/components/AuthModal";
+import { TopbarNotifications } from "@/components/shared/Notification/TopbarNotifications";
 import { toast } from "sonner";
 import Cookies from "js-cookie";
 import { getImageUrl } from "@/lib/getImageUrl";
@@ -173,7 +174,7 @@ export default function WebNavbar({ user }: { user: any }) {
         </div>
 
         {/* ── Right: Profile / Auth ── */}
-        <div className="flex-1 flex items-center justify-end gap-3 md:gap-6">
+        <div className="flex-1 flex items-center justify-end gap-3 ">
           {!user ? (
             <div className="flex items-center gap-2 sm:gap-4">
               <button
@@ -190,6 +191,8 @@ export default function WebNavbar({ user }: { user: any }) {
               </Button>
             </div>
           ) : (
+            <>
+            <TopbarNotifications userId={user?._id || user?.id} />
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <Button
@@ -251,6 +254,7 @@ export default function WebNavbar({ user }: { user: any }) {
                 </div>
               </DropdownMenuContent>
             </DropdownMenu>
+            </>
           )}
         </div>
       </div>
