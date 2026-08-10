@@ -36,6 +36,17 @@ const webNavItems = [
   { label: "Support", href: "/support" },
 ];
 
+/** Transparent at top-of-page; solid teal once the user scrolls. */
+const TRANSPARENT_AT_TOP_PATHS = new Set([
+  "/home", // Explore
+  "/explore",
+  "/programmes",
+  "/about",
+  "/support",
+  "/payment/success",
+  "/payment/failed",
+]);
+
 export default function WebNavbar({ user }: { user: any }) {
   // console.log(user)
   const [authModalOpen, setAuthModalOpen] = useState(false);
@@ -54,24 +65,43 @@ export default function WebNavbar({ user }: { user: any }) {
     router.refresh();
   };
   useEffect(() => {
-    const handleScroll = () => {
-      const scrollY = window.scrollY;
-      const banner = document.getElementById("banner");
+    const usesScrollTransparent = TRANSPARENT_AT_TOP_PATHS.has(pathname);
 
+    const computeScrolled = () => {
+      const scrollY = window.scrollY;
+
+      // These pages: transparent at top-0, solid bg as soon as user scrolls.
+      if (usesScrollTransparent) {
+        setIsScrolled(scrollY > 8);
+        return;
+      }
+
+      // Everywhere else: swap after the hero/banner clears the navbar.
+      const banner = document.getElementById("banner");
       if (!banner) {
-        // If there's no banner, the background should be visible
         setIsScrolled(true);
         return;
       }
 
       const bannerHeight = banner.offsetHeight || 0;
-      // Background swap
+      if (bannerHeight === 0) {
+        setIsScrolled(false);
+        return;
+      }
+
       setIsScrolled(scrollY > bannerHeight - 72);
     };
 
-    handleScroll();
-    window.addEventListener("scroll", handleScroll, { passive: true });
-    return () => window.removeEventListener("scroll", handleScroll);
+    computeScrolled();
+    const raf = requestAnimationFrame(computeScrolled);
+
+    window.addEventListener("scroll", computeScrolled, { passive: true });
+    window.addEventListener("resize", computeScrolled);
+    return () => {
+      cancelAnimationFrame(raf);
+      window.removeEventListener("scroll", computeScrolled);
+      window.removeEventListener("resize", computeScrolled);
+    };
   }, [pathname]);
 
   const navBase =

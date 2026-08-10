@@ -1,14 +1,15 @@
-'use client';
+"use client";
 
-import { useCallback } from 'react';
-import { ArrowLeft, ChevronLeft, ChevronRight, BookOpen } from 'lucide-react';
-import { usePathname, useRouter, useSearchParams } from 'next/navigation';
+import { useCallback } from "react";
+import { ArrowLeft, ChevronLeft, ChevronRight, BookOpen } from "lucide-react";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 
-import { cn } from '@/lib/utils';
-import { Block, ProgrammeDoc, ProgrammePage } from '@/types/programme';
-import { useReveal } from './animation';
-import { renderBlockPreview } from './BlockPreviews';
-import ProgrammeNotFound from './ProgrammeNotFound';
+import { cn } from "@/lib/utils";
+import { Block, ProgrammeDoc, ProgrammePage } from "@/types/programme";
+import { useReveal } from "./animation";
+import { renderBlockPreview } from "./BlockPreviews";
+import ProgrammeNotFound from "./ProgrammeNotFound";
+import { useDwellTime } from "./useDwellTime";
 
 export default function ReaderPage({ programme }: { programme: ProgrammeDoc }) {
   const router = useRouter();
@@ -17,8 +18,11 @@ export default function ReaderPage({ programme }: { programme: ProgrammeDoc }) {
 
   const pages = programme?.pages ?? [];
   const totalPages = pages.length;
+
+  // Track enter → leave dwell time for this programme (POST /ads/dwell-time).
+  useDwellTime(totalPages > 0 ? programme?.id : null, "Programmes");
   // URL uses 1-based `page` (e.g. ?page=2). Invalid / missing → first page.
-  const rawPage = Number(searchParams.get('page'));
+  const rawPage = Number(searchParams.get("page"));
   const pageIndex =
     totalPages > 0 && Number.isFinite(rawPage) && rawPage >= 1
       ? Math.min(Math.floor(rawPage) - 1, totalPages - 1)
@@ -31,7 +35,7 @@ export default function ReaderPage({ programme }: { programme: ProgrammeDoc }) {
       if (next === pageIndex) return;
 
       const params = new URLSearchParams(searchParams.toString());
-      params.set('page', String(next + 1));
+      params.set("page", String(next + 1));
       router.replace(`${pathname}?${params.toString()}`, { scroll: false });
     },
     [pageIndex, pathname, router, searchParams, totalPages],
@@ -84,13 +88,21 @@ export default function ReaderPage({ programme }: { programme: ProgrammeDoc }) {
               >
                 {page.blocks.length === 0 ? (
                   <div className="px-6 py-20 text-center text-ink-muted">
-                    <BookOpen size={28} className="mx-auto mb-3 text-ink-faint" />
+                    <BookOpen
+                      size={28}
+                      className="mx-auto mb-3 text-ink-faint"
+                    />
                     <p>This page is empty.</p>
                   </div>
                 ) : (
                   <div>
                     {page?.blocks?.map((b) => (
-                      <ReaderBlock key={b.id} block={b} programme={programme} page={page} />
+                      <ReaderBlock
+                        key={b.id}
+                        block={b}
+                        programme={programme}
+                        page={page}
+                      />
                     ))}
                   </div>
                 )}
@@ -106,8 +118,10 @@ export default function ReaderPage({ programme }: { programme: ProgrammeDoc }) {
                   key={p.id}
                   onClick={() => goToPage(i)}
                   className={cn(
-                    'h-1.5 rounded-full transition-all',
-                    i === pageIndex ? 'w-6 bg-accent' : 'w-1.5 bg-white/30 hover:bg-white/50'
+                    "h-1.5 rounded-full transition-all",
+                    i === pageIndex
+                      ? "w-6 bg-accent"
+                      : "w-1.5 bg-white/30 hover:bg-white/50",
                   )}
                   aria-label={`Go to ${p.title}`}
                 />
@@ -157,44 +171,41 @@ function ReaderBlock({
   const reveal = useReveal(block.animation);
 
   const resolvedBg =
-    block.layout.background === 'custom'
-      ? (block.layout.background_custom || 'transparent')
-      : block.layout.background === 'sunken'
-        ? '#F2EFE9'
-        : block.layout.background === 'surface'
-          ? '#FBFAF7'
-          : block.layout.background === 'primary'
-            ? '#014B52'
-            : block.layout.background === 'accent'
-              ? '#F5A800'
-              : block.layout.background === 'dark'
-                ? '#000000'
-                : 'transparent';
+    block.layout.background === "custom"
+      ? block.layout.background_custom || "transparent"
+      : block.layout.background === "sunken"
+        ? "#F2EFE9"
+        : block.layout.background === "surface"
+          ? "#FBFAF7"
+          : block.layout.background === "primary"
+            ? "#014B52"
+            : block.layout.background === "accent"
+              ? "#F5A800"
+              : block.layout.background === "dark"
+                ? "#000000"
+                : "transparent";
 
   const style = {
-
     paddingTop: block.layout.padding_top,
     paddingBottom: block.layout.padding_bottom,
     paddingLeft: block.layout.padding_x,
     paddingRight: block.layout.padding_x,
     background: resolvedBg,
+    ...(block.layout.text_color ? { "--btext": block.layout.text_color } : {}),
     ...(block.layout.text_color
-      ? { '--btext': block.layout.text_color }
-      : {}),
-    ...(block.layout.text_color
-      ? { '--bborder': block.layout.text_color }
+      ? { "--bborder": block.layout.text_color }
       : {}),
     ...(block.layout.title_color
-      ? { '--btitle': block.layout.title_color }
+      ? { "--btitle": block.layout.title_color }
       : {}),
     ...(block.layout.eyebrow_color
-      ? { '--beyebrow': block.layout.eyebrow_color }
+      ? { "--beyebrow": block.layout.eyebrow_color }
       : {}),
     ...(block.layout.card_background
-      ? { '--bcardbg': block.layout.card_background }
+      ? { "--bcardbg": block.layout.card_background }
       : {}),
     ...(block.layout.card_text_color
-      ? { '--bcardtext': block.layout.card_text_color }
+      ? { "--bcardtext": block.layout.card_text_color }
       : {}),
   } as React.CSSProperties;
 
@@ -202,11 +213,11 @@ function ReaderBlock({
     <div
       style={style}
       className={cn(
-        block.layout.text_color && 'block-textcolor',
-        block.layout.title_color && 'block-titlecolor',
-        block.layout.eyebrow_color && 'block-eyebrowcolor',
-        block.layout.card_background && 'block-cardbg',
-        block.layout.card_text_color && 'block-cardtext'
+        block.layout.text_color && "block-textcolor",
+        block.layout.title_color && "block-titlecolor",
+        block.layout.eyebrow_color && "block-eyebrowcolor",
+        block.layout.card_background && "block-cardbg",
+        block.layout.card_text_color && "block-cardtext",
       )}
     >
       <div ref={reveal.ref} style={reveal.style}>
