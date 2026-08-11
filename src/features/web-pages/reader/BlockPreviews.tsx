@@ -325,9 +325,16 @@ function RefreshmentsPreview({
         {block.title}
       </h3>
       <p className="text-[13px] text-ink-muted mt-1.5">{block.description}</p>
-      <button className="mt-3 inline-flex items-center gap-1.5 text-sm font-semibold text-primary">
-        {block.cta_label} <ArrowRight size={13} />
-      </button>
+      <a
+        href={block.cta_url}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="block"
+      >
+        <button className="mt-3 inline-flex items-center gap-1.5 text-sm font-semibold text-primary">
+          {block.cta_label} <ArrowRight size={13} />
+        </button>
+      </a>
     </div>
   );
 }
@@ -624,28 +631,36 @@ function MerchandisePreview({
       <div className="eyebrow mb-3">{block.title}</div>
       <ul className="space-y-2.5">
         {block.items.map((it) => (
-          <li
+          <a
             key={it.id}
-            className="flex items-center gap-3 rounded-xl border border-line bg-surface-raised p-2.5"
+            href={it.url}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="block"
           >
-            {it.image && (
-              <MediaRenderer
-                src={it.image}
-                className="w-14 h-14 rounded-lg object-cover bg-surface-sunken"
-              />
-            )}
-            <div className="flex-1 min-w-0">
-              <div className="font-semibold text-ink text-sm truncate">
-                {it.name}
+            <li
+              key={it.id}
+              className="flex items-center gap-3 rounded-xl border border-line bg-surface-raised p-2.5"
+            >
+              {it.image && (
+                <MediaRenderer
+                  src={it.image}
+                  className="w-14 h-14 rounded-lg object-cover bg-surface-sunken"
+                />
+              )}
+              <div className="flex-1 min-w-0">
+                <div className="font-semibold text-ink text-sm truncate">
+                  {it.name}
+                </div>
+                <div className="font-display font-bold tabular text-primary text-sm">
+                  {it.price}
+                </div>
               </div>
-              <div className="font-display font-bold tabular text-primary text-sm">
-                {it.price}
-              </div>
-            </div>
-            <button className="w-8 h-8 rounded-full bg-primary text-ink-inverse flex items-center justify-center">
-              <ShoppingBag size={13} />
-            </button>
-          </li>
+              <button className="w-8 h-8 rounded-full bg-primary text-ink-inverse flex items-center justify-center">
+                <ShoppingBag size={13} />
+              </button>
+            </li>
+          </a>
         ))}
       </ul>
     </div>
@@ -1166,7 +1181,7 @@ function MemoryCapturePreview({
       <div className="bg-linear-to-br from-primary to-primary-800 p-5 relative overflow-hidden">
         <div className="absolute -top-8 -right-8 w-32 h-32 rounded-full bg-accent/10" />
         <div className="absolute bottom-0 left-1/2 w-40 h-1 bg-accent/30 blur-sm" />
-        <div className="relative z-[1]">
+        <div className="relative z-1">
           <div className="flex items-center gap-1.5 mb-2">
             <Sparkles size={12} className="text-accent" />
             <span className="text-[10px] font-bold text-accent uppercase tracking-widest">
@@ -1204,7 +1219,7 @@ function MemoryCapturePreview({
               <img
                 src={imagePreview}
                 alt=""
-                className="w-full aspect-[4/3] object-cover"
+                className="w-full aspect-4/3 object-cover"
               />
               <div className="absolute inset-0 bg-black/0 group-hover:bg-black/50 transition-colors flex items-center justify-center">
                 <span className="opacity-0 group-hover:opacity-100 text-white text-[12px] font-bold transition-opacity flex items-center gap-1.5 bg-black/50 rounded-full px-3 py-1.5">
@@ -1229,7 +1244,7 @@ function MemoryCapturePreview({
                 e.stopPropagation();
                 fileRef.current?.click();
               }}
-              className="w-full aspect-[4/3] rounded-xl border-2 border-dashed border-line hover:border-primary bg-surface-sunken hover:bg-primary/5 flex flex-col items-center justify-center gap-2 transition-all group"
+              className="w-full aspect-4/3 rounded-xl border-2 border-dashed border-line hover:border-primary bg-surface-sunken hover:bg-primary/5 flex flex-col items-center justify-center gap-2 transition-all group"
             >
               <div className="w-14 h-14 rounded-full bg-surface-raised group-hover:bg-primary/10 border border-line flex items-center justify-center transition-colors">
                 <Camera
@@ -1348,8 +1363,8 @@ function RecapPreview({
 
   return (
     <div className="rounded-xl panel-deep p-4">
-      <div className="relative z-[1]">
-        <div className="eyebrow !text-accent mb-2">Recap</div>
+      <div className="relative z-1">
+        <div className="eyebrow text-accent! mb-2">Recap</div>
         <h3 className="font-display font-bold text-ink-inverse leading-tight">
           {block.title}
         </h3>
@@ -1649,7 +1664,7 @@ function MapPreview({ block }: { block: Extract<Block, { type: "map" }> }) {
     <div>
       <div className="eyebrow mb-2">{block.title}</div>
       <div className="rounded-xl overflow-hidden border border-line bg-surface-sunken">
-        <div className="relative aspect-[4/3] bg-surface-sunken">
+        <div className="relative aspect-4/3 bg-surface-sunken">
           {embedSrc ? (
             <iframe
               title={block.title || "Map preview"}

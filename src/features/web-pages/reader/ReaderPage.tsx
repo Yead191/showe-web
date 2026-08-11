@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback } from "react";
+import { useCallback, useEffect, useRef } from "react";
 import { ArrowLeft, ChevronLeft, ChevronRight, BookOpen } from "lucide-react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 
@@ -11,10 +11,13 @@ import { renderBlockPreview } from "./BlockPreviews";
 import ProgrammeNotFound from "./ProgrammeNotFound";
 import { useDwellTime } from "./useDwellTime";
 
+const SWIPE_THRESHOLD_PX = 56;
+
 export default function ReaderPage({ programme }: { programme: ProgrammeDoc }) {
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
+  const touchStartRef = useRef<{ x: number; y: number } | null>(null);
 
   const pages = programme?.pages ?? [];
   const totalPages = pages.length;
@@ -41,13 +44,71 @@ export default function ReaderPage({ programme }: { programme: ProgrammeDoc }) {
     [pageIndex, pathname, router, searchParams, totalPages],
   );
 
+  const goPrev = useCallback(() => goToPage(pageIndex - 1), [goToPage, pageIndex]);
+  const goNext = useCallback(() => goToPage(pageIndex + 1), [goToPage, pageIndex]);
+
+  // Keyboard ← → page navigation
+  useEffect(() => {
+    if (totalPages <= 1) return;
+
+    const onKeyDown = (e: KeyboardEvent) => {
+      const target = e.target as HTMLElement | null;
+      const tag = target?.tagName;
+      if (
+        tag === "INPUT" ||
+        tag === "TEXTAREA" ||
+        tag === "SELECT" ||
+        target?.isContentEditable
+      ) {
+        return;
+      }
+
+      if (e.key === "ArrowLeft") {
+        e.preventDefault();
+        goPrev();
+      } else if (e.key === "ArrowRight") {
+        e.preventDefault();
+        goNext();
+      }
+    };
+
+    window.addEventListener("keydown", onKeyDown);
+    return () => window.removeEventListener("keydown", onKeyDown);
+  }, [goNext, goPrev, totalPages]);
+
+  // Touch swipe: left → next, right → previous (won't fight vertical scroll)
+  const onTouchStart = useCallback((e: React.TouchEvent) => {
+    const t = e.changedTouches[0];
+    if (!t) return;
+    touchStartRef.current = { x: t.clientX, y: t.clientY };
+  }, []);
+
+  const onTouchEnd = useCallback(
+    (e: React.TouchEvent) => {
+      const start = touchStartRef.current;
+      touchStartRef.current = null;
+      if (!start || totalPages <= 1) return;
+
+      const t = e.changedTouches[0];
+      if (!t) return;
+
+      const dx = t.clientX - start.x;
+      const dy = t.clientY - start.y;
+
+      if (Math.abs(dx) < SWIPE_THRESHOLD_PX) return;
+      if (Math.abs(dx) < Math.abs(dy)) return;
+
+      if (dx < 0) goNext();
+      else goPrev();
+    },
+    [goNext, goPrev, totalPages],
+  );
+
   if (!programme || totalPages === 0) {
     return <ProgrammeNotFound />;
   }
 
   const page = pages[pageIndex] ?? pages[0]!;
-  const goPrev = () => goToPage(pageIndex - 1);
-  const goNext = () => goToPage(pageIndex + 1);
 
   return (
     <div className="programme-reader min-h-dvh bg-surface-raised md:bg-ink/95 text-ink-inverse relative hide-scrollbar!">
@@ -81,10 +142,12 @@ export default function ReaderPage({ programme }: { programme: ProgrammeDoc }) {
                 <div className="absolute top-2 left-1/2 -translate-x-1/2 w-24 h-5 bg-ink rounded-full z-10" />
               </div>
 
-              {/* Page content — full viewport on mobile */}
+              {/* Page content — full viewport on mobile; swipe left/right to change page */}
               <div
-                className="h-dvh md:h-[calc(100dvh-137px)] 2xl:h-[calc(100vh-180px)] overflow-auto no-scrollbar!"
+                className="h-dvh md:h-[calc(100dvh-137px)] 2xl:h-[calc(100vh-180px)] overflow-auto no-scrollbar! touch-pan-y"
                 key={page.id}
+                onTouchStart={onTouchStart}
+                onTouchEnd={onTouchEnd}
               >
                 {page.blocks.length === 0 ? (
                   <div className="px-6 py-20 text-center text-ink-muted">
@@ -133,7 +196,7 @@ export default function ReaderPage({ programme }: { programme: ProgrammeDoc }) {
 
       {/* Floating page nav */}
       {totalPages > 1 && (
-        <nav className="fixed bottom-2 left-1/2 -translate-x-1/2 inline-flex items-center gap-1 p-1 2xl:p-1.5 rounded-full bg-ink-inverse text-ink shadow-2xl border border-white/10">
+        <nav className="fixed bottom-5 left-1/2 -translate-x-1/2 inline-flex items-center gap-1 p-1 2xl:p-1.5 rounded-full bg-ink-inverse text-ink shadow-2xl border border-white/10">
           <button
             onClick={goPrev}
             disabled={pageIndex === 0}
