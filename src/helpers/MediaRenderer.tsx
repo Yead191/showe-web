@@ -5,7 +5,7 @@ import { useRef, useState } from "react";
 function MediaRenderer({ src, className }: { src: string; className?: string }) {
     const videoRef = useRef<HTMLVideoElement>(null);
     const [isMuted, setIsMuted] = useState(true);
-
+// console.log(src, 'src')
     if (!src) return null;
     const isVideo = src.startsWith('data:video') || src.match(/\.(mp4|webm|mov)$/i);
 

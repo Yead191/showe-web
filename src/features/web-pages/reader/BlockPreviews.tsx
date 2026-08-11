@@ -229,7 +229,7 @@ function BehindScenesPreview({
             className="w-full aspect-square bg-surface-sunken rounded-lg overflow-hidden cursor-pointer"
             onClick={(e) => {
               e.stopPropagation();
-              setFullscreenMedia(src);
+              setFullscreenMedia(getImageUrl(src));
             }}
           >
             <MediaRenderer src={src} className="w-full h-full object-cover" />
