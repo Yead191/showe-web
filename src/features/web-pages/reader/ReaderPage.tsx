@@ -134,7 +134,7 @@ export default function ReaderPage({ programme }: { programme: ProgrammeDoc }) {
 
       {/* Full-bleed on mobile; phone frame on md+ */}
       <div className="md:px-4 md:pt-18 2xl:pt-20 2xl:pb-16">
-        <div className="mx-auto md:max-w-105">
+        <div className="mx-auto md:max-w-90">
           <div className="md:p-2.5 md:bg-ink md:rounded-[40px] md:shadow-2xl">
             <div className="bg-surface-raised text-ink overflow-hidden md:rounded-[32px] md:overflow-hidden">
               {/* Notch (desktop only) */}

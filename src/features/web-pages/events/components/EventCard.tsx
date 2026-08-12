@@ -59,20 +59,20 @@ export function EventCard({ event }: EventCardProps) {
             <p className="text-[11px] font-medium text-gray-500 uppercase tracking-wider">
               {event?.address ?? ""}
             </p>
-            <h3 className="text-base font-bold text-gray-900 leading-snug group-hover:text-[#F5A800] transition-colors line-clamp-2">
+            <h3 className="text-base font-bold text-gray-900 leading-snug group-hover:text-accent-400 transition-colors line-clamp-2">
               {event.title}
             </h3>
           </div>
           <div className="text-right shrink-0">
-            <p className="text-xl font-black text-[#F5A800]">
-              ${Number(event?.price?.toFixed(2) ?? 0)}
+            <p className="text-xl font-black text-accent-400">
+              £{Number(event?.price?.toFixed(2) ?? 0)}
             </p>
           </div>
         </div>
 
         <div className="mt-auto pt-4 space-y-4">
           <div className="flex items-center gap-2 text-xs font-medium text-gray-600">
-            <Calendar className="h-4 w-4 text-[#F5A800] shrink-0" />
+            <Calendar className="h-4 w-4 text-accent-400 shrink-0" />
             <span>
               {event?.event_date
                 ? format(parseISO(event?.event_date), "EEEE, MMM dd, yyyy")

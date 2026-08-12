@@ -43,7 +43,7 @@ export function EventSidebar({ event, user }: EventSidebarProps) {
                     <div className="flex items-center justify-between">
                         <div className="space-y-1">
                             <p className="text-[10px] font-black text-gray-400 uppercase tracking-[0.2em]">Ticket starting from</p>
-                            <p className="text-4xl font-black text-accent-400 tracking-tight">${event.price}</p>
+                            <p className="text-4xl font-black text-accent-400 tracking-tight">£{event.price}</p>
                         </div>
                         <div className="bg-accent-400/10 text-accent-400 px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-wider">
                             Best Deal
