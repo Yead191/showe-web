@@ -22,6 +22,7 @@ import {
   Wine,
   CheckCircle2,
   ParkingCircle,
+  Loader2,
 } from "lucide-react";
 import { useState, useRef, useMemo, useEffect } from "react";
 
@@ -508,58 +509,199 @@ function ImageStoryPreview({
 
 /* ---------------- Module 4 ---------------- */
 
+interface PollAnswerApiItem {
+  answer_id: string;
+  answer: string;
+  count: number;
+  percentage: number;
+}
+
 function PollPreview({ block }: { block: Extract<Block, { type: "poll" }> }) {
   const [voted, setVoted] = useState<string | null>(null);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [answers, setAnswers] = useState<PollAnswerApiItem[] | null>(null);
+  const [isLoadingAnswers, setIsLoadingAnswers] = useState(false);
+
+  const fetchAnswers = async (pollId: string) => {
+    if (!pollId) return;
+    setIsLoadingAnswers(true);
+    try {
+      const res = await nextFetch<PollAnswerApiItem[]>(
+        `/programmes/polls/${pollId}/answers`,
+        { method: "GET" },
+      );
+      if (res?.success && Array.isArray(res.data)) {
+        console.log(res.data, "poll result");
+        setAnswers(res.data);
+      }
+    } catch (err) {
+      console.error("Failed to fetch poll answers:", err);
+    } finally {
+      setIsLoadingAnswers(false);
+    }
+  };
+
+  useEffect(() => {
+    if (!block.id) return;
+    const storedVote =
+      typeof window !== "undefined"
+        ? localStorage.getItem(`poll_voted_${block.id}`)
+        : null;
+    if (storedVote) {
+      setVoted(storedVote);
+    }
+    if (block.show_results_live || storedVote) {
+      fetchAnswers(block.id);
+    }
+  }, [block.id, block.show_results_live]);
+
+  const handleVote = async (option: {
+    id: string;
+    label: string;
+    emoji?: string;
+  }) => {
+    if (voted || isSubmitting || !block.id) return;
+    setIsSubmitting(true);
+    setVoted(option.id);
+    if (typeof window !== "undefined") {
+      try {
+        localStorage.setItem(`poll_voted_${block.id}`, option.id);
+      } catch {}
+    }
+
+    try {
+      await nextFetch("/programmes/answer-poll", {
+        method: "POST",
+        body: {
+          poll_id: block.id,
+          answer: option.label,
+          answer_id: option.id,
+        },
+      });
+      await fetchAnswers(block.id);
+    } catch (err) {
+      console.error("Failed to submit poll vote:", err);
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
+  const showResults = Boolean(voted || block.show_results_live);
+  const totalVotes =
+    answers?.reduce((acc, a) => acc + (a.count || 0), 0) ??
+    (block.results ?? []).reduce((acc, r) => acc + (r.count || 0), 0);
+
   return (
     <div className="rounded-xl border border-line bg-surface-sunken p-4">
-      <h4 className="font-display font-bold text-ink leading-tight">
-        {block.question}
-      </h4>
+      <div className="flex items-start justify-between gap-2">
+        <h4 className="font-display font-bold text-ink leading-tight">
+          {block.question}
+        </h4>
+        {isSubmitting && (
+          <Loader2 className="w-4 h-4 animate-spin text-primary shrink-0" />
+        )}
+      </div>
+
       <ul className="mt-3 grid grid-cols-2 gap-2">
-        {block.options.map((o) => (
-          <li key={o.id}>
-            <button
-              type="button"
-              onClick={(e) => {
-                e.stopPropagation();
-                setVoted(o.id);
-              }}
-              className={`w-full rounded-lg border px-3 py-2.5 text-sm font-semibold transition-all flex items-center justify-center gap-2
-                ${
-                  voted === o.id
-                    ? "bg-primary text-ink-inverse border-primary"
-                    : "bg-surface-raised text-ink border-line hover:border-primary/40"
-                }`}
-            >
-              {o.emoji && <span className="text-base">{o.emoji}</span>}
-              <span>{o.label}</span>
-            </button>
-          </li>
-        ))}
+        {block.options.map((o) => {
+          const isSelected = voted === o.id;
+          return (
+            <li key={o.id}>
+              <button
+                type="button"
+                disabled={Boolean(voted) || isSubmitting}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  handleVote(o);
+                }}
+                className={`w-full rounded-lg border px-3 py-2.5 text-sm font-semibold transition-all flex items-center justify-center gap-2
+                  ${
+                    isSelected
+                      ? "bg-primary text-ink-inverse border-primary shadow-sm"
+                      : voted
+                        ? "bg-surface-raised/70 text-ink/70 border-line opacity-85 cursor-default"
+                        : "bg-surface-raised text-ink border-line hover:border-primary/40 active:scale-[0.98]"
+                  }`}
+              >
+                {o.emoji && <span className="text-base">{o.emoji}</span>}
+                <span>{o.label}</span>
+                {isSelected && (
+                  <CheckCircle2 className="w-3.5 h-3.5 ml-auto text-ink-inverse" />
+                )}
+              </button>
+            </li>
+          );
+        })}
       </ul>
+
       {voted && block.thank_you_message && (
-        <p className="mt-3 text-[12.5px] text-success font-semibold">
-          {block.thank_you_message}
-        </p>
+        <div className="mt-3 flex items-center gap-1.5 text-[12.5px] text-success font-semibold">
+          <CheckCircle2 size={13} className="shrink-0" />
+          <span>{block.thank_you_message}</span>
+        </div>
       )}
-      {block.show_results_live && (
-        <div className="mt-4 space-y-2">
+
+      {showResults && (
+        <div className="mt-4 pt-3 border-t border-line/60 space-y-2.5">
+          <div className="flex items-center justify-between text-[11px] font-semibold text-ink-muted uppercase tracking-wider">
+            <span>Live Results</span>
+            {isLoadingAnswers ? (
+              <span className="flex items-center gap-1">
+                <Loader2 className="w-3 h-3 animate-spin" /> Loading...
+              </span>
+            ) : (
+              <span>
+                {totalVotes} {totalVotes === 1 ? "vote" : "votes"}
+              </span>
+            )}
+          </div>
+
           {block.options.map((option, index) => {
-            const results = block.results ?? [];
-            const count = results[index]?.count ?? 0;
-            const total =
-              results.reduce((acc, result) => acc + result.count, 0) || 1;
-            const width = `${Math.max(8, Math.round((count / total) * 100))}%`;
+            const apiMatch = answers?.find(
+              (a) =>
+                a.answer_id === option.id ||
+                a.answer?.toLowerCase() === option.label?.toLowerCase(),
+            );
+            const fallbackResult = block.results?.[index];
+            const count = apiMatch
+              ? apiMatch.count
+              : (fallbackResult?.count ?? 0);
+            const percent = apiMatch
+              ? apiMatch.percentage !== undefined
+                ? apiMatch.percentage
+                : totalVotes > 0
+                  ? Math.round((count / totalVotes) * 100)
+                  : 0
+              : totalVotes > 0
+                ? Math.round((count / totalVotes) * 100)
+                : 0;
+
+            const isUserPick = voted === option.id;
+
             return (
-              <div key={option.id}>
-                <div className="flex items-center justify-between text-[11px] text-ink-muted mb-1">
-                  <span>{option.label}</span>
-                  <span>{count}</span>
+              <div key={option.id} className="space-y-1">
+                <div className="flex items-center justify-between text-[11.5px] text-ink">
+                  <span className="flex items-center gap-1.5 font-medium">
+                    {option.emoji && <span>{option.emoji}</span>}
+                    <span>{option.label}</span>
+                    {isUserPick && (
+                      <span className="text-[10px] bg-primary/15 text-primary px-1.5 py-0.2 rounded font-semibold">
+                        Your vote
+                      </span>
+                    )}
+                  </span>
+                  <span className="text-ink-muted font-mono font-medium">
+                    {count} ({percent}%)
+                  </span>
                 </div>
-                <div className="h-2 rounded-full bg-surface-raised overflow-hidden">
+                <div className="h-2 rounded-full bg-surface-raised overflow-hidden border border-line/40">
                   <div
-                    className="h-full rounded-full bg-primary"
-                    style={{ width }}
+                    className={`h-full rounded-full transition-all duration-500 ${
+                      isUserPick ? "bg-primary" : "bg-primary/60"
+                    }`}
+                    style={{
+                      width: `${Math.max(count > 0 ? 6 : 0, percent)}%`,
+                    }}
                   />
                 </div>
               </div>
@@ -1321,6 +1463,15 @@ function MemoryCapturePreview({
 
 /* ---------------- Module 7 ---------------- */
 
+interface ProgrammePollItem {
+  _id: string;
+  programme: string;
+  question: string;
+  id: string;
+  response?: number;
+  __v?: number;
+}
+
 function RecapPreview({
   block,
   context,
@@ -1329,105 +1480,236 @@ function RecapPreview({
   context?: { programme?: ProgrammeDoc | null; page?: ProgrammePage | null };
 }) {
   const programme = context?.programme;
-  const page = context?.page;
-  const isReleased = (() => {
-    if (!programme?.published_at) return false;
-    const publishedAt = new Date(programme.published_at).getTime();
-    const unlockAt = publishedAt + block.release_after_hours * 60 * 60 * 1000;
-    return Date.now() >= unlockAt;
-  })();
+  const programmeId = (programme as any)?._id || programme?.id;
 
-  const allPolls =
-    programme?.pages.flatMap((pg) =>
-      pg.blocks.filter(
-        (b): b is Extract<Block, { type: "poll" }> => b.type === "poll",
-      ),
-    ) ?? [];
-  const pagePolls =
-    page?.blocks.filter(
-      (b): b is Extract<Block, { type: "poll" }> => b.type === "poll",
-    ) ?? [];
-  const scopedPolls = block.poll_ids_to_include.length
-    ? allPolls.filter((poll) => block.poll_ids_to_include.includes(poll.id))
-    : pagePolls;
+  const [polls, setPolls] = useState<ProgrammePollItem[]>([]);
+  const [selectedPollId, setSelectedPollId] = useState<string | null>(null);
+  const [pollAnswers, setPollAnswers] = useState<PollAnswerApiItem[] | null>(
+    null,
+  );
+  const [loadingPolls, setLoadingPolls] = useState(false);
+  const [loadingAnswers, setLoadingAnswers] = useState(false);
 
-  const summary = scopedPolls.map((poll) => {
-    const results = poll.results ?? [];
-    const totalVotes = results.reduce((acc, result) => acc + result.count, 0);
-    const options = poll.options.map((option, index) => ({
-      option,
-      count: results[index]?.count ?? 0,
-    }));
-    return { poll, totalVotes, options };
-  });
+  // Fetch all polls of this programme
+  useEffect(() => {
+    if (!programmeId) return;
+    let active = true;
+    (async () => {
+      setLoadingPolls(true);
+      try {
+        const res = await nextFetch<ProgrammePollItem[]>(
+          `/programmes/polls/${programmeId}`,
+          { method: "GET" },
+        );
+        if (active && res?.success && Array.isArray(res.data)) {
+          let list = res.data;
+          if (
+            block.poll_ids_to_include &&
+            block.poll_ids_to_include.length > 0
+          ) {
+            const filtered = list.filter(
+              (p) =>
+                block.poll_ids_to_include.includes(p.id) ||
+                block.poll_ids_to_include.includes(p._id),
+            );
+            if (filtered.length > 0) {
+              list = filtered;
+            }
+          }
+          setPolls(list);
+          if (list.length > 0) {
+            const defaultId = list[0]._id || list[0].id;
+            setSelectedPollId((prev) =>
+              prev && list.some((p) => (p._id || p.id) === prev)
+                ? prev
+                : defaultId,
+            );
+          }
+        }
+      } catch (err) {
+        console.error("Failed to fetch programme polls:", err);
+      } finally {
+        if (active) setLoadingPolls(false);
+      }
+    })();
+    return () => {
+      active = false;
+    };
+  }, [programmeId, block.poll_ids_to_include]);
+
+  // Fetch answers when a specific poll is selected
+  useEffect(() => {
+    if (!selectedPollId) {
+      setPollAnswers(null);
+      return;
+    }
+    let active = true;
+    (async () => {
+      setLoadingAnswers(true);
+      try {
+        const res = await nextFetch<PollAnswerApiItem[]>(
+          `/programmes/polls/${selectedPollId}/answers`,
+          { method: "GET" },
+        );
+        if (active && res?.success && Array.isArray(res.data)) {
+          setPollAnswers(res.data);
+        } else if (active) {
+          setPollAnswers([]);
+        }
+      } catch (err) {
+        console.error("Failed to fetch poll answers for recap:", err);
+        if (active) setPollAnswers([]);
+      } finally {
+        if (active) setLoadingAnswers(false);
+      }
+    })();
+    return () => {
+      active = false;
+    };
+  }, [selectedPollId]);
+
+  const selectedPoll = polls.find((p) => (p._id || p.id) === selectedPollId);
+
+  const totalVotes =
+    pollAnswers?.reduce((acc, a) => acc + (a.count || 0), 0) ??
+    selectedPoll?.response ??
+    0;
 
   return (
     <div className="rounded-xl panel-deep p-4">
       <div className="relative z-1">
-        <div className="eyebrow text-accent! mb-2">Recap</div>
-        <h3 className="font-display font-bold text-ink-inverse leading-tight">
-          {block.title}
-        </h3>
-        <p className="text-[13px] text-ink-inverse/75 mt-2">
-          {block.description}
-        </p>
-        <div className="mt-3 flex items-center gap-2 text-[11.5px] text-accent-300 font-semibold">
-          <Bell size={11} /> Available {block.release_after_hours}h after the
-          event
+        <div className="eyebrow text-accent! mb-1.5">
+          Recap & Live Highlights
         </div>
-        {block.results_api_url && (
-          <div className="mt-2 rounded-lg border border-white/10 bg-white/5 px-3 py-2 text-[11px] text-ink-inverse/70">
-            Results API ready: {block.results_api_url}
-          </div>
+        <h3 className="font-display font-bold text-ink-inverse leading-tight text-lg">
+          {block.title || "Show Recap"}
+        </h3>
+        {block.description && (
+          <p className="text-[13px] text-ink-inverse/75 mt-1.5">
+            {block.description}
+          </p>
         )}
-        <div className="mt-4 rounded-xl bg-black/15 border border-white/10 p-3">
-          {isReleased ? (
-            summary.length > 0 ? (
-              <div className="space-y-3">
-                {summary.map(({ poll, totalVotes, options }) => (
-                  <div key={poll.id}>
-                    <div className="text-[11px] uppercase tracking-wider text-ink-inverse/55 font-bold">
-                      Poll result
+
+        <div className="mt-4 rounded-xl bg-black/25 border border-white/10 p-3.5 space-y-3">
+          {loadingPolls ? (
+            <div className="flex items-center justify-center py-6 text-ink-inverse/60 gap-2 text-xs">
+              <Loader2 className="w-4 h-4 animate-spin text-accent" />
+              <span>Loading audience polls...</span>
+            </div>
+          ) : polls.length === 0 ? (
+            <p className="text-[12px] text-ink-inverse/70 text-center py-3">
+              No audience polls found for this recap yet.
+            </p>
+          ) : (
+            <>
+              {/* Poll Selector */}
+              {polls.length > 1 && (
+                <div>
+                  <div className="text-[10.5px] uppercase tracking-wider text-ink-inverse/60 font-semibold mb-2">
+                    Select Question ({polls.length})
+                  </div>
+                  <div className="flex items-center gap-1.5 overflow-x-auto pb-1.5 scrollbar-thin">
+                    {polls.map((poll, index) => {
+                      const pollKey = poll._id || poll.id;
+                      const isSelected = selectedPollId === pollKey;
+                      return (
+                        <button
+                          key={pollKey}
+                          type="button"
+                          onClick={() => setSelectedPollId(pollKey)}
+                          className={`px-3 py-1.5 rounded-lg text-xs font-semibold whitespace-nowrap transition-all flex items-center gap-1.5 ${
+                            isSelected
+                              ? "bg-accent text-slate-950 shadow-md font-bold"
+                              : "bg-white/10 text-ink-inverse/80 hover:bg-white/15 hover:text-white"
+                          }`}
+                        >
+                          <span>Poll #{index + 1}</span>
+                          {poll.response !== undefined && poll.response > 0 && (
+                            <span
+                              className={`text-[10px] px-1 py-0.2 rounded-full ${
+                                isSelected
+                                  ? "bg-slate-950/20 text-slate-950 font-bold"
+                                  : "bg-white/15 text-ink-inverse/90"
+                              }`}
+                            >
+                              {poll.response}
+                            </span>
+                          )}
+                        </button>
+                      );
+                    })}
+                  </div>
+                </div>
+              )}
+
+              {/* Selected Poll Details */}
+              {selectedPoll && (
+                <div className="space-y-3 pt-1">
+                  <div className="flex items-start justify-between gap-2">
+                    <div>
+                      <div className="text-[10.5px] uppercase tracking-wider text-accent font-bold">
+                        Audience Question
+                      </div>
+                      <div className="mt-0.5 text-sm font-semibold text-ink-inverse leading-snug">
+                        {selectedPoll.question}
+                      </div>
                     </div>
-                    <div className="mt-1 text-sm font-semibold text-ink-inverse">
-                      {poll.question}
+                    <div className="shrink-0 text-right">
+                      <span className="text-[11px] font-mono text-ink-inverse/70 bg-white/10 px-2 py-0.5 rounded-md">
+                        {totalVotes} {totalVotes === 1 ? "vote" : "votes"}
+                      </span>
                     </div>
-                    <div className="mt-2 space-y-2">
-                      {options.map(({ option, count }) => {
+                  </div>
+
+                  {/* Answers breakdown */}
+                  {loadingAnswers ? (
+                    <div className="flex items-center justify-center py-5 text-ink-inverse/60 gap-2 text-xs">
+                      <Loader2 className="w-4 h-4 animate-spin text-accent" />
+                      <span>Loading results...</span>
+                    </div>
+                  ) : !pollAnswers || pollAnswers.length === 0 ? (
+                    <p className="text-[12px] text-ink-inverse/60 italic py-2 text-center">
+                      No responses recorded for this question yet.
+                    </p>
+                  ) : (
+                    <div className="space-y-2.5 pt-1">
+                      {pollAnswers.map((item) => {
                         const percent =
-                          totalVotes > 0
-                            ? Math.round((count / totalVotes) * 100)
-                            : 0;
+                          item.percentage !== undefined
+                            ? item.percentage
+                            : totalVotes > 0
+                              ? Math.round((item.count / totalVotes) * 100)
+                              : 0;
                         return (
-                          <div key={option.id}>
-                            <div className="flex items-center justify-between text-[12px] text-ink-inverse/75">
-                              <span>{option.label}</span>
-                              <span>
-                                {count} {totalVotes > 0 ? `(${percent}%)` : ""}
+                          <div
+                            key={item.answer_id || item.answer}
+                            className="space-y-1"
+                          >
+                            <div className="flex items-center justify-between text-[12px] text-ink-inverse/90 font-medium">
+                              <span>{item.answer}</span>
+                              <span className="font-mono text-ink-inverse/80">
+                                {item.count} ({percent}%)
                               </span>
                             </div>
-                            <div className="mt-1 h-2 rounded-full bg-white/10 overflow-hidden">
+                            <div className="h-2 rounded-full bg-white/10 overflow-hidden border border-white/5">
                               <div
-                                className="h-full rounded-full bg-accent"
-                                style={{ width: `${Math.max(6, percent)}%` }}
+                                className="h-full rounded-full bg-gradient-to-r from-accent to-accent-300 transition-all duration-500 shadow-sm"
+                                style={{
+                                  width: `${Math.max(
+                                    item.count > 0 ? 6 : 0,
+                                    percent,
+                                  )}%`,
+                                }}
                               />
                             </div>
                           </div>
                         );
                       })}
                     </div>
-                  </div>
-                ))}
-              </div>
-            ) : (
-              <p className="text-[12px] text-ink-inverse/70">
-                No polls selected for this recap yet.
-              </p>
-            )
-          ) : (
-            <p className="text-[12px] text-ink-inverse/70">
-              Poll results will unlock after {block.release_after_hours} hours.
-            </p>
+                  )}
+                </div>
+              )}
+            </>
           )}
         </div>
       </div>

@@ -350,6 +350,7 @@ export type ProgrammeDocStatus = 'draft' | 'published' | 'archived';
 
 export interface ProgrammeDoc {
   id: string;
+  _id?: string;
   // venue_id: string;
   event_id: string | null; // optionally linked to an event
   title: string;
