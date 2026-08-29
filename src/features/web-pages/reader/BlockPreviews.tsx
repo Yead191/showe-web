@@ -60,7 +60,7 @@ export function renderBlockPreview(
     case "poll":
       return <PollPreview block={block} />;
     case "review":
-      return <ReviewPreview block={block} />;
+      return <ReviewPreview block={block} context={context} />;
     case "merchandise":
       return <MerchandisePreview block={block} />;
     case "future_shows":
@@ -715,45 +715,108 @@ function PollPreview({ block }: { block: Extract<Block, { type: "poll" }> }) {
 
 function ReviewPreview({
   block,
+  context,
 }: {
   block: Extract<Block, { type: "review" }>;
+  context?: { programme?: ProgrammeDoc | null; page?: ProgrammePage | null };
 }) {
-  const [chars, setChars] = useState(0);
+  const programme = context?.programme;
+  const programmeId = (programme as any)?._id || programme?.id;
+  const [thought, setThought] = useState("");
   const [submitted, setSubmitted] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [errorMsg, setErrorMsg] = useState<string | null>(null);
+
+  const handleSubmit = async (e: React.MouseEvent) => {
+    e.stopPropagation();
+    if (!thought.trim()) {
+      setErrorMsg("Please write your thoughts before submitting.");
+      return;
+    }
+    if (!programmeId) {
+      setErrorMsg("Programme reference missing.");
+      return;
+    }
+
+    setIsSubmitting(true);
+    setErrorMsg(null);
+    try {
+      const res = await nextFetch("/programmes/user-thoughts", {
+        method: "POST",
+        body: {
+          proggrame: programmeId,
+          programme: programmeId,
+          thought: thought.trim(),
+        },
+      });
+
+      if (res?.success) {
+        setSubmitted(true);
+      } else {
+        setErrorMsg(
+          res?.message || "Failed to submit review. Please try again.",
+        );
+      }
+    } catch (err) {
+      console.error("Failed to submit user thought:", err);
+      setErrorMsg("An unexpected error occurred. Please try again.");
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
   return (
-    <div>
+    <div className="rounded-xl border border-line bg-surface-sunken p-4">
       <h4 className="font-display font-bold text-ink leading-tight">
         {block.prompt}
       </h4>
       {submitted ? (
         <div className="mt-3 rounded-xl bg-success/10 border border-success/30 p-4 text-center">
-          <p className="text-[13px] font-semibold text-success">
-            Thanks for your review! ✓
-          </p>
+          <div className="flex items-center justify-center gap-1.5 text-[13px] font-semibold text-success">
+            <CheckCircle2 size={16} />
+            <span>Thanks for sharing your thoughts!</span>
+          </div>
         </div>
       ) : (
         <>
           <textarea
             rows={3}
-            placeholder={block.placeholder}
-            maxLength={block.max_chars}
-            onChange={(e) => setChars(e.target.value.length)}
-            className="mt-2 w-full rounded-lg border border-line bg-surface-raised p-3 text-sm leading-relaxed outline-none focus:border-primary transition-colors"
+            value={thought}
+            disabled={isSubmitting}
+            placeholder={
+              block.placeholder || "Share your thoughts on the performance..."
+            }
+            maxLength={block.max_chars || 500}
+            onChange={(e) => {
+              setThought(e.target.value);
+              if (errorMsg) setErrorMsg(null);
+            }}
+            className="mt-2.5 w-full rounded-lg border border-line bg-surface-raised p-3 text-sm leading-relaxed outline-none focus:border-primary transition-colors disabled:opacity-60"
           />
           <div className="flex items-center justify-between mt-1 mb-3">
             <span className="text-[11px] text-ink-faint">
-              {chars} / {block.max_chars}
+              {thought.length} / {block.max_chars || 500}
             </span>
+            {errorMsg && (
+              <span className="text-[11.5px] text-danger font-medium">
+                {errorMsg}
+              </span>
+            )}
           </div>
           <button
             type="button"
-            onClick={(e) => {
-              e.stopPropagation();
-              setSubmitted(true);
-            }}
-            className="w-full rounded-full bg-primary text-ink-inverse h-10 font-bold text-sm shadow-soft hover:bg-primary-700 transition-colors"
+            disabled={isSubmitting || !thought.trim()}
+            onClick={handleSubmit}
+            className="w-full rounded-full bg-primary text-ink-inverse h-10 font-bold text-sm shadow-soft hover:bg-primary-700 transition-all flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer active:scale-[0.99]"
           >
-            {block.submit_label || "Submit"}
+            {isSubmitting ? (
+              <>
+                <Loader2 className="w-4 h-4 animate-spin" />
+                <span>Submitting...</span>
+              </>
+            ) : (
+              <span>{block.submit_label || "Submit"}</span>
+            )}
           </button>
         </>
       )}
@@ -1693,7 +1756,7 @@ function RecapPreview({
                             </div>
                             <div className="h-2 rounded-full bg-white/10 overflow-hidden border border-white/5">
                               <div
-                                className="h-full rounded-full bg-gradient-to-r from-accent to-accent-300 transition-all duration-500 shadow-sm"
+                                className="h-full rounded-full bg-linear-to-r from-accent to-accent-300 transition-all duration-500 shadow-sm"
                                 style={{
                                   width: `${Math.max(
                                     item.count > 0 ? 6 : 0,
