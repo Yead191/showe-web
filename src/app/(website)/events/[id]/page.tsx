@@ -11,7 +11,7 @@ import { cache } from "react";
 const getEvent = cache((id: string) =>
   nextFetch<EventDetail>(`/event/${id}`, {
     method: "GET",
-    cache: "default",
+    cache: "no-store",
     tags: [`event-${id}`],
   }),
 );

@@ -531,7 +531,7 @@ function PollPreview({ block }: { block: Extract<Block, { type: "poll" }> }) {
         { method: "GET" },
       );
       if (res?.success && Array.isArray(res.data)) {
-        console.log(res.data, "poll result");
+        // console.log(res.data, "poll result");
         setAnswers(res.data);
       }
     } catch (err) {
@@ -691,7 +691,7 @@ function PollPreview({ block }: { block: Extract<Block, { type: "poll" }> }) {
                     )}
                   </span>
                   <span className="text-ink-muted font-mono font-medium">
-                    {count} ({percent}%)
+                    {count} ({percent.toFixed(2)}%)
                   </span>
                 </div>
                 <div className="h-2 rounded-full bg-surface-raised overflow-hidden border border-line/40">
@@ -1751,7 +1751,7 @@ function RecapPreview({
                             <div className="flex items-center justify-between text-[12px] text-ink-inverse/90 font-medium">
                               <span>{item.answer}</span>
                               <span className="font-mono text-ink-inverse/80">
-                                {item.count} ({percent}%)
+                                {item.count} ({percent.toFixed(2)}%)
                               </span>
                             </div>
                             <div className="h-2 rounded-full bg-white/10 overflow-hidden border border-white/5">

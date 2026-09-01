@@ -1,6 +1,8 @@
 import { useRef, useEffect, useState, useMemo } from "react";
 import { useRouter } from "next/navigation";
+import { toast } from "sonner";
 import { type ProgrammeItem } from "@/helpers/useTheatreStore";
+import { deleteBooking } from "@/helpers/next-fetch/bookingActions";
 import { BookCard } from "./BookCard";
 import { InfoTile } from "./InfoTile";
 import { DeleteProgrammeDialog } from "./DeleteProgrammeDialog";
@@ -27,6 +29,7 @@ export function DiagonalBooksSection({
   const containerRef = useRef<HTMLDivElement>(null);
   const [activeItem, setActiveItem] = useState<ProgrammeItem | null>(null);
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
+  const [isDeleting, setIsDeleting] = useState(false);
 
   const [containerW, setContainerW] = useState(1200);
   useEffect(() => {
@@ -108,6 +111,29 @@ export function DiagonalBooksSection({
   const handleDeleteRequest = (item: ProgrammeItem) => {
     setActiveItem(item);
     setDeleteDialogOpen(true);
+  };
+
+  const handleConfirmDelete = async (programme: ProgrammeItem) => {
+    if (!programme?._id) return;
+    setIsDeleting(true);
+    try {
+      const res = await deleteBooking(programme._id);
+      if (res?.success) {
+        toast.success(res?.message || "Programme deleted successfully");
+        setDeleteDialogOpen(false);
+        setActiveItem(null);
+        router.refresh();
+      } else {
+        toast.error(
+          (typeof res?.error === "string" ? res.error : res?.message) ||
+            "Failed to delete programme"
+        );
+      }
+    } catch {
+      toast.error("Something went wrong while deleting the programme");
+    } finally {
+      setIsDeleting(false);
+    }
   };
 
   // Repeat the API items so the diagonal always has enough cards to loop,
@@ -256,10 +282,13 @@ export function DiagonalBooksSection({
       <DeleteProgrammeDialog
         item={activeItem}
         open={deleteDialogOpen}
-        onOpenChange={setDeleteDialogOpen}
-        onConfirmDelete={(item) => {
-          console.log("Delete programme:", item);
+        onOpenChange={(open) => {
+          if (!isDeleting) {
+            setDeleteDialogOpen(open);
+          }
         }}
+        onConfirmDelete={handleConfirmDelete}
+        isDeleting={isDeleting}
       />
     </div>
   );
