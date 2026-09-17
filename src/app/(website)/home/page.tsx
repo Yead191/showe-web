@@ -22,34 +22,34 @@ export const metadata = buildMetadata({
 });
 
 export default async function page() {
-    const [events, artists, venues] = await Promise.all([
-        nextFetch("/event/search", {
-            method: "GET",
-            cache: "force-cache",
-            next: {
-                revalidate: 60 * 60 // 1 hour
-            }
-        }),
-        nextFetch("/artist", {
-            method: "GET",
-            cache: "force-cache",
-            next: {
-                revalidate: 60 * 60 // 1 hour
-            }
-        }),
-        nextFetch("/vanue", {
-            method: "GET",
-            // User-specific isFavorited — must not be shared cache
-            cache: "no-store",
-            tags: ["venues"],
-        })
-    ]);
-    console.log(venues.data);
-    return (
-        <Home
-            events={events.data ?? []}
-            artists={artists.data ?? []}
-            venues={venues.data ?? []}
-        />
-    );
+  const [events, artists, venues] = await Promise.all([
+    nextFetch("/event/search", {
+      method: "GET",
+      cache: "force-cache",
+      next: {
+        revalidate: 60 * 60, // 1 hour
+      },
+    }),
+    nextFetch("/artist", {
+      method: "GET",
+      cache: "force-cache",
+      next: {
+        revalidate: 60 * 60, // 1 hour
+      },
+    }),
+    nextFetch("/vanue", {
+      method: "GET",
+      // User-specific isFavorited — must not be shared cache
+      cache: "no-store",
+      tags: ["venues"],
+    }),
+  ]);
+  // console.log(venues.data);
+  return (
+    <Home
+      events={events.data ?? []}
+      artists={artists.data ?? []}
+      venues={venues.data ?? []}
+    />
+  );
 }
