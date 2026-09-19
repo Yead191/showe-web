@@ -94,7 +94,7 @@ export default function SupportForm() {
                       name="name"
                       required
                       placeholder="John Doe"
-                      className="h-12 border-gray-200 focus:border-accent-400 focus:ring-[#F5A800]/10 rounded-xl"
+                      className="h-12 border-gray-200 focus:border-accent-400 focus:ring-accent-400/10 rounded-xl"
                     />
                   </div>
                   <div className="space-y-2">
@@ -110,7 +110,7 @@ export default function SupportForm() {
                       type="email"
                       required
                       placeholder="john@example.com"
-                      className="h-12 border-gray-200 focus:border-accent-400 focus:ring-[#F5A800]/10 rounded-xl"
+                      className="h-12 border-gray-200 focus:border-accent-400 focus:ring-accent-400/10 rounded-xl"
                     />
                   </div>
                 </div>
@@ -127,7 +127,7 @@ export default function SupportForm() {
                     name="subject"
                     required
                     placeholder="How can we help?"
-                    className="h-12 border-gray-200 focus:border-accent-400 focus:ring-[#F5A800]/10 rounded-xl"
+                    className="h-12 border-gray-200 focus:border-accent-400 focus:ring-accent-400/10 rounded-xl"
                   />
                 </div>
 
@@ -143,14 +143,14 @@ export default function SupportForm() {
                     name="message"
                     required
                     placeholder="Tell us more about your issue..."
-                    className="min-h-[150px] border-gray-200 focus:border-accent-400 focus:ring-[#F5A800]/10 rounded-xl resize-none py-4"
+                    className="min-h-37.5 border-gray-200 focus:border-accent-400 focus:ring-accent-400/10 rounded-xl resize-none py-4"
                   />
                 </div>
 
                 <Button
                   disabled={isSubmitting}
                   type="submit"
-                  className="w-full h-14 bg-accent-400 hover:bg-[#e09900] text-white font-bold text-lg rounded-2xl shadow-lg shadow-[#F5A800]/20 transition-all active:scale-[0.98]"
+                  className="w-full h-14 bg-accent-400 hover:bg-[#e09900] text-white font-bold text-lg rounded-2xl shadow-lg shadow-accent-400/20 transition-all active:scale-[0.98]"
                 >
                   {isSubmitting ? (
                     <span className="flex items-center gap-2">

@@ -6,15 +6,18 @@ import ExploreByVenue from './components/ExploreByVenue'
 import ExploreByArtist from './components/ExploreByArtist'
 import HomeFAQ from './components/HomeFAQ'
 import LandingCTA from '../landing/components/LandingCTA'
+import type { FaqItem } from '@/features/web-pages/support/types'
 
 export default function Home({
     events,
     artists,
-    venues
+    venues,
+    faqs
 }: {
     events: any[],
     artists: any[],
-    venues: any[]
+    venues: any[],
+    faqs?: FaqItem[]
 }) {
     return (
         <main>
@@ -35,7 +38,7 @@ export default function Home({
             <ExploreByDate />
             <ExploreByVenue venues={venues} />
             <ExploreByArtist artists={artists} />
-            <HomeFAQ />
+            <HomeFAQ faqs={faqs} />
             <LandingCTA />
         </main>
     )

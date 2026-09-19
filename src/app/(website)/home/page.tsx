@@ -1,5 +1,6 @@
 import Home from "@/features/web-pages/home";
 import { nextFetch } from "@/helpers/next-fetch/NextFetch";
+import type { FaqItem } from "@/features/web-pages/support/types";
 import { buildMetadata } from "@/lib/seo";
 
 export const metadata = buildMetadata({
@@ -22,7 +23,7 @@ export const metadata = buildMetadata({
 });
 
 export default async function page() {
-  const [events, artists, venues] = await Promise.all([
+  const [events, artists, venues, faq] = await Promise.all([
     nextFetch("/event/search", {
       method: "GET",
       cache: "force-cache",
@@ -43,6 +44,11 @@ export default async function page() {
       cache: "no-store",
       tags: ["venues"],
     }),
+    nextFetch<FaqItem[]>("/faq", {
+      method: "GET",
+      cache: "default",
+      tags: ["faq"],
+    }),
   ]);
   // console.log(venues.data);
   return (
@@ -50,6 +56,7 @@ export default async function page() {
       events={events.data ?? []}
       artists={artists.data ?? []}
       venues={venues.data ?? []}
+      faqs={faq?.data ?? []}
     />
   );
 }

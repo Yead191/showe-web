@@ -62,7 +62,7 @@ export default function OrgVisualShowcase() {
             </div>
 
             <Link href="/organisation-register">
-              <Button className="h-14 px-10 bg-accent-400 hover:bg-[#e09900] text-primary-600 text-lg font-bold rounded-xl transition-all shadow-xl hover:shadow-[#F5A800]/20">
+              <Button className="h-14 px-10 bg-accent-400 hover:bg-[#e09900] text-primary-600 text-lg font-bold rounded-xl transition-all shadow-xl hover:shadow-accent-400/20">
                 Start Your Transformation
               </Button>
             </Link>

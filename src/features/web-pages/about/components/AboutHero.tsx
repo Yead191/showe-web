@@ -35,7 +35,7 @@ export default function AboutHero() {
           digital future, turning every scan into an interactive journey.
         </p>
         <div className="flex flex-col sm:flex-row gap-4 justify-center">
-          <Button className="h-12 px-8 bg-accent-400 hover:bg-[#e09900] text-white font-semibold text-lg rounded-xl flex items-center gap-2 shadow-lg shadow-[#F5A800]/20 active:scale-95 transition-all">
+          <Button className="h-12 px-8 bg-accent-400 hover:bg-[#e09900] text-white font-semibold text-lg rounded-xl flex items-center gap-2 shadow-lg shadow-accent-400/20 active:scale-95 transition-all">
             <Smartphone size={20} />
             Download App
           </Button>

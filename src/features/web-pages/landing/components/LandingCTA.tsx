@@ -27,7 +27,7 @@ export default function LandingCTA() {
             </p>
 
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-6">
-              <Button className="h-14 px-8 md:px-10 bg-accent-400 hover:bg-[#e09900] text-white font-bold text-lg rounded-2xl flex items-center gap-3 shadow-lg shadow-[#F5A800]/20 active:scale-95 transition-all w-full sm:w-auto">
+              <Button className="h-14 px-8 md:px-10 bg-accent-400 hover:bg-[#e09900] text-white font-bold text-lg rounded-2xl flex items-center gap-3 shadow-lg shadow-accent-400/20 active:scale-95 transition-all w-full sm:w-auto">
                 <Smartphone size={22} />
                 Download App
               </Button>

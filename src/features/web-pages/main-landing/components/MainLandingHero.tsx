@@ -70,7 +70,7 @@ export default function MainLandingHero() {
               className="flex flex-wrap gap-4 pt-4 animate-in slide-in-from-left-8 fade-in duration-1000 fill-mode-both mb-28 lg:mb-0"
               style={{ animationDelay: `${baseDelay + 600}ms` }}
             >
-              <Button className="h-12 xl:h-14 px-8 bg-accent-400 hover:bg-[#e09900] text-white font-semibold text-lg rounded-xl flex items-center gap-2 shadow-lg shadow-[#F5A800]/20 active:scale-95 transition-all w-full md:w-auto">
+              <Button className="h-12 xl:h-14 px-8 bg-accent-400 hover:bg-[#e09900] text-white font-semibold text-lg rounded-xl flex items-center gap-2 shadow-lg shadow-accent-400/20 active:scale-95 transition-all w-full md:w-auto">
                 <Smartphone size={20} />
                 Download App
               </Button>
