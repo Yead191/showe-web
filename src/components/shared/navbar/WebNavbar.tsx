@@ -107,7 +107,9 @@ export default function WebNavbar({ user }: { user: any }) {
   const navBase =
     "fixed top-0 z-50 w-full transition-[background-color,backdrop-filter] duration-500 pr-(--removed-body-scroll-bar-size)";
 
-  const navBg = isScrolled ? "bg-[#014B52] backdrop-blur-sm" : "bg-transparent";
+  const navBg = isScrolled
+    ? "bg-primary-600 backdrop-blur-sm"
+    : "bg-transparent";
 
   const handleOpenAuth = (view: "login" | "register") => {
     // console.log(view)
@@ -156,7 +158,7 @@ export default function WebNavbar({ user }: { user: any }) {
             </SheetTrigger>
             <SheetContent
               side="left"
-              className="bg-[#014B52] border-white/10 text-white w-72"
+              className="bg-primary-600 border-white/10 text-white w-72"
             >
               <SheetHeader className="mb-8 pt-4">
                 <SheetTitle className="text-left">
@@ -222,68 +224,68 @@ export default function WebNavbar({ user }: { user: any }) {
             </div>
           ) : (
             <>
-            <TopbarNotifications userId={user?._id || user?.id} />
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <Button
-                  variant="ghost"
-                  className="relative h-10 w-10 rounded-full p-0 border-2 border-white/10 hover:border-[#F5A800]/50 transition-all overflow-hidden ring-offset-[#014B52] focus-visible:ring-[#F5A800]"
+              <TopbarNotifications userId={user?._id || user?.id} />
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <Button
+                    variant="ghost"
+                    className="relative h-10 w-10 rounded-full p-0 border-2 border-white/10 hover:border-[#F5A800]/50 transition-all overflow-hidden ring-offset-[#014B52] focus-visible:ring-[#F5A800]"
+                  >
+                    <Avatar className="h-full w-full">
+                      <AvatarImage
+                        src={
+                          getImageUrl(user?.image) ||
+                          "https://github.com/shadcn.png"
+                        }
+                        alt="Profile"
+                      />
+                      <AvatarFallback className="bg-[#F5A800] text-white text-xs font-bold">
+                        {user?.name || "JD"}
+                      </AvatarFallback>
+                    </Avatar>
+                  </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent
+                  className="w-64 mt-2 bg-primary-600 border-white/10 text-white shadow-2xl animate-in fade-in zoom-in-95"
+                  align="end"
                 >
-                  <Avatar className="h-full w-full">
-                    <AvatarImage
-                      src={
-                        getImageUrl(user?.image) ||
-                        "https://github.com/shadcn.png"
-                      }
-                      alt="Profile"
-                    />
-                    <AvatarFallback className="bg-[#F5A800] text-white text-xs font-bold">
-                      {user?.name || "JD"}
-                    </AvatarFallback>
-                  </Avatar>
-                </Button>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent
-                className="w-64 mt-2 bg-[#014B52] border-white/10 text-white shadow-2xl animate-in fade-in zoom-in-95"
-                align="end"
-              >
-                <DropdownMenuLabel className="font-normal border-b border-white/5 pb-3 mb-1">
-                  <div className="flex flex-col space-y-1">
-                    <p className="text-sm font-semibold leading-none text-white">
-                      {user?.name || "John Doe"}
-                    </p>
-                    <p className="text-xs leading-none text-white/60">
-                      {user?.email || "john@example.com"}
-                    </p>
-                  </div>
-                </DropdownMenuLabel>
-                <div className="p-1">
-                  <DropdownMenuItem
-                    asChild
-                    className="focus:bg-white/10 cursor-pointer py-2.5 rounded-md transition-colors"
-                  >
-                    <Link
-                      href="/dashboard"
-                      className="flex items-center gap-2 w-full"
-                    >
-                      <LayoutDashboard className="h-4 w-4 text-[#F5A800]" />
-                      <span>Dashboard</span>
-                    </Link>
-                  </DropdownMenuItem>
-                </div>
-                <div className="p-1">
-                  <DropdownMenuItem
-                    className="focus:bg-red-500/10! text-red-400  cursor-pointer py-2.5 rounded-md transition-colors"
-                    onClick={handleLogout}
-                  >
-                    <div className="flex items-center gap-2 w-full">
-                      <LogOut className="h-4 w-4" />
-                      <span>Log out</span>
+                  <DropdownMenuLabel className="font-normal border-b border-white/5 pb-3 mb-1">
+                    <div className="flex flex-col space-y-1">
+                      <p className="text-sm font-semibold leading-none text-white">
+                        {user?.name || "John Doe"}
+                      </p>
+                      <p className="text-xs leading-none text-white/60">
+                        {user?.email || "john@example.com"}
+                      </p>
                     </div>
-                  </DropdownMenuItem>
-                </div>
-              </DropdownMenuContent>
-            </DropdownMenu>
+                  </DropdownMenuLabel>
+                  <div className="p-1">
+                    <DropdownMenuItem
+                      asChild
+                      className="focus:bg-white/10 cursor-pointer py-2.5 rounded-md transition-colors"
+                    >
+                      <Link
+                        href="/dashboard"
+                        className="flex items-center gap-2 w-full"
+                      >
+                        <LayoutDashboard className="h-4 w-4 text-[#F5A800]" />
+                        <span>Dashboard</span>
+                      </Link>
+                    </DropdownMenuItem>
+                  </div>
+                  <div className="p-1">
+                    <DropdownMenuItem
+                      className="focus:bg-red-500/10! text-red-400  cursor-pointer py-2.5 rounded-md transition-colors"
+                      onClick={handleLogout}
+                    >
+                      <div className="flex items-center gap-2 w-full">
+                        <LogOut className="h-4 w-4" />
+                        <span>Log out</span>
+                      </div>
+                    </DropdownMenuItem>
+                  </div>
+                </DropdownMenuContent>
+              </DropdownMenu>
             </>
           )}
         </div>

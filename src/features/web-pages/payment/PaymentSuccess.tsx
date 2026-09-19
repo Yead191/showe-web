@@ -17,7 +17,7 @@ export default function PaymentSuccess({ type }: { type?: string | null }) {
     >
       {/* Decorative glows */}
       <div className="pointer-events-none absolute -top-40 -right-32 h-112 w-112 rounded-full bg-[#F5A800]/15 blur-[120px]" />
-      <div className="pointer-events-none absolute -bottom-40 -left-32 h-104 w-104 rounded-full bg-[#014B52]/50 blur-[120px]" />
+      <div className="pointer-events-none absolute -bottom-40 -left-32 h-104 w-104 rounded-full bg-primary-600/50 blur-[120px]" />
 
       {/* Rings */}
       <div className="pointer-events-none absolute inset-0 flex items-center justify-center opacity-[0.12]">
@@ -35,7 +35,7 @@ export default function PaymentSuccess({ type }: { type?: string | null }) {
               <Check size={32} strokeWidth={3} className="text-[#06181B]" />
             </div>
           </div>
-          <span className="absolute -right-1 -top-1 flex h-9 w-9 items-center justify-center rounded-full border border-white/10 bg-[#014B52] text-[#F5A800] shadow-lg">
+          <span className="absolute -right-1 -top-1 flex h-9 w-9 items-center justify-center rounded-full border border-white/10 bg-primary-600 text-[#F5A800] shadow-lg">
             <Sparkles size={16} />
           </span>
         </div>

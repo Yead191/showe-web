@@ -19,7 +19,7 @@ export default function PaymentFailed({ type }: { type?: string | null }) {
     >
       {/* Decorative glows — cooler / muted vs success */}
       <div className="pointer-events-none absolute -top-40 -right-32 h-112 w-112 rounded-full bg-red-500/10 blur-[120px]" />
-      <div className="pointer-events-none absolute -bottom-40 -left-32 h-104 w-104 rounded-full bg-[#014B52]/50 blur-[120px]" />
+      <div className="pointer-events-none absolute -bottom-40 -left-32 h-104 w-104 rounded-full bg-primary-600/50 blur-[120px]" />
 
       {/* Rings */}
       <div className="pointer-events-none absolute inset-0 flex items-center justify-center opacity-[0.12]">

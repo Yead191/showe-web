@@ -100,7 +100,7 @@ export function ProgrammePurchase({
   };
 
   return (
-    <div className="rounded-2xl border border-gray-100 bg-[#014B52]/3 p-4 space-y-4">
+    <div className="rounded-2xl border border-gray-100 bg-primary-600/3 p-4 space-y-4">
       {/* ── Programme header ── */}
       <div className="flex items-center gap-3">
         <div className="relative h-14 w-14 rounded-xl overflow-hidden border border-gray-100 shrink-0 shadow-sm bg-gray-100">
@@ -138,14 +138,16 @@ export function ProgrammePurchase({
         <Button
           onClick={handleBuyClick}
           disabled={isBuying}
-          className="w-full h-12 bg-[#014B52] hover:bg-[#023a40] text-white font-black rounded-2xl flex items-center justify-center gap-2 transition-all active:scale-[0.98] shadow-lg shadow-[#014B52]/20"
+          className="w-full h-12 bg-primary-600 hover:bg-[#023a40] text-white font-black rounded-2xl flex items-center justify-center gap-2 transition-all active:scale-[0.98] shadow-lg shadow-[#014B52]/20"
         >
           {isBuying ? (
             <Loader2 className="h-4 w-4 animate-spin" />
           ) : (
             <>
               <BookOpen className="h-5 w-5" />
-              {isFree ? "Get Free Programme" : `Purchase Programme · ${priceLabel}`}
+              {isFree
+                ? "Get Free Programme"
+                : `Purchase Programme · ${priceLabel}`}
             </>
           )}
         </Button>

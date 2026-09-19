@@ -69,6 +69,7 @@ export const nextFetch = async <T = any>(
 
     if (!res.ok) {
       return {
+        ...(typeof json === "object" ? json : {}),
         success: false,
         message: json?.message,
         error: json?.errorMessages || "Request failed",

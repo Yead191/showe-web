@@ -47,11 +47,11 @@ export function getSuccessCopy(type?: string | null): SuccessCopy {
     case "subscription":
       return {
         eyebrow: "Subscription active",
-        title: "Welcome aboard",
+        title: "You're all set!",
         description:
-          "Your subscription is confirmed. You now have access to the tools and features included in your plan.",
-        primaryHref: "/dashboard",
-        primaryLabel: "Go to dashboard",
+          "Your SHOWE organizer subscription is ready. You can now access your organizer dashboard and start managing your events.",
+        primaryHref: "https://admin.showe.biz",
+        primaryLabel: "Go to Organizer Portal →",
         secondaryHref: "/home",
         secondaryLabel: "Back to home",
       };
