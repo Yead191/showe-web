@@ -88,7 +88,7 @@ export function SubscriptionReview({
   return (
     <div className="space-y-6 animate-in fade-in duration-300">
       <header className="space-y-2">
-        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary-600/10 text-[#014B52] text-xs font-semibold tracking-wide uppercase">
+        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary-600/10 text-primary-600 text-xs font-semibold tracking-wide uppercase">
           Step 4 · Final Review & Agreement
         </div>
         <h2 className="text-2xl sm:text-3xl font-bold text-slate-900 font-museo">
@@ -101,12 +101,12 @@ export function SubscriptionReview({
       </header>
 
       {/* Selected Plan Summary Box */}
-      <div className="p-6 rounded-3xl bg-linear-to-br from-[#014B52] to-[#013138] text-white shadow-xl shadow-[#014B52]/20 relative overflow-hidden">
-        <div className="absolute top-0 right-0 w-64 h-64 bg-[#F5A800]/10 rounded-full blur-3xl pointer-events-none" />
+      <div className="p-6 rounded-3xl bg-linear-to-br from-primary-600 to-[#013138] text-white shadow-xl shadow-primary-600/20 relative overflow-hidden">
+        <div className="absolute top-0 right-0 w-64 h-64 bg-accent-400/10 rounded-full blur-3xl pointer-events-none" />
 
         <div className="relative flex flex-col sm:flex-row sm:items-end justify-between gap-4 pb-6 border-b border-white/10">
           <div>
-            <span className="inline-flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider px-2.5 py-1 rounded-full bg-white/10 text-[#F5A800] mb-3">
+            <span className="inline-flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider px-2.5 py-1 rounded-full bg-white/10 text-accent-400 mb-3">
               <ShieldCheck size={14} /> Selected Plan
             </span>
             <h3 className="text-2xl sm:text-3xl font-bold">
@@ -119,7 +119,7 @@ export function SubscriptionReview({
 
           <div className="sm:text-right">
             <div className="flex items-baseline sm:justify-end gap-1">
-              <span className="text-4xl sm:text-5xl font-extrabold font-museo text-[#F5A800]">
+              <span className="text-4xl sm:text-5xl font-extrabold font-museo text-accent-400">
                 £{selectedPackage.priceMonthly}
               </span>
               <span className="text-white/70 text-sm font-medium">/ month</span>
@@ -152,7 +152,7 @@ export function SubscriptionReview({
             <span className="text-white/60 block">
               Selling Digital Programmes
             </span>
-            <span className="font-semibold text-[#F5A800] text-sm">
+            <span className="font-semibold text-accent-400 text-sm">
               {selectedPackage.is_proggramme_sell ? "Supported" : "Free only"}
             </span>
           </div>
@@ -166,12 +166,12 @@ export function SubscriptionReview({
         </h4>
 
         {/* Checkbox 1: Terms */}
-        <label className="flex items-start gap-3 p-4 rounded-2xl border border-slate-200 hover:border-[#014B52]/50 transition-colors bg-white cursor-pointer shadow-xs">
+        <label className="flex items-start gap-3 p-4 rounded-2xl border border-slate-200 hover:border-primary-600/50 transition-colors bg-white cursor-pointer shadow-xs">
           <Checkbox
             id="terms-checkbox"
             checked={agreedToTerms}
             onCheckedChange={(checked) => onToggleTerms(Boolean(checked))}
-            className="mt-0.5 data-[state=checked]:bg-primary-600 data-[state=checked]:border-[#014B52]"
+            className="mt-0.5 data-[state=checked]:bg-primary-600 data-[state=checked]:border-primary-600 "
           />
           <div className="text-sm text-slate-700 leading-relaxed">
             I agree to the{" "}
@@ -181,7 +181,7 @@ export function SubscriptionReview({
                 e.preventDefault();
                 setModalType("terms");
               }}
-              className="text-[#014B52] font-bold underline hover:text-[#F5A800] transition-colors"
+              className="text-primary-600 font-bold underline hover:text-accent-400 transition-colors"
             >
               SHOWE Terms & Conditions
             </button>{" "}
@@ -191,12 +191,12 @@ export function SubscriptionReview({
         </label>
 
         {/* Checkbox 2: Privacy */}
-        <label className="flex items-start gap-3 p-4 rounded-2xl border border-slate-200 hover:border-[#014B52]/50 transition-colors bg-white cursor-pointer shadow-xs">
+        <label className="flex items-start gap-3 p-4 rounded-2xl border border-slate-200 hover:border-primary-600/50 transition-colors bg-white cursor-pointer shadow-xs">
           <Checkbox
             id="privacy-checkbox"
             checked={agreedToPrivacy}
             onCheckedChange={(checked) => onTogglePrivacy(Boolean(checked))}
-            className="mt-0.5 data-[state=checked]:bg-primary-600 data-[state=checked]:border-[#014B52]"
+            className="mt-0.5 data-[state=checked]:bg-primary-600 data-[state=checked]:border-primary-600"
           />
           <div className="text-sm text-slate-700 leading-relaxed">
             I have read and accepted the{" "}
@@ -206,7 +206,7 @@ export function SubscriptionReview({
                 e.preventDefault();
                 setModalType("privacy");
               }}
-              className="text-[#014B52] font-bold underline hover:text-[#F5A800] transition-colors"
+              className="text-primary-600 font-bold underline hover:text-accent-400 transition-colors"
             >
               SHOWE Privacy Policy
             </button>{" "}
@@ -241,7 +241,7 @@ export function SubscriptionReview({
           type="button"
           disabled={!canProceed}
           onClick={handleCreateCheckout}
-          className="w-full sm:w-auto min-w-[240px] h-13 bg-primary-600 hover:bg-[#013c42] text-white font-bold text-base rounded-xl shadow-lg shadow-[#014B52]/20 flex items-center justify-center gap-2 cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed transition-all"
+          className="w-full sm:w-auto min-w-60 h-13 bg-primary-600 hover:bg-[#013c42] text-white font-bold text-base rounded-xl shadow-lg shadow-primary-600/20 flex items-center justify-center gap-2 cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed transition-all"
         >
           {isCreatingCheckout ? (
             <>

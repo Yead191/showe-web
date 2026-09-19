@@ -37,7 +37,7 @@ export function OptionCard({
         className={`absolute top-4 right-4 w-6 h-6 rounded-full flex items-center justify-center transition-all
           ${
             selected
-              ? "bg-[#F5A800] text-white scale-100"
+              ? "bg-accent-400 text-white scale-100"
               : "bg-slate-100 text-transparent scale-75 group-hover:scale-100"
           }`}
       >
@@ -48,7 +48,7 @@ export function OptionCard({
         {icon && (
           <div
             className={`shrink-0 w-12 h-12 rounded-xl flex items-center justify-center transition-colors
-              ${selected ? "bg-primary-600 text-[#F5A800]" : "bg-slate-100 text-slate-600"}`}
+              ${selected ? "bg-primary-600 text-accent-400" : "bg-slate-100 text-slate-600"}`}
           >
             {icon}
           </div>
@@ -57,13 +57,13 @@ export function OptionCard({
           <div className="flex items-center gap-2 flex-wrap">
             <h3
               className={`font-semibold text-base md:text-lg ${
-                selected ? "text-[#014B52]" : "text-slate-900"
+                selected ? "text-primary-600" : "text-slate-900"
               }`}
             >
               {title}
             </h3>
             {badge && (
-              <span className="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full bg-[#F5A800]/15 text-[#a07000]">
+              <span className="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full bg-accent-400/15 text-[#a07000]">
                 {badge}
               </span>
             )}

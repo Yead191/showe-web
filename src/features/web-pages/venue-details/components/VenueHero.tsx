@@ -108,7 +108,7 @@ export function VenueHero({ venue }: { venue: Venue }) {
                 unoptimized
               />
             ) : (
-              <span className="text-4xl font-black text-[#F5A800]">
+              <span className="text-4xl font-black text-accent-400">
                 {getInitials(venue.name)}
               </span>
             )}
@@ -123,7 +123,7 @@ export function VenueHero({ venue }: { venue: Venue }) {
                 </span>
               )}
               {venue.city && (
-                <span className="bg-[#F5A800] text-white text-[10px] font-black uppercase tracking-[0.2em] px-4 py-1.5 rounded-full shadow-md">
+                <span className="bg-accent-400 text-white text-[10px] font-black uppercase tracking-[0.2em] px-4 py-1.5 rounded-full shadow-md">
                   {venue.city}
                 </span>
               )}
@@ -134,7 +134,7 @@ export function VenueHero({ venue }: { venue: Venue }) {
             </h1>
 
             <div className="flex items-center gap-2 text-gray-500 text-sm font-medium">
-              <MapPin className="h-4 w-4 text-[#F5A800] shrink-0" />
+              <MapPin className="h-4 w-4 text-accent-400 shrink-0" />
               <span>{locationText}</span>
             </div>
           </div>
@@ -169,7 +169,7 @@ export function VenueHero({ venue }: { venue: Venue }) {
                 rel="noopener noreferrer"
                 className="flex-1 md:flex-initial"
               >
-                <Button className="w-full bg-primary-600 hover:bg-[#01383e] text-white font-bold h-12 px-6 rounded-2xl gap-2 shadow-lg shadow-[#014B52]/20 cursor-pointer">
+                <Button className="w-full bg-primary-600 hover:bg-[#01383e] text-white font-bold h-12 px-6 rounded-2xl gap-2 shadow-lg shadow-primary-600/20 cursor-pointer">
                   <Globe className="h-4 w-4" />
                   <span>Website</span>
                 </Button>

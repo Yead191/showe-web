@@ -51,7 +51,7 @@ const NotFoundPage = () => {
                 <span>Error 404</span>
               </div>
 
-              <h1 className="text-5xl md:text-6xl font-extrabold mb-4 text-[#014B52]">
+              <h1 className="text-5xl md:text-6xl font-extrabold mb-4 text-primary-600">
                 Oops!
               </h1>
 
@@ -67,7 +67,7 @@ const NotFoundPage = () => {
               <div className="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4">
                 <button
                   onClick={handleGoBack}
-                  className="group relative flex items-center justify-center px-6 py-3 rounded-xl text-sm font-medium transition-all duration-300 bg-white text-[#014B52] border border-[#014B52]/30 hover:bg-primary-600/5 cursor-pointer"
+                  className="group relative flex items-center justify-center px-6 py-3 rounded-xl text-sm font-medium transition-all duration-300 bg-white text-primary-600 border border-[#014B52]/30 hover:bg-primary-600/5 cursor-pointer"
                 >
                   <FiArrowLeft className="mr-2 group-hover:-translate-x-1 transition-transform duration-300" />
                   Go Back
@@ -103,10 +103,10 @@ const NotFoundPage = () => {
 
                   {/* 404 Text */}
                   <div className="relative z-10 text-center">
-                    <div className="text-9xl font-black text-[#014B52]/10">
+                    <div className="text-9xl font-black text-primary-600/10">
                       404
                     </div>
-                    <div className="mt-4 flex justify-center text-[#014B52]">
+                    <div className="mt-4 flex justify-center text-primary-600">
                       <FiWifi size={48} className="animate-pulse" />
                       <div className="absolute top-1/2 left-1/2 w-12 h-1 bg-current transform -translate-x-1/2 rotate-45"></div>
                     </div>

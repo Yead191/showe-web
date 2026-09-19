@@ -30,7 +30,7 @@ export default function VisualBenefits() {
           {/* Left Side: Copy & Benefits */}
           <div className="lg:w-1/2 space-y-12 order-2 lg:order-1">
             <div>
-              <h2 className="text-4xl md:text-5xl font-bold text-[#014B52] font-museo mb-6 leading-tight">
+              <h2 className="text-4xl md:text-5xl font-bold text-primary-600 font-museo mb-6 leading-tight">
                 More than a <br />
                 piece of paper.
               </h2>
@@ -44,7 +44,7 @@ export default function VisualBenefits() {
               {benefits.map((benefit, idx) => (
                 <div key={idx} className="flex gap-6 group">
                   <div className="shrink-0 mt-1">
-                    <div className="w-12 h-12 rounded-xl bg-[#F5A800]/10 flex items-center justify-center text-[#F5A800] group-hover:bg-[#F5A800] group-hover:text-white transition-colors duration-300">
+                    <div className="w-12 h-12 rounded-xl bg-accent-400/10 flex items-center justify-center text-accent-400 group-hover:bg-accent-400 group-hover:text-white transition-colors duration-300">
                       <benefit.icon size={24} />
                     </div>
                   </div>
@@ -68,7 +68,7 @@ export default function VisualBenefits() {
               <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[120%] h-[120%] bg-primary-600/5 rounded-full blur-[80px] -z-10" />
 
               {/* Phone Mockup */}
-              <div className="relative aspect-9/19 bg-white rounded-[3rem] border-8 border-slate-900 shadow-2xl shadow-[#014B52]/20 overflow-hidden">
+              <div className="relative aspect-9/19 bg-white rounded-[3rem] border-8 border-slate-900 shadow-2xl shadow-primary-600/20 overflow-hidden">
                 {/* Top Notch */}
                 <div className="absolute top-0 left-1/2 -translate-x-1/2 w-1/3 h-6 bg-slate-900 rounded-b-xl z-20" />
 
@@ -80,7 +80,7 @@ export default function VisualBenefits() {
                     fill
                     className="object-cover opacity-60"
                   />
-                  <div className="absolute inset-0 bg-linear-to-t from-[#014B52] via-[#014B52]/80 to-transparent" />
+                  <div className="absolute inset-0 bg-linear-to-t from-primary-600 via-[#014B52]/80 to-transparent" />
 
                   {/* Mock UI Elements */}
                   <div className="absolute bottom-0 left-0 right-0 p-6 space-y-4">
@@ -111,7 +111,7 @@ export default function VisualBenefits() {
                 style={{ animationDuration: "3s" }}
               >
                 <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 rounded-full bg-[#F5A800]/20 flex items-center justify-center text-[#F5A800]">
+                  <div className="w-10 h-10 rounded-full bg-accent-400/20 flex items-center justify-center text-accent-400">
                     <Bookmark size={20} />
                   </div>
                   <div>

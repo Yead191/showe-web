@@ -100,7 +100,7 @@ export function ChangePasswordForm() {
       <Button
         type="submit"
         disabled={isLoading}
-        className="w-full md:w-auto h-12 px-8 bg-primary-600 hover:bg-[#023a40] rounded-2xl font-black text-xs uppercase tracking-widest gap-2 shadow-lg shadow-[#014B52]/20"
+        className="w-full md:w-auto h-12 px-8 bg-primary-600 hover:bg-[#023a40] rounded-2xl font-black text-xs uppercase tracking-widest gap-2 shadow-lg shadow-primary-600/20"
       >
         {isLoading ? (
           <Loader2 size={16} className="animate-spin" />

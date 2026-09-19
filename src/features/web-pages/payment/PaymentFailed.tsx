@@ -59,7 +59,7 @@ export default function PaymentFailed({ type }: { type?: string | null }) {
         <div className="mt-9 flex w-full flex-col items-center justify-center gap-3 sm:flex-row">
           <Link
             href={copy.primaryHref}
-            className="group inline-flex h-12 w-full items-center justify-center gap-2 rounded-xl bg-[#F5A800] px-7 font-bold text-[#06181B] shadow-lg shadow-[#F5A800]/25 transition-all hover:bg-[#e09900] active:scale-95 sm:w-auto"
+            className="group inline-flex h-12 w-full items-center justify-center gap-2 rounded-xl bg-accent-400 px-7 font-bold text-[#06181B] shadow-lg shadow-accent-400/25 transition-all hover:bg-[#e09900] active:scale-95 sm:w-auto"
           >
             <RefreshCw
               size={18}

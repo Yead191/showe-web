@@ -36,8 +36,8 @@ export function TicketSelectionModal({
           </div>
           <DialogHeader className="relative z-10 space-y-2">
             <div className="flex items-center gap-2">
-              <span className="bg-[#F5A800] h-1 w-4 rounded-full" />
-              <p className="text-[9px] font-black uppercase tracking-[0.3em] text-[#F5A800]">
+              <span className="bg-accent-400 h-1 w-4 rounded-full" />
+              <p className="text-[9px] font-black uppercase tracking-[0.3em] text-accent-400">
                 Ticket Selection
               </p>
             </div>
@@ -95,8 +95,8 @@ export function TicketSelectionModal({
                         key={idx}
                         className="flex items-center gap-1.5 text-[10px] font-bold text-gray-500"
                       >
-                        <div className="h-3.5 w-3.5 rounded-full bg-[#F5A800]/10 flex items-center justify-center shrink-0">
-                          <Check className="h-2 w-2 text-[#F5A800]" />
+                        <div className="h-3.5 w-3.5 rounded-full bg-accent-400/10 flex items-center justify-center shrink-0">
+                          <Check className="h-2 w-2 text-accent-400" />
                         </div>
                         {perk}
                       </div>
@@ -128,7 +128,7 @@ export function TicketSelectionModal({
         {/* ── Compact Footer ── */}
         <div className="p-5 md:p-6 bg-white border-t border-gray-100">
           <div className="flex items-center gap-2 text-gray-400 mb-5">
-            <Info className="h-3.5 w-3.5 text-[#F5A800]" />
+            <Info className="h-3.5 w-3.5 text-accent-400" />
             <p className="text-[9px] font-bold uppercase tracking-widest leading-none pt-0.5">
               Max {event.tickets.max_per_order} tickets per order
             </p>

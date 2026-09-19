@@ -40,7 +40,7 @@ export default function EmotionalConnection() {
               <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary-600/5 border border-[#014B52]/10 text-[#F2A900] text-sm font-bold tracking-wider uppercase">
                 <Sparkles size={16} /> More Than a Programme
               </div>
-              <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold font-museo text-[#014B52] leading-[1.1]">
+              <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold font-museo text-primary-600 leading-[1.1]">
                 Keep the Magic <span className="text-[#F2A900]">Alive.</span>
               </h2>
               <p className="text-xl text-slate-600 font-light leading-relaxed">
@@ -52,8 +52,8 @@ export default function EmotionalConnection() {
 
             <div className="space-y-8 pt-4">
               <div className="flex gap-4 items-start">
-                <div className="mt-1 bg-primary-600/10 p-3 rounded-full text-[#014B52] border border-[#014B52]/20">
-                  <Heart size={24} className="text-[#014B52]" />
+                <div className="mt-1 bg-primary-600/10 p-3 rounded-full text-primary-600 border border-[#014B52]/20">
+                  <Heart size={24} className="text-primary-600" />
                 </div>
                 <div>
                   <h3 className="text-2xl font-bold text-slate-900 mb-2">

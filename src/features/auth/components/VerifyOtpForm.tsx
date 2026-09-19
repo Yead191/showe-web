@@ -1,17 +1,23 @@
-"use client"
+"use client";
 
-import * as React from "react"
-import { useState } from "react"
-import { toast } from "sonner"
-import { Loader2, MailCheck } from "lucide-react"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { nextFetch } from "@/helpers/next-fetch/NextFetch"
-import { useResendOtp } from "@/features/auth/hooks/useResendOtp"
-import { otpSchema } from "@/features/auth/schemas"
-import type { AuthView } from "@/features/auth/types"
+import * as React from "react";
+import { useState } from "react";
+import { toast } from "sonner";
+import { Loader2, MailCheck } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { nextFetch } from "@/helpers/next-fetch/NextFetch";
+import { useResendOtp } from "@/features/auth/hooks/useResendOtp";
+import { otpSchema } from "@/features/auth/schemas";
+import type { AuthView } from "@/features/auth/types";
 
-export function VerifyOtpForm({ setView, email }: { setView: (v: AuthView) => void; email: string }) {
+export function VerifyOtpForm({
+  setView,
+  email,
+}: {
+  setView: (v: AuthView) => void;
+  email: string;
+}) {
   const [otp, setOtp] = useState<string[]>(["", "", "", "", "", ""]);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
@@ -31,7 +37,10 @@ export function VerifyOtpForm({ setView, email }: { setView: (v: AuthView) => vo
     }
   };
 
-  const handleKeyDown = (index: number, e: React.KeyboardEvent<HTMLInputElement>) => {
+  const handleKeyDown = (
+    index: number,
+    e: React.KeyboardEvent<HTMLInputElement>,
+  ) => {
     if (e.key === "Backspace" && !otp[index] && index > 0) {
       inputRefs.current[index - 1]?.focus();
     }
@@ -57,11 +66,15 @@ export function VerifyOtpForm({ setView, email }: { setView: (v: AuthView) => vo
     const code = otp.join("");
     const parsed = otpSchema.safeParse(code);
     if (!parsed.success) {
-      setError(parsed.error.issues[0]?.message || "Enter the complete 4-digit code");
+      setError(
+        parsed.error.issues[0]?.message || "Enter the complete 4-digit code",
+      );
       return;
     }
     if (!email) {
-      toast.error("Missing email. Please register again.", { id: "verify-otp" });
+      toast.error("Missing email. Please register again.", {
+        id: "verify-otp",
+      });
       return;
     }
 
@@ -73,17 +86,26 @@ export function VerifyOtpForm({ setView, email }: { setView: (v: AuthView) => vo
       });
 
       if (response?.success) {
-        toast.success(response?.message || "Email verified! You can now sign in.", { id: "verify-otp" });
+        toast.success(
+          response?.message || "Email verified! You can now sign in.",
+          { id: "verify-otp" },
+        );
         setView("login");
       } else if (Array.isArray(response?.error)) {
-        response.error.forEach((err: { message: string }) => toast.error(err.message, { id: "verify-otp" }));
+        response.error.forEach((err: { message: string }) =>
+          toast.error(err.message, { id: "verify-otp" }),
+        );
       } else {
         setError(response?.message || "Invalid or expired code");
-        toast.error(response?.message || "Invalid or expired code", { id: "verify-otp" });
+        toast.error(response?.message || "Invalid or expired code", {
+          id: "verify-otp",
+        });
       }
     } catch (err) {
       console.error("Verify OTP error:", err);
-      toast.error("Something went wrong. Please try again.", { id: "verify-otp" });
+      toast.error("Something went wrong. Please try again.", {
+        id: "verify-otp",
+      });
     } finally {
       setIsLoading(false);
     }
@@ -92,20 +114,22 @@ export function VerifyOtpForm({ setView, email }: { setView: (v: AuthView) => vo
   return (
     <div className="space-y-6">
       <div className="flex flex-col items-center gap-3">
-        <div className="flex h-12 w-12 items-center justify-center rounded-full bg-[#F5A800]/10">
-          <MailCheck className="h-6 w-6 text-[#F5A800]" />
+        <div className="flex h-12 w-12 items-center justify-center rounded-full bg-accent-400/10">
+          <MailCheck className="h-6 w-6 text-accent-400" />
         </div>
         <div className="flex justify-center gap-2 sm:gap-3">
           {otp.map((digit, i) => (
             <Input
               key={i}
-              ref={(el) => { inputRefs.current[i] = el; }}
+              ref={(el) => {
+                inputRefs.current[i] = el;
+              }}
               value={digit}
               inputMode="numeric"
               onChange={(e) => handleChange(i, e.target.value)}
               onKeyDown={(e) => handleKeyDown(i, e)}
               onPaste={handlePaste}
-              className={`w-11 h-14 sm:w-12 sm:h-16 text-center text-xl sm:text-2xl font-bold border-gray-200 focus:border-[#F5A800] focus:ring-[#F5A800]/20 ${error ? "border-red-400" : ""}`}
+              className={`w-11 h-14 sm:w-12 sm:h-16 text-center text-xl sm:text-2xl font-bold border-gray-200 focus:border-accent-400 focus:ring-accent-400/20 ${error ? "border-red-400" : ""}`}
               maxLength={1}
               autoFocus={i === 0}
             />
@@ -118,9 +142,13 @@ export function VerifyOtpForm({ setView, email }: { setView: (v: AuthView) => vo
           type="button"
           onClick={handleVerify}
           disabled={isLoading}
-          className="w-full h-12 bg-[#F5A800] hover:bg-[#e09900] text-white font-semibold text-base transition-all"
+          className="w-full h-12 bg-accent-400 hover:bg-[#e09900] text-white font-semibold text-base transition-all"
         >
-          {isLoading ? <Loader2 className="w-4 h-4 animate-spin" /> : "Verify Code"}
+          {isLoading ? (
+            <Loader2 className="w-4 h-4 animate-spin" />
+          ) : (
+            "Verify Code"
+          )}
         </Button>
         <p className="text-center text-sm text-gray-500">
           Didn&apos;t receive code?{" "}
@@ -128,7 +156,7 @@ export function VerifyOtpForm({ setView, email }: { setView: (v: AuthView) => vo
             type="button"
             onClick={() => resend(email)}
             disabled={resendIn > 0}
-            className="text-[#F5A800] font-semibold hover:underline disabled:opacity-50 disabled:no-underline disabled:cursor-not-allowed"
+            className="text-accent-400 font-semibold hover:underline disabled:opacity-50 disabled:no-underline disabled:cursor-not-allowed"
           >
             {resendIn > 0 ? `Resend in ${resendIn}s` : "Resend"}
           </button>
@@ -136,11 +164,11 @@ export function VerifyOtpForm({ setView, email }: { setView: (v: AuthView) => vo
         <button
           type="button"
           onClick={() => setView("login")}
-          className="w-full text-center text-sm text-gray-500 hover:text-[#F5A800] transition-colors"
+          className="w-full text-center text-sm text-gray-500 hover:text-accent-400 transition-colors"
         >
           Back to Login
         </button>
       </div>
     </div>
-  )
+  );
 }

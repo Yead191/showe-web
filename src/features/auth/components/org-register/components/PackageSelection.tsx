@@ -72,7 +72,7 @@ export function PackageSelection({
   return (
     <div className="space-y-6 animate-in fade-in duration-300">
       <header className="space-y-2">
-        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary-600/10 text-[#014B52] text-xs font-semibold tracking-wide uppercase">
+        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary-600/10 text-primary-600 text-xs font-semibold tracking-wide uppercase">
           Step 3 · Subscription Plans
         </div>
         <h2 className="text-2xl sm:text-3xl font-bold text-slate-900 font-museo">
@@ -133,13 +133,13 @@ export function PackageSelection({
                 onClick={() => onSelectPackage(pkg)}
                 className={`relative flex flex-col justify-between p-6 rounded-3xl border-2 transition-all duration-300 cursor-pointer ${
                   isSelected
-                    ? "border-[#F5A800] bg-linear-to-b from-amber-50/40 to-white shadow-xl shadow-amber-500/10 ring-2 ring-[#F5A800]/20"
+                    ? "border-accent-400 bg-linear-to-b from-amber-50/40 to-white shadow-xl shadow-amber-500/10 ring-2 ring-accent-400/20"
                     : "border-slate-200/90 bg-white hover:border-primary-600/40 hover:shadow-lg hover:shadow-slate-200/50"
                 }`}
               >
                 {/* Recommended Badge */}
                 {pkg.recommended && (
-                  <span className="absolute -top-3 left-6 inline-flex items-center gap-1 text-[11px] font-bold uppercase tracking-wider px-3 py-1 rounded-full bg-primary-600 text-[#F5A800] shadow-sm">
+                  <span className="absolute -top-3 left-6 inline-flex items-center gap-1 text-[11px] font-bold uppercase tracking-wider px-3 py-1 rounded-full bg-primary-600 text-accent-400 shadow-sm">
                     <Sparkles size={12} /> Most Popular
                   </span>
                 )}
@@ -154,7 +154,7 @@ export function PackageSelection({
                         </span>
                         {pkg.audience && (
                           <span
-                            className="text-[11px] text-slate-500 font-medium truncate max-w-[140px]"
+                            className="text-[11px] text-slate-500 font-medium truncate max-w-35"
                             title={pkg.audience}
                           >
                             {pkg.audience}
@@ -169,7 +169,7 @@ export function PackageSelection({
                     <div
                       className={`w-6 h-6 rounded-full flex items-center justify-center transition-all ${
                         isSelected
-                          ? "bg-[#F5A800] text-slate-950 shadow-sm"
+                          ? "bg-accent-400 text-slate-950 shadow-sm"
                           : "border border-slate-300 bg-white"
                       }`}
                     >
@@ -187,7 +187,7 @@ export function PackageSelection({
                         / month
                       </span>
                     </div>
-                    <p className="text-xs text-slate-500 mt-1 min-h-[36px] line-clamp-2">
+                    <p className="text-xs text-slate-500 mt-1 min-h-9 line-clamp-2">
                       {pkg.description}
                     </p>
                   </div>
@@ -212,7 +212,7 @@ export function PackageSelection({
                     </div>
                     <div className="flex items-center justify-between">
                       <span className="text-slate-500">Selling Capability</span>
-                      <span className="font-semibold text-[#014B52]">
+                      <span className="font-semibold text-primary-600">
                         {pkg.is_proggramme_sell ? "Enabled" : "Disabled"}
                       </span>
                     </div>
@@ -240,7 +240,7 @@ export function PackageSelection({
                           <li key={idx} className="flex items-start gap-2">
                             <Check
                               size={14}
-                              className="shrink-0 text-[#014B52] mt-0.5"
+                              className="shrink-0 text-primary-600 mt-0.5"
                             />
                             <span className="leading-snug">{feat}</span>
                           </li>
@@ -259,7 +259,7 @@ export function PackageSelection({
                   }}
                   className={`w-full h-11 font-semibold rounded-xl text-sm transition-all cursor-pointer ${
                     isSelected
-                      ? "bg-primary-600 hover:bg-[#013c42] text-white shadow-md shadow-[#014B52]/20"
+                      ? "bg-primary-600 hover:bg-[#013c42] text-white shadow-md shadow-primary-600/20"
                       : "bg-slate-100 hover:bg-slate-200 text-slate-800"
                   }`}
                 >
@@ -287,7 +287,7 @@ export function PackageSelection({
           type="button"
           disabled={!selectedPackage}
           onClick={onContinue}
-          className="w-full sm:w-auto min-w-[200px] h-12 bg-primary-600 hover:bg-[#013c42] text-white font-bold rounded-xl shadow-lg shadow-[#014B52]/20 flex items-center justify-center gap-2 cursor-pointer disabled:opacity-50"
+          className="w-full sm:w-auto min-w-50 h-12 bg-primary-600 hover:bg-[#013c42] text-white font-bold rounded-xl shadow-lg shadow-primary-600/20 flex items-center justify-center gap-2 cursor-pointer disabled:opacity-50"
         >
           <span>Review & Continue</span>
           <ArrowRight size={16} />

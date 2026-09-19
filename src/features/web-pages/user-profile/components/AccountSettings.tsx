@@ -98,7 +98,7 @@ export function AccountSettings({ user }: { user: UserProfile }) {
       {/* Avatar Upload */}
       <div className="flex flex-col items-center gap-4 shrink-0">
         <div className="relative group">
-          <div className="relative h-28 w-28 md:h-32 md:w-32 rounded-[32px] md:rounded-[40px] bg-gray-100 flex items-center justify-center text-3xl md:text-4xl font-black text-[#014B52] overflow-hidden border-4 border-white shadow-xl">
+          <div className="relative h-28 w-28 md:h-32 md:w-32 rounded-[32px] md:rounded-[40px] bg-gray-100 flex items-center justify-center text-3xl md:text-4xl font-black text-primary-600 overflow-hidden border-4 border-white shadow-xl">
             {displayImage ? (
               <Image
                 src={displayImage}
@@ -169,7 +169,7 @@ export function AccountSettings({ user }: { user: UserProfile }) {
         <Button
           type="submit"
           disabled={isLoading}
-          className="w-full md:w-auto h-12 px-8 bg-primary-600 hover:bg-[#023a40] rounded-2xl font-black text-xs uppercase tracking-widest gap-2 shadow-lg shadow-[#014B52]/20"
+          className="w-full md:w-auto h-12 px-8 bg-primary-600 hover:bg-[#023a40] rounded-2xl font-black text-xs uppercase tracking-widest gap-2 shadow-lg shadow-primary-600/20"
         >
           {isLoading ? (
             <Loader2 size={16} className="animate-spin" />

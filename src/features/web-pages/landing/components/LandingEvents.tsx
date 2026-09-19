@@ -34,7 +34,7 @@ export default function LandingEvents({ event }: { event?: LandingEventItem }) {
             )}
             <Link
               href={`/events/${event._id}`}
-              className="inline-flex mt-2 text-sm font-bold uppercase tracking-widest text-[#F5A800] hover:text-[#ffb81a] transition-colors"
+              className="inline-flex mt-2 text-sm font-bold uppercase tracking-widest text-accent-400 hover:text-[#ffb81a] transition-colors"
             >
               View event →
             </Link>

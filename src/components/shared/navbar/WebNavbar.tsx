@@ -131,12 +131,12 @@ export default function WebNavbar({ user }: { user: any }) {
                   href={item.href}
                   scroll={true}
                   className={`relative p-2 text-xs xl:text-sm font-medium transition-all duration-300 rounded-md hover:text-white ${
-                    isActive ? "text-[#F5A800]" : "text-white/80"
+                    isActive ? "text-accent-400" : "text-white/80"
                   }`}
                 >
                   {item.label}
                   {isActive && (
-                    <span className="absolute -bottom-3.5 left-1/2 -translate-x-1/2 h-0.75 w-5 rounded-full bg-[#F5A800]" />
+                    <span className="absolute -bottom-3.5 left-1/2 -translate-x-1/2 h-0.75 w-5 rounded-full bg-accent-400" />
                   )}
                 </Link>
               </li>
@@ -179,7 +179,7 @@ export default function WebNavbar({ user }: { user: any }) {
                     onClick={() => setMobileMenuOpen(false)}
                     className={`px-4 py-3 rounded-lg text-base font-medium transition-all ${
                       pathname === item.href
-                        ? "bg-white/10 text-[#F5A800]"
+                        ? "bg-white/10 text-accent-400"
                         : "text-white/70 hover:bg-white/5 hover:text-white"
                     }`}
                   >
@@ -217,7 +217,7 @@ export default function WebNavbar({ user }: { user: any }) {
               </button>
               <Button
                 onClick={() => handleOpenAuth("register")}
-                className="bg-[#F5A800] hover:bg-[#e09900] text-white font-bold px-4 sm:px-7 h-10 transition-all rounded-md shadow-[0_4px_14px_0_rgba(245,168,0,0.39)] hidden md:block"
+                className="bg-accent-400 hover:bg-[#e09900] text-white font-bold px-4 sm:px-7 h-10 transition-all rounded-md shadow-[0_4px_14px_0_rgba(245,168,0,0.39)] hidden md:block"
               >
                 Sign up
               </Button>
@@ -229,7 +229,7 @@ export default function WebNavbar({ user }: { user: any }) {
                 <DropdownMenuTrigger asChild>
                   <Button
                     variant="ghost"
-                    className="relative h-10 w-10 rounded-full p-0 border-2 border-white/10 hover:border-[#F5A800]/50 transition-all overflow-hidden ring-offset-[#014B52] focus-visible:ring-[#F5A800]"
+                    className="relative h-10 w-10 rounded-full p-0 border-2 border-white/10 hover:border-accent-400/50 transition-all overflow-hidden ring-offset-[#014B52] focus-visible:ring-[#F5A800]"
                   >
                     <Avatar className="h-full w-full">
                       <AvatarImage
@@ -239,7 +239,7 @@ export default function WebNavbar({ user }: { user: any }) {
                         }
                         alt="Profile"
                       />
-                      <AvatarFallback className="bg-[#F5A800] text-white text-xs font-bold">
+                      <AvatarFallback className="bg-accent-400 text-white text-xs font-bold">
                         {user?.name || "JD"}
                       </AvatarFallback>
                     </Avatar>
@@ -268,7 +268,7 @@ export default function WebNavbar({ user }: { user: any }) {
                         href="/dashboard"
                         className="flex items-center gap-2 w-full"
                       >
-                        <LayoutDashboard className="h-4 w-4 text-[#F5A800]" />
+                        <LayoutDashboard className="h-4 w-4 text-accent-400" />
                         <span>Dashboard</span>
                       </Link>
                     </DropdownMenuItem>

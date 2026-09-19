@@ -3,19 +3,19 @@ import { Zap, Smartphone, Leaf, QrCode } from "lucide-react";
 export default function AboutShowe() {
   const features = [
     {
-      icon: <Smartphone className="w-10 h-10 text-[#F5A800]" />,
+      icon: <Smartphone className="w-10 h-10 text-accent-400" />,
       title: "Mobile-First",
       description:
         "Beautifully designed programs formatted perfectly for your phone screen.",
     },
     {
-      icon: <Zap className="w-10 h-10 text-[#F5A800]" />,
+      icon: <Zap className="w-10 h-10 text-accent-400" />,
       title: "Real-Time Updates",
       description:
         "Never miss a beat. Get instant updates on schedule changes or announcements.",
     },
     {
-      icon: <Leaf className="w-10 h-10 text-[#F5A800]" />,
+      icon: <Leaf className="w-10 h-10 text-accent-400" />,
       title: "Eco-Friendly",
       description:
         "Enjoy the show while helping the planet by reducing paper waste.",
@@ -28,7 +28,7 @@ export default function AboutShowe() {
         <div className="flex flex-col lg:flex-row gap-16 items-center">
           {/* Left Side */}
           <div className="lg:w-1/2">
-            <h2 className="text-4xl md:text-5xl font-bold text-[#014B52] mb-8 font-museo leading-tight tracking-tight">
+            <h2 className="text-4xl md:text-5xl font-bold text-primary-600 mb-8 font-museo leading-tight tracking-tight">
               The Future of <br className="hidden md:block" /> Event Programmes.
             </h2>
             <p className="text-xl text-slate-600 font-light leading-relaxed mb-10">
@@ -38,16 +38,16 @@ export default function AboutShowe() {
             </p>
 
             <div className="space-y-4">
-              <div className="flex items-start gap-4 p-5 rounded-2xl bg-white shadow-sm border-l-4 border-[#F5A800]">
-                <div className="font-bold text-[#014B52] text-lg shrink-0">
+              <div className="flex items-start gap-4 p-5 rounded-2xl bg-white shadow-sm border-l-4 border-accent-400">
+                <div className="font-bold text-primary-600 text-lg shrink-0">
                   “What is this?”
                 </div>
                 <div className="text-slate-600 pt-[2px]">
                   Your interactive, digital companion for live events and shows.
                 </div>
               </div>
-              <div className="flex items-start gap-4 p-5 rounded-2xl bg-white shadow-sm border-l-4 border-[#F5A800]">
-                <div className="font-bold text-[#014B52] text-lg shrink-0">
+              <div className="flex items-start gap-4 p-5 rounded-2xl bg-white shadow-sm border-l-4 border-accent-400">
+                <div className="font-bold text-primary-600 text-lg shrink-0">
                   “Is it easy?”
                 </div>
                 <div className="text-slate-600 pt-[2px]">
@@ -61,7 +61,7 @@ export default function AboutShowe() {
           <div className="lg:w-1/2 grid grid-cols-1 md:grid-cols-2 gap-6">
             <div className="md:col-span-2 bg-primary-600 text-white p-8 md:p-10 rounded-[2rem] shadow-xl transition-all hover:translate-y-[-5px]">
               <div className="mb-6">
-                <QrCode className="w-12 h-12 text-[#F5A800]" />
+                <QrCode className="w-12 h-12 text-accent-400" />
               </div>
               <h3 className="text-2xl font-bold mb-3 text-white font-museo">
                 Instant Access

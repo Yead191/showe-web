@@ -16,7 +16,7 @@ export default function PaymentSuccess({ type }: { type?: string | null }) {
       }}
     >
       {/* Decorative glows */}
-      <div className="pointer-events-none absolute -top-40 -right-32 h-112 w-112 rounded-full bg-[#F5A800]/15 blur-[120px]" />
+      <div className="pointer-events-none absolute -top-40 -right-32 h-112 w-112 rounded-full bg-accent-400/15 blur-[120px]" />
       <div className="pointer-events-none absolute -bottom-40 -left-32 h-104 w-104 rounded-full bg-primary-600/50 blur-[120px]" />
 
       {/* Rings */}
@@ -29,18 +29,18 @@ export default function PaymentSuccess({ type }: { type?: string | null }) {
       <div className="animate-in fade-in slide-in-from-bottom-6 relative z-10 mx-auto flex max-w-xl flex-col items-center text-center duration-700">
         {/* Success emblem */}
         <div className="relative mb-8">
-          <div className="absolute inset-0 -z-10 rounded-full bg-[#F5A800]/25 blur-2xl" />
+          <div className="absolute inset-0 -z-10 rounded-full bg-accent-400/25 blur-2xl" />
           <div className="relative flex h-28 w-28 items-center justify-center rounded-full bg-white/[0.04] ring-1 ring-white/10 backdrop-blur-sm">
-            <div className="flex h-16 w-16 items-center justify-center rounded-full bg-[#F5A800] shadow-lg shadow-[#F5A800]/40">
+            <div className="flex h-16 w-16 items-center justify-center rounded-full bg-accent-400 shadow-lg shadow-[#F5A800]/40">
               <Check size={32} strokeWidth={3} className="text-[#06181B]" />
             </div>
           </div>
-          <span className="absolute -right-1 -top-1 flex h-9 w-9 items-center justify-center rounded-full border border-white/10 bg-primary-600 text-[#F5A800] shadow-lg">
+          <span className="absolute -right-1 -top-1 flex h-9 w-9 items-center justify-center rounded-full border border-white/10 bg-primary-600 text-accent-400 shadow-lg">
             <Sparkles size={16} />
           </span>
         </div>
 
-        <span className="mb-4 inline-flex items-center gap-2 rounded-full border border-[#F5A800]/25 bg-[#F5A800]/10 px-3 py-1 text-[11px] font-bold uppercase tracking-[0.2em] text-[#F5A800]">
+        <span className="mb-4 inline-flex items-center gap-2 rounded-full border border-accent-400/25 bg-accent-400/10 px-3 py-1 text-[11px] font-bold uppercase tracking-[0.2em] text-accent-400">
           {copy.eyebrow}
         </span>
 
@@ -60,7 +60,7 @@ export default function PaymentSuccess({ type }: { type?: string | null }) {
         <div className="mt-9 flex w-full flex-col items-center justify-center gap-3 sm:flex-row">
           <Link
             href={copy.primaryHref}
-            className="group inline-flex h-12 w-full items-center justify-center gap-2 rounded-xl bg-[#F5A800] px-7 font-bold text-[#06181B] shadow-lg shadow-[#F5A800]/25 transition-all hover:bg-[#e09900] active:scale-95 sm:w-auto"
+            className="group inline-flex h-12 w-full items-center justify-center gap-2 rounded-xl bg-accent-400 px-7 font-bold text-[#06181B] shadow-lg shadow-accent-400/25 transition-all hover:bg-[#e09900] active:scale-95 sm:w-auto"
           >
             {copy.primaryLabel}
             <ArrowRight

@@ -42,7 +42,7 @@ export default function MainLandingHero() {
       className="relative min-h-screen w-full overflow-hidden bg-[#0C0C0C] flex items-center pt-24 lg:pt-0"
     >
       {/* Background Decorative Elements */}
-      <div className="absolute top-0 right-0 w-125 h-125 bg-[#F5A800]/10 rounded-full blur-[120px] -mr-64 -mt-64" />
+      <div className="absolute top-0 right-0 w-125 h-125 bg-accent-400/10 rounded-full blur-[120px] -mr-64 -mt-64" />
       <div className="absolute bottom-0 left-0 w-100 h-100 bg-primary-600/10 rounded-full blur-[100px] -ml-48 -mb-48" />
 
       <div className=" container relative z-10 ">
@@ -54,7 +54,7 @@ export default function MainLandingHero() {
               style={{ animationDelay: `${baseDelay + 200}ms` }}
             >
               Turn every performance into an{" "}
-              <span className="text-[#F5A800]">interactive experience</span>
+              <span className="text-accent-400">interactive experience</span>
             </h1>
             <p
               className="text-lg xl:text-xl text-white/70 font-light leading-tight max-w-2xl animate-in slide-in-from-left-8 fade-in duration-1000 fill-mode-both"
@@ -70,7 +70,7 @@ export default function MainLandingHero() {
               className="flex flex-wrap gap-4 pt-4 animate-in slide-in-from-left-8 fade-in duration-1000 fill-mode-both mb-28 lg:mb-0"
               style={{ animationDelay: `${baseDelay + 600}ms` }}
             >
-              <Button className="h-12 xl:h-14 px-8 bg-[#F5A800] hover:bg-[#e09900] text-white font-semibold text-lg rounded-xl flex items-center gap-2 shadow-lg shadow-[#F5A800]/20 active:scale-95 transition-all w-full md:w-auto">
+              <Button className="h-12 xl:h-14 px-8 bg-accent-400 hover:bg-[#e09900] text-white font-semibold text-lg rounded-xl flex items-center gap-2 shadow-lg shadow-[#F5A800]/20 active:scale-95 transition-all w-full md:w-auto">
                 <Smartphone size={20} />
                 Download App
               </Button>

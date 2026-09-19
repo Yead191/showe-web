@@ -81,11 +81,11 @@ export default function TicketsPage() {
                   </h3>
                   <div className="flex flex-wrap gap-3 md:gap-4">
                     <div className="flex items-center gap-1.5 text-[11px] md:text-xs font-bold text-gray-500">
-                      <Calendar className="h-3.5 w-3.5 text-[#014B52]" />
+                      <Calendar className="h-3.5 w-3.5 text-primary-600" />
                       {ticket.date} at {ticket.time}
                     </div>
                     <div className="flex items-center gap-1.5 text-[11px] md:text-xs font-bold text-gray-500">
-                      <MapPin className="h-3.5 w-3.5 text-[#014B52]" />
+                      <MapPin className="h-3.5 w-3.5 text-primary-600" />
                       {ticket.venue}
                     </div>
                   </div>
@@ -104,14 +104,14 @@ export default function TicketsPage() {
                     <Button
                       variant="ghost"
                       size="icon"
-                      className="h-9 w-9 md:h-10 md:w-10 rounded-xl bg-gray-50 text-gray-500 hover:text-[#014B52] hover:bg-white border border-transparent hover:border-gray-100"
+                      className="h-9 w-9 md:h-10 md:w-10 rounded-xl bg-gray-50 text-gray-500 hover:text-primary-600 hover:bg-white border border-transparent hover:border-gray-100"
                     >
                       <Download size={16} />
                     </Button>
                     <Button
                       variant="ghost"
                       size="icon"
-                      className="h-9 w-9 md:h-10 md:w-10 rounded-xl bg-gray-50 text-gray-500 hover:text-[#014B52] hover:bg-white border border-transparent hover:border-gray-100"
+                      className="h-9 w-9 md:h-10 md:w-10 rounded-xl bg-gray-50 text-gray-500 hover:text-primary-600 hover:bg-white border border-transparent hover:border-gray-100"
                     >
                       <ExternalLink size={16} />
                     </Button>
@@ -122,14 +122,14 @@ export default function TicketsPage() {
               {/* Right Section (QR Area) */}
               <div className="md:w-64 bg-gray-50/50 p-6 md:p-8 flex flex-col items-center justify-center gap-3 md:gap-4 border-t md:border-t-0 md:border-l border-gray-100">
                 <div className="relative p-2 md:p-3 bg-white rounded-2xl md:rounded-3xl shadow-sm group-hover:scale-105 transition-transform duration-500">
-                  <QrCode size={100} className="text-[#014B52] md:hidden" />
+                  <QrCode size={100} className="text-primary-600 md:hidden" />
                   <QrCode
                     size={120}
-                    className="text-[#014B52] hidden md:block"
+                    className="text-primary-600 hidden md:block"
                   />
                   <div className="absolute inset-0 bg-primary-600/5 rounded-2xl md:rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity" />
                 </div>
-                <p className="text-[9px] md:text-[10px] font-black text-[#014B52] uppercase tracking-[0.2em] animate-pulse">
+                <p className="text-[9px] md:text-[10px] font-black text-primary-600 uppercase tracking-[0.2em] animate-pulse">
                   Scan at Entrance
                 </p>
               </div>
@@ -143,7 +143,7 @@ export default function TicketsPage() {
         <p className="text-sm font-bold text-gray-400 mb-2">
           Can't find your ticket?
         </p>
-        <button className="text-xs font-black text-[#014B52] hover:text-[#F5A800] transition-colors uppercase tracking-widest underline underline-offset-4">
+        <button className="text-xs font-black text-primary-600 hover:text-accent-400 transition-colors uppercase tracking-widest underline underline-offset-4">
           Import from Email
         </button>
       </div>

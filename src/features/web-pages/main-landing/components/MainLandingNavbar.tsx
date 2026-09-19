@@ -52,7 +52,7 @@ export default function MainLandingNavbar() {
             Create Event
           </Link>
           <Link href="/for-users">
-            <Button className="bg-[#F5A800] hover:bg-[#e09900] text-white px-6 py-2 rounded-md text-sm transition-all duration-200 shadow-none h-10">
+            <Button className="bg-accent-400 hover:bg-[#e09900] text-white px-6 py-2 rounded-md text-sm transition-all duration-200 shadow-none h-10">
               Explore Showe
             </Button>
           </Link>

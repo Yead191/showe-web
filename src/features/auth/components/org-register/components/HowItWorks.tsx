@@ -56,7 +56,7 @@ export function HowItWorks({ onContinue }: HowItWorksProps) {
             key={card.title}
             className="p-5 sm:p-6 rounded-2xl bg-white border border-slate-200/90 hover:border-primary-600/40 hover:shadow-md transition-all duration-200 flex flex-col justify-start"
           >
-            <div className="w-12 h-12 rounded-xl bg-primary-600 text-[#F5A800] flex items-center justify-center mb-4 shadow-sm shadow-[#014B52]/20">
+            <div className="w-12 h-12 rounded-xl bg-primary-600 text-accent-400 flex items-center justify-center mb-4 shadow-sm shadow-primary-600/20">
               {card.icon}
             </div>
             <h3 className="font-bold text-slate-900 text-sm sm:text-base tracking-wide uppercase mb-2">
@@ -74,7 +74,7 @@ export function HowItWorks({ onContinue }: HowItWorksProps) {
         <Button
           type="button"
           onClick={onContinue}
-          className="w-full sm:w-auto min-w-[220px] h-13 bg-primary-600 hover:bg-[#013c42] text-white font-bold text-base rounded-xl transition-all shadow-lg shadow-[#014B52]/20 flex items-center justify-center gap-2 cursor-pointer float-right"
+          className="w-full sm:w-auto min-w-55 h-13 bg-primary-600 hover:bg-[#013c42] text-white font-bold text-base rounded-xl transition-all shadow-lg shadow-primary-600/20 flex items-center justify-center gap-2 cursor-pointer float-right"
         >
           <span>Choose Your Plan</span>
           <ArrowRight size={18} />

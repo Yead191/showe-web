@@ -32,16 +32,16 @@ export function StepCommissionInfo({ state, dispatch }: Props) {
     >
       <div className="space-y-5">
         <div className="p-6 rounded-2xl bg-primary-600 text-white relative overflow-hidden">
-          <div className="absolute -top-12 -right-12 w-40 h-40 bg-[#F5A800]/10 rounded-full blur-2xl" />
+          <div className="absolute -top-12 -right-12 w-40 h-40 bg-accent-400/10 rounded-full blur-2xl" />
           <div className="relative">
-            <Handshake size={28} className="text-[#F5A800] mb-3" />
+            <Handshake size={28} className="text-accent-400 mb-3" />
             <ul className="space-y-3">
               {points.map((p, i) => (
                 <li
                   key={i}
                   className="flex gap-3 text-sm md:text-base leading-relaxed"
                 >
-                  <span className="shrink-0 mt-1 w-1.5 h-1.5 rounded-full bg-[#F5A800]" />
+                  <span className="shrink-0 mt-1 w-1.5 h-1.5 rounded-full bg-accent-400" />
                   <span className="text-white/90">{p}</span>
                 </li>
               ))}
@@ -58,20 +58,20 @@ export function StepCommissionInfo({ state, dispatch }: Props) {
           connected via Stripe.
         </InfoBanner>
 
-        <label className="flex items-start gap-3 p-4 rounded-xl border border-slate-200 hover:border-[#014B52] transition-colors cursor-pointer">
+        <label className="flex items-start gap-3 p-4 rounded-xl border border-slate-200 hover:border-primary-600 transition-colors cursor-pointer">
           <Checkbox
             checked={state.acceptance.commissionTerms}
             onCheckedChange={(v) => {
               if (v) dispatch({ type: "ACCEPT_COMMISSION_TERMS" });
             }}
-            className="mt-0.5 data-[state=checked]:bg-primary-600 data-[state=checked]:border-[#014B52]"
+            className="mt-0.5 data-[state=checked]:bg-primary-600 data-[state=checked]:border-primary-600"
           />
           <span className="text-sm text-slate-700 leading-relaxed">
             I have read and accept the{" "}
             <a
               href="/legal/commission-terms"
               target="_blank"
-              className="text-[#014B52] font-semibold underline"
+              className="text-primary-600 font-semibold underline"
             >
               Commission Terms &amp; Conditions
             </a>

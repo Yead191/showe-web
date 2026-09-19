@@ -59,9 +59,14 @@ function toAppPath(extraPath: string): string | null {
   return `/${trimmed}`;
 }
 
-export function TopbarNotifications({ userId, className }: TopbarNotificationsProps) {
+export function TopbarNotifications({
+  userId,
+  className,
+}: TopbarNotificationsProps) {
   const router = useRouter();
-  const [notifications, setNotifications] = React.useState<NotificationItem[]>([]);
+  const [notifications, setNotifications] = React.useState<NotificationItem[]>(
+    [],
+  );
   const [unreadCount, setUnreadCount] = React.useState(0);
   const [isFetching, setIsFetching] = React.useState(false);
   const [isLoadingMore, setIsLoadingMore] = React.useState(false);
@@ -135,9 +140,7 @@ export function TopbarNotifications({ userId, className }: TopbarNotificationsPr
     if (!userId) return;
 
     const socketUrl =
-      process.env.NEXT_PUBLIC_SOCKET_URL ||
-      process.env.SOCKET_URL ||
-      "";
+      process.env.NEXT_PUBLIC_SOCKET_URL || process.env.SOCKET_URL || "";
 
     if (!socketUrl) return;
 
@@ -195,7 +198,9 @@ export function TopbarNotifications({ userId, className }: TopbarNotificationsPr
     if (!notifications.length || unreadCount === 0) return;
 
     const previous = notifications;
-    setNotifications((current) => current.map((item) => ({ ...item, isRead: true })));
+    setNotifications((current) =>
+      current.map((item) => ({ ...item, isRead: true })),
+    );
     setUnreadCount(0);
 
     const res = await readAllNotificationsAction();
@@ -242,7 +247,7 @@ export function TopbarNotifications({ userId, className }: TopbarNotificationsPr
             <DropdownMenuLabel className="flex items-center gap-2 p-0 text-[14px] font-semibold text-white">
               Notifications
               {unreadCount > 0 && (
-                <span className="rounded-md border border-[#F5A800]/30 bg-[#F5A800]/15 px-1.5 py-0.5 text-[10px] font-bold uppercase tracking-wide text-[#F5A800]">
+                <span className="rounded-md border border-accent-400/30 bg-accent-400/15 px-1.5 py-0.5 text-[10px] font-bold uppercase tracking-wide text-accent-400">
                   {unreadCount} new
                 </span>
               )}
@@ -272,7 +277,7 @@ export function TopbarNotifications({ userId, className }: TopbarNotificationsPr
         >
           {isFetching && notifications.length === 0 ? (
             <div className="flex flex-col items-center justify-center px-4 py-12 text-center">
-              <Loader2 className="mb-3 h-5 w-5 animate-spin text-[#F5A800]" />
+              <Loader2 className="mb-3 h-5 w-5 animate-spin text-accent-400" />
               <p className="text-sm text-white/50">Loading notifications…</p>
             </div>
           ) : notifications.length === 0 ? (
@@ -281,7 +286,9 @@ export function TopbarNotifications({ userId, className }: TopbarNotificationsPr
                 <Inbox className="h-5 w-5" />
               </div>
               <p className="text-sm font-medium text-white/80">All caught up</p>
-              <p className="mt-1 text-xs text-white/45">You have no new notifications.</p>
+              <p className="mt-1 text-xs text-white/45">
+                You have no new notifications.
+              </p>
             </div>
           ) : (
             <>
@@ -291,12 +298,12 @@ export function TopbarNotifications({ userId, className }: TopbarNotificationsPr
                   type="button"
                   className={cn(
                     "group relative block w-full px-4 py-3.5 text-left transition-all duration-150 hover:bg-white/8",
-                    !notification.isRead && "bg-[#F5A800]/6",
+                    !notification.isRead && "bg-accent-400/6",
                   )}
                   onClick={() => void handleNotificationClick(notification)}
                 >
                   {!notification.isRead && (
-                    <div className="absolute top-0 bottom-0 left-0 w-0.75 rounded-r-md bg-[#F5A800] transition-colors group-hover:bg-[#ffb81a]" />
+                    <div className="absolute top-0 bottom-0 left-0 w-0.75 rounded-r-md bg-accent-400 transition-colors group-hover:bg-[#ffb81a]" />
                   )}
 
                   <div className="flex items-start gap-3">
@@ -305,7 +312,7 @@ export function TopbarNotifications({ userId, className }: TopbarNotificationsPr
                         "flex h-8 w-8 shrink-0 items-center justify-center rounded-lg border transition-colors",
                         notification.isRead
                           ? "border-white/10 bg-white/5 text-white/40"
-                          : "border-[#F5A800]/30 bg-[#F5A800]/15 text-[#F5A800]",
+                          : "border-accent-400/30 bg-accent-400/15 text-accent-400",
                       )}
                     >
                       <Sparkles className="h-4 w-4" />
@@ -325,7 +332,7 @@ export function TopbarNotifications({ userId, className }: TopbarNotificationsPr
                         </p>
 
                         {!notification.isRead && (
-                          <span className="mt-1 h-1.5 w-1.5 shrink-0 rounded-full bg-[#F5A800] shadow-sm shadow-[#F5A800]/50" />
+                          <span className="mt-1 h-1.5 w-1.5 shrink-0 rounded-full bg-accent-400 shadow-sm shadow-[#F5A800]/50" />
                         )}
                       </div>
                       <p className="mt-0.5 line-clamp-2 text-xs leading-relaxed text-white/50 transition-colors group-hover:text-white/70">
@@ -343,7 +350,7 @@ export function TopbarNotifications({ userId, className }: TopbarNotificationsPr
 
               {isLoadingMore && (
                 <div className="flex items-center justify-center gap-2 py-3 text-xs text-white/45">
-                  <Loader2 className="h-3.5 w-3.5 animate-spin text-[#F5A800]" />
+                  <Loader2 className="h-3.5 w-3.5 animate-spin text-accent-400" />
                   Loading more…
                 </div>
               )}

@@ -3,31 +3,31 @@ import { TrendingUp, Users, Zap, Database, Leaf } from "lucide-react";
 export default function OrgStrategicSummary() {
   const metrics = [
     {
-      icon: <TrendingUp className="w-10 h-10 text-[#F5A800]" />,
+      icon: <TrendingUp className="w-10 h-10 text-accent-400" />,
       title: "Unlock Revenue",
       description:
         "Directly monetize your programs through ticket sales, sponsorships, and donation integrations.",
     },
     {
-      icon: <Users className="w-10 h-10 text-[#F5A800]" />,
+      icon: <Users className="w-10 h-10 text-accent-400" />,
       title: "Drive Engagement",
       description:
         "Transform passive readers into active participants with interactive content and real-time updates.",
     },
     {
-      icon: <Zap className="w-10 h-10 text-[#F5A800]" />,
+      icon: <Zap className="w-10 h-10 text-accent-400" />,
       title: "Peak Efficiency",
       description:
         "Update your entire audience instantly. No more reprint costs or outdated physical materials.",
     },
     {
-      icon: <Database className="w-10 h-10 text-[#F5A800]" />,
+      icon: <Database className="w-10 h-10 text-accent-400" />,
       title: "Actionable Data",
       description:
         "Gain deep insights into audience behavior, preferences, and conversion rates.",
     },
     {
-      icon: <Leaf className="w-10 h-10 text-[#F5A800]" />,
+      icon: <Leaf className="w-10 h-10 text-accent-400" />,
       title: "Sustainability",
       description:
         "Eliminate paper waste and reduce your organization's environmental footprint significantly.",
@@ -39,7 +39,7 @@ export default function OrgStrategicSummary() {
       <div className="container mx-auto px-4">
         <div className="flex flex-col lg:flex-row gap-16 items-center">
           <div className="lg:w-1/2">
-            <h2 className="text-4xl md:text-5xl font-bold text-[#014B52] mb-8 font-museo leading-tight">
+            <h2 className="text-4xl md:text-5xl font-bold text-primary-600 mb-8 font-museo leading-tight">
               The Strategic Edge Your Organization Needs.
             </h2>
             <p className="text-xl text-slate-600 font-light leading-relaxed mb-10">
@@ -49,16 +49,16 @@ export default function OrgStrategicSummary() {
             </p>
 
             <div className="space-y-4">
-              <div className="flex items-start gap-4 p-4 rounded-xl bg-slate-50 border-l-4 border-[#F5A800]">
-                <div className="font-bold text-[#014B52] text-lg">
+              <div className="flex items-start gap-4 p-4 rounded-xl bg-slate-50 border-l-4 border-accent-400">
+                <div className="font-bold text-primary-600 text-lg">
                   “Will it make money?”
                 </div>
                 <div className="text-slate-600">
                   — Yes. Through diversified digital revenue streams.
                 </div>
               </div>
-              <div className="flex items-start gap-4 p-4 rounded-xl bg-slate-50 border-l-4 border-[#F5A800]">
-                <div className="font-bold text-[#014B52] text-lg">
+              <div className="flex items-start gap-4 p-4 rounded-xl bg-slate-50 border-l-4 border-accent-400">
+                <div className="font-bold text-primary-600 text-lg">
                   “Is it easy to implement?”
                 </div>
                 <div className="text-slate-600">

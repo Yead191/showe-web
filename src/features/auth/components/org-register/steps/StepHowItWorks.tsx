@@ -50,7 +50,7 @@ export function StepHowItWorks() {
             key={p.title}
             className="p-5 rounded-2xl bg-linear-to-br from-slate-50 to-white border border-slate-100"
           >
-            <div className="w-11 h-11 rounded-xl bg-primary-600 text-[#F5A800] flex items-center justify-center mb-3">
+            <div className="w-11 h-11 rounded-xl bg-primary-600 text-accent-400 flex items-center justify-center mb-3">
               {p.icon}
             </div>
             <h3 className="font-semibold text-slate-900 mb-1">{p.title}</h3>

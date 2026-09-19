@@ -10,12 +10,12 @@ export default function StorySections() {
         <div className="flex flex-col lg:flex-row items-center gap-16">
           <div className="lg:w-1/2 relative">
             <div className="relative aspect-square max-w-[500px] mx-auto">
-              <div className="absolute inset-0 bg-[#F5A800]/20 rounded-[60px] rotate-6 scale-95" />
+              <div className="absolute inset-0 bg-accent-400/20 rounded-[60px] rotate-6 scale-95" />
               <div className="absolute inset-0 bg-primary-600 rounded-[60px] flex items-center justify-center overflow-hidden">
                 <div className="p-12 text-white space-y-6">
                   <QrCode
                     size={80}
-                    className="text-[#F5A800] opacity-20 absolute -top-4 -right-4"
+                    className="text-accent-400 opacity-20 absolute -top-4 -right-4"
                   />
                   <h5 className="text-3xl font-bold font-museo">
                     It all started with a simple question...
@@ -24,7 +24,7 @@ export default function StorySections() {
                     "Why are we still using paper programs in a digital world?"
                   </p>
                   <div className="pt-4 flex items-center gap-4">
-                    <div className="h-1 w-12 bg-[#F5A800]" />
+                    <div className="h-1 w-12 bg-accent-400" />
                     <span className="text-sm font-bold tracking-widest uppercase">
                       The SHOWE Team
                     </span>
@@ -35,7 +35,7 @@ export default function StorySections() {
           </div>
 
           <div className="lg:w-1/2 space-y-8">
-            <h2 className="text-3xl md:text-4xl font-bold text-[#014B52] font-museo">
+            <h2 className="text-3xl md:text-4xl font-bold text-primary-600 font-museo">
               Our Story
             </h2>
             <div className="space-y-6 text-gray-600 leading-relaxed text-lg">
@@ -55,7 +55,7 @@ export default function StorySections() {
             </div>
             <Button
               variant="link"
-              className="text-[#F5A800] font-bold p-0 flex items-center gap-2 group text-lg"
+              className="text-accent-400 font-bold p-0 flex items-center gap-2 group text-lg"
             >
               Read more about our journey
               <ChevronRight className="group-hover:translate-x-1 transition-transform" />

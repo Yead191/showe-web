@@ -13,7 +13,7 @@ export function ProgressBar({ current, total, percent }: ProgressBarProps) {
         <span className="font-medium tracking-wide">
           STEP {current} OF {total}
         </span>
-        <span className="font-semibold text-[#014B52]">
+        <span className="font-semibold text-primary-600">
           {percent}% complete
         </span>
       </div>
@@ -27,7 +27,7 @@ export function ProgressBar({ current, total, percent }: ProgressBarProps) {
               className={`h-1.5 flex-1 rounded-full transition-all duration-500 ${
                 filled
                   ? active
-                    ? "bg-[#F5A800]"
+                    ? "bg-accent-400"
                     : "bg-primary-600"
                   : "bg-slate-200"
               }`}

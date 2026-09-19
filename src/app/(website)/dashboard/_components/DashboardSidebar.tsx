@@ -47,10 +47,10 @@ export default function DashboardSidebar({ user }: DashboardSidebarProps) {
     <aside className="lg:w-80 shrink-0">
       <div className="lg:sticky lg:top-28 space-y-6">
         {/* User Summary Card - Hidden on Mobile */}
-        <div className="hidden lg:block bg-primary-600 rounded-[32px] p-8 text-white shadow-2xl shadow-[#014B52]/20 relative overflow-hidden group">
+        <div className="hidden lg:block bg-primary-600 rounded-[32px] p-8 text-white shadow-2xl shadow-primary-600/20 relative overflow-hidden group">
           <div className="absolute top-0 right-0 w-32 h-32 bg-white/5 rounded-full -mr-16 -mt-16 blur-2xl group-hover:bg-white/10 transition-colors duration-500" />
           <div className="relative z-10 space-y-4">
-            <div className="h-16 w-16 rounded-2xl bg-[#F5A800] flex items-center justify-center text-2xl font-black shadow-lg shadow-black/20 overflow-hidden relative shrink-0">
+            <div className="h-16 w-16 rounded-2xl bg-accent-400 flex items-center justify-center text-2xl font-black shadow-lg shadow-black/20 overflow-hidden relative shrink-0">
               {user?.image ? (
                 <Image
                   src={getImageUrl(user.image)}
@@ -91,7 +91,7 @@ export default function DashboardSidebar({ user }: DashboardSidebarProps) {
                   href={item.href}
                   className={`flex items-center gap-3 lg:gap-4 p-3 lg:p-4 rounded-2xl transition-all duration-300 group w-full md:shrink-0 ${
                     isActive
-                      ? "bg-primary-600 lg:bg-primary-600/5 text-white lg:text-[#014B52]"
+                      ? "bg-primary-600 lg:bg-primary-600/5 text-white lg:text-primary-600"
                       : "text-gray-500 hover:bg-gray-50 hover:text-gray-900"
                   }`}
                 >
@@ -123,8 +123,8 @@ export default function DashboardSidebar({ user }: DashboardSidebarProps) {
         </nav>
 
         {/* Need Help Card - Hidden on Mobile */}
-        <div className="hidden lg:block bg-[#F5A800]/5 rounded-[32px] p-6 border border-[#F5A800]/20">
-          <p className="text-xs font-black text-[#F5A800] uppercase tracking-widest mb-2">
+        <div className="hidden lg:block bg-accent-400/5 rounded-[32px] p-6 border border-accent-400/20">
+          <p className="text-xs font-black text-accent-400 uppercase tracking-widest mb-2">
             Need Assistance?
           </p>
           <p className="text-sm text-gray-600 font-medium leading-relaxed mb-4">
@@ -132,7 +132,7 @@ export default function DashboardSidebar({ user }: DashboardSidebarProps) {
           </p>
           <Link
             href="/support"
-            className="text-xs font-black text-[#014B52] underline underline-offset-4 hover:text-[#F5A800] transition-colors"
+            className="text-xs font-black text-primary-600 underline underline-offset-4 hover:text-accent-400 transition-colors"
           >
             Contact Support
           </Link>

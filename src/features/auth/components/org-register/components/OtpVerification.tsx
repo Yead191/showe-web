@@ -118,7 +118,7 @@ export function OtpVerification({
   return (
     <div className="space-y-6 animate-in fade-in duration-300">
       <header className="space-y-2 text-center md:text-left">
-        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary-600/10 text-[#014B52] text-xs font-semibold tracking-wide uppercase">
+        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary-600/10 text-primary-600 text-xs font-semibold tracking-wide uppercase">
           Step 2 · Security
         </div>
         <h2 className="text-2xl sm:text-3xl font-bold text-slate-900 font-museo">
@@ -143,7 +143,7 @@ export function OtpVerification({
 
       {/* OTP Input Fields */}
       <div className="flex flex-col items-center gap-4 py-4">
-        <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-primary-600/10 text-[#014B52] shadow-inner">
+        <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-primary-600/10 text-primary-600 shadow-inner">
           <MailCheck className="h-7 w-7" />
         </div>
 
@@ -159,7 +159,7 @@ export function OtpVerification({
               onChange={(e) => handleChange(i, e.target.value)}
               onKeyDown={(e) => handleKeyDown(i, e)}
               onPaste={handlePaste}
-              className={`w-11 h-14 sm:w-13 sm:h-16 text-center text-xl sm:text-2xl font-bold rounded-xl border-slate-200 focus:border-[#014B52] focus:ring-[#014B52]/20 shadow-sm transition-all ${
+              className={`w-11 h-14 sm:w-13 sm:h-16 text-center text-xl sm:text-2xl font-bold rounded-xl border-slate-200 focus:border-primary-600 focus:ring-primary-600/20 shadow-sm transition-all ${
                 error ? "border-red-400 ring-1 ring-red-400" : ""
               }`}
               maxLength={1}
@@ -177,7 +177,7 @@ export function OtpVerification({
           type="button"
           onClick={handleVerify}
           disabled={isLoading || otp.join("").length < 6}
-          className="w-full h-13 bg-primary-600 hover:bg-[#013c42] text-white font-bold text-base rounded-xl transition-all shadow-lg shadow-[#014B52]/20 flex items-center justify-center gap-2 cursor-pointer disabled:opacity-50"
+          className="w-full h-13 bg-primary-600 hover:bg-[#013c42] text-white font-bold text-base rounded-xl transition-all shadow-lg shadow-primary-600/20 flex items-center justify-center gap-2 cursor-pointer disabled:opacity-50"
         >
           {isLoading ? (
             <>
@@ -194,7 +194,7 @@ export function OtpVerification({
             type="button"
             onClick={() => resend(email)}
             disabled={isCoolingDown}
-            className="flex items-center gap-1.5 font-semibold text-[#014B52] hover:underline disabled:opacity-50 disabled:no-underline disabled:cursor-not-allowed cursor-pointer"
+            className="flex items-center gap-1.5 font-semibold text-primary-600 hover:underline disabled:opacity-50 disabled:no-underline disabled:cursor-not-allowed cursor-pointer"
           >
             <RefreshCw
               size={14}

@@ -20,7 +20,7 @@ export default function EventNotFound() {
       }}
     >
       {/* Decorative glows */}
-      <div className="pointer-events-none absolute -top-40 -right-32 h-112 w-112 rounded-full bg-[#F5A800]/10 blur-[120px]" />
+      <div className="pointer-events-none absolute -top-40 -right-32 h-112 w-112 rounded-full bg-accent-400/10 blur-[120px]" />
       <div className="pointer-events-none absolute -bottom-40 -left-32 h-104 w-104 rounded-full bg-primary-600/40 blur-[120px]" />
 
       {/* Faint concentric rings */}
@@ -34,21 +34,21 @@ export default function EventNotFound() {
       <div className="animate-in fade-in slide-in-from-bottom-6 relative z-10 mx-auto flex max-w-xl flex-col items-center text-center duration-700">
         {/* Emblem */}
         <div className="relative mb-8">
-          <div className="absolute inset-0 -z-10 rounded-[2rem] bg-[#F5A800]/20 blur-2xl" />
+          <div className="absolute inset-0 -z-10 rounded-[2rem] bg-accent-400/20 blur-2xl" />
           <div className="relative flex h-28 w-28 items-center justify-center rounded-[2rem] bg-white/[0.04] ring-1 ring-white/10 backdrop-blur-sm">
             <CalendarX2
               size={44}
               strokeWidth={1.75}
-              className="text-[#F5A800]"
+              className="text-accent-400"
             />
-            <span className="absolute -right-2 -top-2 flex h-9 w-9 items-center justify-center rounded-full bg-[#F5A800] text-sm font-black text-[#06181B] shadow-lg shadow-[#F5A800]/30">
+            <span className="absolute -right-2 -top-2 flex h-9 w-9 items-center justify-center rounded-full bg-accent-400 text-sm font-black text-[#06181B] shadow-lg shadow-[#F5A800]/30">
               ?
             </span>
           </div>
         </div>
 
         {/* Eyebrow */}
-        <span className="mb-4 inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.03] px-3 py-1 text-[11px] font-bold uppercase tracking-[0.2em] text-[#F5A800]">
+        <span className="mb-4 inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.03] px-3 py-1 text-[11px] font-bold uppercase tracking-[0.2em] text-accent-400">
           Event Details
         </span>
 
@@ -65,7 +65,7 @@ export default function EventNotFound() {
         <div className="mt-8 flex w-full flex-col items-center justify-center gap-3 sm:flex-row">
           <Link
             href="/events"
-            className="group inline-flex h-12 w-full items-center justify-center gap-2 rounded-xl bg-[#F5A800] px-7 font-bold text-[#06181B] shadow-lg shadow-[#F5A800]/25 transition-all hover:bg-[#e09900] active:scale-95 sm:w-auto"
+            className="group inline-flex h-12 w-full items-center justify-center gap-2 rounded-xl bg-accent-400 px-7 font-bold text-[#06181B] shadow-lg shadow-accent-400/25 transition-all hover:bg-[#e09900] active:scale-95 sm:w-auto"
           >
             <Search
               size={18}

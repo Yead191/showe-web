@@ -51,7 +51,7 @@ export function VenueLocation({ venue }: { venue: Venue }) {
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div className="space-y-1">
           <h3 className="text-xl font-bold text-gray-900 tracking-tight flex items-center gap-2">
-            <MapPin className="h-5 w-5 text-[#F5A800]" />
+            <MapPin className="h-5 w-5 text-accent-400" />
             <span>Venue Location</span>
           </h3>
           <p className="text-xs text-gray-500 font-medium">{displayAddress}</p>
@@ -72,8 +72,8 @@ export function VenueLocation({ venue }: { venue: Venue }) {
       <div className="relative w-full h-[340px] md:h-[420px] rounded-2xl overflow-hidden border border-gray-100 shadow-inner group bg-gray-100">
         {/* Floating Map Pin Badge */}
         <div className="absolute top-4 right-4 z-10 bg-white/95 backdrop-blur-md px-4 py-2.5 rounded-2xl shadow-lg border border-gray-100/80 flex items-center gap-3 transition-transform duration-300 group-hover:scale-105 pointer-events-none">
-          <div className="h-9 w-9 rounded-xl bg-[#F5A800] text-white flex items-center justify-center shrink-0 shadow-md animate-bounce">
-            <MapPin className="h-5 w-5 fill-white text-[#F5A800]" />
+          <div className="h-9 w-9 rounded-xl bg-accent-400 text-white flex items-center justify-center shrink-0 shadow-md animate-bounce">
+            <MapPin className="h-5 w-5 fill-white text-accent-400" />
           </div>
           <div className="text-left">
             <p className="text-xs font-black text-gray-900 leading-tight">

@@ -12,7 +12,7 @@ export default function ImpactStats() {
             { value: "98%", label: "Satisfaction" },
           ].map((stat, i) => (
             <div key={i} className="text-center space-y-2">
-              <div className="text-4xl md:text-5xl font-bold font-museo text-[#F5A800]">
+              <div className="text-4xl md:text-5xl font-bold font-museo text-accent-400">
                 {stat.value}
               </div>
               <div className="text-white/60 text-sm font-medium uppercase tracking-widest">

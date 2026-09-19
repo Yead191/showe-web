@@ -41,7 +41,7 @@ export function StepTierSelection({ state, dispatch }: Props) {
                 ${isLocked ? "opacity-50 cursor-not-allowed" : "hover:shadow-xl"}
                 ${
                   isSelected
-                    ? "border-[#F5A800] bg-linear-to-br from-amber-50 to-white shadow-xl shadow-amber-100"
+                    ? "border-accent-400 bg-linear-to-br from-amber-50 to-white shadow-xl shadow-amber-100"
                     : "border-slate-200 bg-white"
                 }
                 ${t.recommended && !isSelected ? "border-[#014B52]/30" : ""}
@@ -53,7 +53,7 @@ export function StepTierSelection({ state, dispatch }: Props) {
                 </span>
               )}
               {isSelected && (
-                <span className="absolute top-4 right-4 w-6 h-6 rounded-full bg-[#F5A800] text-white flex items-center justify-center">
+                <span className="absolute top-4 right-4 w-6 h-6 rounded-full bg-accent-400 text-white flex items-center justify-center">
                   <Check size={14} strokeWidth={3} />
                 </span>
               )}
@@ -66,7 +66,7 @@ export function StepTierSelection({ state, dispatch }: Props) {
                       ? "Tier 2"
                       : "Tier 3"}
                 </p>
-                <h3 className="text-2xl font-bold text-[#014B52] mt-1">
+                <h3 className="text-2xl font-bold text-primary-600 mt-1">
                   {t.name}
                 </h3>
                 <p className="text-sm text-slate-500 mt-1 min-h-10">
@@ -81,8 +81,8 @@ export function StepTierSelection({ state, dispatch }: Props) {
                   </span>
                   <span className="text-sm text-slate-500">/ month</span>
                 </div>
-                <p className="text-[10px] text-[#014B52] font-semibold uppercase tracking-wider mt-1.5 flex items-center gap-1.5">
-                  <span className="w-1 h-1 rounded-full bg-[#F5A800]" />+ 20%
+                <p className="text-[10px] text-primary-600 font-semibold uppercase tracking-wider mt-1.5 flex items-center gap-1.5">
+                  <span className="w-1 h-1 rounded-full bg-accent-400" />+ 20%
                   VAT (£{(t.priceMonthly * 0.2).toFixed(2)})
                 </p>
               </div>
@@ -92,7 +92,7 @@ export function StepTierSelection({ state, dispatch }: Props) {
                   <li key={f} className="flex gap-2 text-slate-700">
                     <Check
                       size={16}
-                      className="shrink-0 mt-0.5 text-[#014B52]"
+                      className="shrink-0 mt-0.5 text-primary-600"
                     />
                     <span>{f}</span>
                   </li>

@@ -119,7 +119,7 @@ export function ProgrammePurchase({
             {programme.title}
           </p>
           {priceLabel && !isPurchased && (
-            <p className="text-xs font-black text-[#F5A800]">{priceLabel}</p>
+            <p className="text-xs font-black text-accent-400">{priceLabel}</p>
           )}
         </div>
       </div>
@@ -138,7 +138,7 @@ export function ProgrammePurchase({
         <Button
           onClick={handleBuyClick}
           disabled={isBuying}
-          className="w-full h-12 bg-primary-600 hover:bg-[#023a40] text-white font-black rounded-2xl flex items-center justify-center gap-2 transition-all active:scale-[0.98] shadow-lg shadow-[#014B52]/20"
+          className="w-full h-12 bg-primary-600 hover:bg-[#023a40] text-white font-black rounded-2xl flex items-center justify-center gap-2 transition-all active:scale-[0.98] shadow-lg shadow-primary-600/20"
         >
           {isBuying ? (
             <Loader2 className="h-4 w-4 animate-spin" />

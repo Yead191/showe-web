@@ -54,7 +54,7 @@ export function StepTierTerms({ state, dispatch }: Props) {
               key={c.title}
               className="flex gap-4 p-5 rounded-xl bg-slate-50 border border-slate-100"
             >
-              <div className="shrink-0 w-9 h-9 rounded-lg bg-white shadow-sm flex items-center justify-center text-[#014B52]">
+              <div className="shrink-0 w-9 h-9 rounded-lg bg-white shadow-sm flex items-center justify-center text-primary-600">
                 <Scale size={18} />
               </div>
               <div>
@@ -77,13 +77,13 @@ export function StepTierTerms({ state, dispatch }: Props) {
           terms are accepted.
         </InfoBanner>
 
-        <label className="flex items-start gap-3 p-4 rounded-xl border border-slate-200 hover:border-[#014B52] transition-colors cursor-pointer">
+        <label className="flex items-start gap-3 p-4 rounded-xl border border-slate-200 hover:border-primary-600 transition-colors cursor-pointer">
           <Checkbox
             checked={state.acceptance.tierTerms}
             onCheckedChange={(v) => {
               if (v) dispatch({ type: "ACCEPT_TIER_TERMS" });
             }}
-            className="mt-0.5 data-[state=checked]:bg-primary-600 data-[state=checked]:border-[#014B52]"
+            className="mt-0.5 data-[state=checked]:bg-primary-600 data-[state=checked]:border-primary-600"
           />
           <span className="text-sm text-slate-700 leading-relaxed">
             I confirm that I have read and accept the three clauses above and
@@ -91,7 +91,7 @@ export function StepTierTerms({ state, dispatch }: Props) {
             <a
               href="/legal/terms"
               target="_blank"
-              className="text-[#014B52] font-semibold underline"
+              className="text-primary-600 font-semibold underline"
             >
               SHOWE Subscription Terms
             </a>

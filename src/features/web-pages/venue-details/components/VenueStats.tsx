@@ -9,15 +9,15 @@ export function VenueStats({ venue }: { venue: Venue }) {
       label: "Events Hosted",
       value: venue.events_count ?? 0,
       icon: Calendar,
-      color: "text-[#014B52]",
+      color: "text-primary-600",
       bgColor: "bg-primary-600/10",
     },
     {
       label: "Digital Programmes",
       value: venue.programmes_count ?? 0,
       icon: BookOpen,
-      color: "text-[#F5A800]",
-      bgColor: "bg-[#F5A800]/10",
+      color: "text-accent-400",
+      bgColor: "bg-accent-400/10",
     },
     {
       label: "Total Downloads",

@@ -8,10 +8,10 @@ export function RegistrationSuccess() {
     <div className="space-y-6 py-6 text-center animate-in zoom-in-95 duration-500 max-w-lg mx-auto">
       {/* Success Badge / Emblem */}
       <div className="relative inline-flex items-center justify-center">
-        <div className="w-24 h-24 rounded-3xl bg-primary-600 text-[#F5A800] flex items-center justify-center shadow-xl shadow-[#014B52]/20">
+        <div className="w-24 h-24 rounded-3xl bg-primary-600 text-accent-400 flex items-center justify-center shadow-xl shadow-primary-600/20">
           <Check size={44} strokeWidth={3} />
         </div>
-        <span className="absolute -top-2 -right-2 w-8 h-8 rounded-full bg-[#F5A800] text-slate-900 flex items-center justify-center shadow-md">
+        <span className="absolute -top-2 -right-2 w-8 h-8 rounded-full bg-accent-400 text-slate-900 flex items-center justify-center shadow-md">
           <Sparkles size={16} />
         </span>
       </div>
@@ -34,7 +34,7 @@ export function RegistrationSuccess() {
           href="https://admin.showe.biz"
           target="_blank"
           rel="noopener noreferrer"
-          className="w-full sm:w-auto min-w-[260px] h-13 px-8 rounded-xl bg-[#F5A800] hover:bg-[#e09900] text-slate-950 font-bold text-base shadow-lg shadow-[#F5A800]/25 transition-all flex items-center justify-center gap-2 group cursor-pointer"
+          className="w-full sm:w-auto min-w-65 h-13 px-8 rounded-xl bg-accent-400 hover:bg-[#e09900] text-slate-950 font-bold text-base shadow-lg shadow-accent-400/25 transition-all flex items-center justify-center gap-2 group cursor-pointer"
         >
           <span>Go to Organizer Portal</span>
           <ArrowRight

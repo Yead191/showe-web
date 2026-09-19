@@ -28,7 +28,7 @@ export default function OrgUseCases() {
     <section className="py-24 bg-white">
       <div className="container mx-auto px-4">
         <div className="text-center mb-16">
-          <h2 className="text-3xl md:text-5xl font-bold text-[#014B52] mb-6 font-museo">
+          <h2 className="text-3xl md:text-5xl font-bold text-primary-600 mb-6 font-museo">
             Versatility at Scale.
           </h2>
           <p className="text-lg text-slate-600 max-w-2xl mx-auto">
@@ -43,7 +43,7 @@ export default function OrgUseCases() {
               key={idx}
               className="group p-8 rounded-2xl bg-slate-50 hover:bg-primary-600 transition-all duration-500 border border-slate-100"
             >
-              <div className="w-16 h-16 bg-primary-600 text-[#F5A800] rounded-2xl flex items-center justify-center mb-6 group-hover:bg-[#F5A800] group-hover:text-[#014B52] transition-colors duration-500">
+              <div className="w-16 h-16 bg-primary-600 text-accent-400 rounded-2xl flex items-center justify-center mb-6 group-hover:bg-accent-400 group-hover:text-primary-600 transition-colors duration-500">
                 {useCase.icon}
               </div>
               <h3 className="text-xl font-bold text-slate-900 group-hover:text-white mb-4 transition-colors">

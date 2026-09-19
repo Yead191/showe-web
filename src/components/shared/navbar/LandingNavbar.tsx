@@ -69,7 +69,7 @@ export default function LandingNavbar({
           <Link href={isCreator ? "/organisation-register" : "/home"}>
             <Button
               className="inline-flex
-              bg-[#F5A800] hover:bg-[#e09900] text-white
+              bg-accent-400 hover:bg-[#e09900] text-white
               px-6 py-2 rounded-md text-sm
               transition-all duration-200 shadow-none h-10
             "

@@ -46,7 +46,7 @@ export function StepIndicator({ currentStep }: StepIndicatorProps) {
         </div>
         <div className="w-full h-1.5 bg-slate-200 rounded-full overflow-hidden">
           <div
-            className="h-full bg-linear-to-r from-[#014B52] to-[#F5A800] transition-all duration-300 rounded-full"
+            className="h-full bg-linear-to-r from-primary-600 to-accent-400 transition-all duration-300 rounded-full"
             style={{ width: `${progressPercent}%` }}
           />
         </div>
@@ -68,9 +68,9 @@ export function StepIndicator({ currentStep }: StepIndicatorProps) {
                   <div
                     className={`flex items-center justify-center w-8 h-8 rounded-xl text-xs font-bold transition-all duration-200 ${
                       isCompleted
-                        ? "bg-primary-600 text-[#F5A800] shadow-sm"
+                        ? "bg-primary-600 text-accent-400 shadow-sm"
                         : isCurrent
-                          ? "bg-[#F5A800] text-slate-900 ring-4 ring-[#F5A800]/20 shadow-md scale-105"
+                          ? "bg-accent-400 text-slate-900 ring-4 ring-accent-400/20 shadow-md scale-105"
                           : "bg-slate-100 text-slate-400 border border-slate-200"
                     }`}
                   >
@@ -84,7 +84,7 @@ export function StepIndicator({ currentStep }: StepIndicatorProps) {
                     <span
                       className={`text-xs font-medium uppercase tracking-wider transition-colors ${
                         isCurrent
-                          ? "text-[#014B52] font-bold"
+                          ? "text-primary-600 font-bold"
                           : isCompleted
                             ? "text-slate-800 font-medium"
                             : "text-slate-400"

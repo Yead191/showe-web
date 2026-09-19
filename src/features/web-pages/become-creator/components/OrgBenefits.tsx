@@ -3,22 +3,22 @@ import { CheckCircle2, Clock, BarChart3, Wallet } from "lucide-react";
 export default function OrgBenefits() {
   const benefits = [
     {
-      icon: <Clock className="w-6 h-6 text-[#F5A800]" />,
+      icon: <Clock className="w-6 h-6 text-accent-400" />,
       title: "Distribute in Minutes",
       text: "Go from concept to live program in record time. Our intuitive workshop tools handle the heavy lifting.",
     },
     {
-      icon: <CheckCircle2 className="w-6 h-6 text-[#F5A800]" />,
+      icon: <CheckCircle2 className="w-6 h-6 text-accent-400" />,
       title: "Interactive Content",
       text: "Engage users with videos, links, bios, and schedules that they can interact with, not just read.",
     },
     {
-      icon: <Wallet className="w-6 h-6 text-[#F5A800]" />,
+      icon: <Wallet className="w-6 h-6 text-accent-400" />,
       title: "Revenue Generation",
       text: "Integrate ticketing, merchandise, and donation buttons directly into your digital experience.",
     },
     {
-      icon: <BarChart3 className="w-6 h-6 text-[#F5A800]" />,
+      icon: <BarChart3 className="w-6 h-6 text-accent-400" />,
       title: "Real-time Insights",
       text: "Monitor engagement levels as they happen. Know exactly what your audience cares about most.",
     },
@@ -29,7 +29,7 @@ export default function OrgBenefits() {
       <div className="container mx-auto px-4">
         <div className="max-w-4xl mx-auto">
           <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-5xl font-bold text-[#014B52] mb-6 font-museo">
+            <h2 className="text-3xl md:text-5xl font-bold text-primary-600 mb-6 font-museo">
               Tools Designed for Growth.
             </h2>
             <p className="text-lg text-slate-600">

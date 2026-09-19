@@ -218,7 +218,7 @@ export function RegistrationForm({
   return (
     <div className="space-y-6 animate-in fade-in duration-300">
       <header className="space-y-2">
-        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary-600/10 text-[#014B52] text-xs font-semibold tracking-wide uppercase">
+        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary-600/10 text-primary-600 text-xs font-semibold tracking-wide uppercase">
           Step 1 · Account Details
         </div>
         <h2 className="text-2xl sm:text-3xl font-bold text-slate-900 font-museo">
@@ -239,7 +239,7 @@ export function RegistrationForm({
           href="https://admin.showe.biz"
           target="_blank"
           rel="noopener noreferrer"
-          className="inline-flex items-center gap-1.5 font-semibold text-[#014B52] hover:text-[#F5A800] transition-colors"
+          className="inline-flex items-center gap-1.5 font-semibold text-primary-600 hover:text-accent-400 transition-colors"
         >
           Go to Organizer Portal <ExternalLink size={14} />
         </a>
@@ -253,7 +253,7 @@ export function RegistrationForm({
               htmlFor="org-name"
               className="text-sm font-semibold text-slate-700"
             >
-              Organisation Name <span className="text-[#F5A800]">*</span>
+              Organisation Name <span className="text-accent-400">*</span>
             </Label>
             <div className="relative">
               <Building2
@@ -266,7 +266,7 @@ export function RegistrationForm({
                 placeholder="e.g. Royal Opera House or National Theatre"
                 value={formData.name}
                 onChange={(e) => handleChange("name", e.target.value)}
-                className={`pl-10 h-12 border-slate-200 focus:border-[#014B52] focus:ring-[#014B52]/20 rounded-xl ${
+                className={`pl-10 h-12 border-slate-200 focus:border-primary-600 focus:ring-primary-600/20 rounded-xl ${
                   errors.name ? "border-red-400 ring-1 ring-red-400" : ""
                 }`}
               />
@@ -282,7 +282,7 @@ export function RegistrationForm({
               htmlFor="contact-name"
               className="text-sm font-semibold text-slate-700"
             >
-              Contact Person Name <span className="text-[#F5A800]">*</span>
+              Contact Person Name <span className="text-accent-400">*</span>
             </Label>
             <div className="relative">
               <User
@@ -295,7 +295,7 @@ export function RegistrationForm({
                 placeholder="e.g. Jane Smith"
                 value={formData.contact_name}
                 onChange={(e) => handleChange("contact_name", e.target.value)}
-                className={`pl-10 h-12 border-slate-200 focus:border-[#014B52] focus:ring-[#014B52]/20 rounded-xl ${
+                className={`pl-10 h-12 border-slate-200 focus:border-primary-600 focus:ring-primary-600/20 rounded-xl ${
                   errors.contact_name
                     ? "border-red-400 ring-1 ring-red-400"
                     : ""
@@ -313,7 +313,7 @@ export function RegistrationForm({
               htmlFor="org-email"
               className="text-sm font-semibold text-slate-700"
             >
-              Business Email <span className="text-[#F5A800]">*</span>
+              Business Email <span className="text-accent-400">*</span>
             </Label>
             <div className="relative">
               <Mail
@@ -327,7 +327,7 @@ export function RegistrationForm({
                 placeholder="contact@yourvenue.com"
                 value={formData.email}
                 onChange={(e) => handleChange("email", e.target.value)}
-                className={`pl-10 h-12 border-slate-200 focus:border-[#014B52] focus:ring-[#014B52]/20 rounded-xl ${
+                className={`pl-10 h-12 border-slate-200 focus:border-primary-600 focus:ring-primary-600/20 rounded-xl ${
                   errors.email ? "border-red-400 ring-1 ring-red-400" : ""
                 }`}
               />
@@ -343,7 +343,7 @@ export function RegistrationForm({
               htmlFor="org-phone"
               className="text-sm font-semibold text-slate-700"
             >
-              Phone Number <span className="text-[#F5A800]">*</span>
+              Phone Number <span className="text-accent-400">*</span>
             </Label>
             <div className="relative">
               <Phone
@@ -357,7 +357,7 @@ export function RegistrationForm({
                 placeholder="+44 20 7946 0991"
                 value={formData.phone}
                 onChange={(e) => handleChange("phone", e.target.value)}
-                className={`pl-10 h-12 border-slate-200 focus:border-[#014B52] focus:ring-[#014B52]/20 rounded-xl ${
+                className={`pl-10 h-12 border-slate-200 focus:border-primary-600 focus:ring-primary-600/20 rounded-xl ${
                   errors.phone ? "border-red-400 ring-1 ring-red-400" : ""
                 }`}
               />
@@ -373,7 +373,7 @@ export function RegistrationForm({
               htmlFor="org-country"
               className="text-sm font-semibold text-slate-700"
             >
-              Country <span className="text-[#F5A800]">*</span>
+              Country <span className="text-accent-400">*</span>
             </Label>
             <div className="relative">
               <MapPin
@@ -386,7 +386,7 @@ export function RegistrationForm({
                 placeholder="e.g. United Kingdom"
                 value={formData.country}
                 onChange={(e) => handleChange("country", e.target.value)}
-                className={`pl-10 h-12 border-slate-200 focus:border-[#014B52] focus:ring-[#014B52]/20 rounded-xl ${
+                className={`pl-10 h-12 border-slate-200 focus:border-primary-600 focus:ring-primary-600/20 rounded-xl ${
                   errors.country ? "border-red-400 ring-1 ring-red-400" : ""
                 }`}
               />
@@ -418,7 +418,7 @@ export function RegistrationForm({
                 placeholder="https://yourtheatre.com"
                 value={formData.website}
                 onChange={(e) => handleChange("website", e.target.value)}
-                className={`pl-10 h-12 border-slate-200 focus:border-[#014B52] focus:ring-[#014B52]/20 rounded-xl ${
+                className={`pl-10 h-12 border-slate-200 focus:border-primary-600 focus:ring-primary-600/20 rounded-xl ${
                   errors.website ? "border-red-400 ring-1 ring-red-400" : ""
                 }`}
               />
@@ -434,7 +434,7 @@ export function RegistrationForm({
               htmlFor="org-password"
               className="text-sm font-semibold text-slate-700"
             >
-              Password <span className="text-[#F5A800]">*</span>
+              Password <span className="text-accent-400">*</span>
             </Label>
             <PasswordInput
               id="org-password"
@@ -442,7 +442,7 @@ export function RegistrationForm({
               placeholder="••••••••"
               value={formData.password}
               onChange={(e) => handleChange("password", e.target.value)}
-              className={`h-12 border-slate-200 focus:border-[#014B52] focus:ring-[#014B52]/20 rounded-xl ${
+              className={`h-12 border-slate-200 focus:border-primary-600 focus:ring-primary-600/20 rounded-xl ${
                 errors.password ? "border-red-400 ring-1 ring-red-400" : ""
               }`}
             />
@@ -457,7 +457,7 @@ export function RegistrationForm({
               htmlFor="org-confirm-password"
               className="text-sm font-semibold text-slate-700"
             >
-              Confirm Password <span className="text-[#F5A800]">*</span>
+              Confirm Password <span className="text-accent-400">*</span>
             </Label>
             <PasswordInput
               id="org-confirm-password"
@@ -473,7 +473,7 @@ export function RegistrationForm({
                   });
                 }
               }}
-              className={`h-12 border-slate-200 focus:border-[#014B52] focus:ring-[#014B52]/20 rounded-xl ${
+              className={`h-12 border-slate-200 focus:border-primary-600 focus:ring-primary-600/20 rounded-xl ${
                 errors.confirmPassword
                   ? "border-red-400 ring-1 ring-red-400"
                   : ""
@@ -489,7 +489,7 @@ export function RegistrationForm({
           <Button
             type="submit"
             disabled={isLoading}
-            className="w-full h-13 bg-primary-600 hover:bg-[#013c42] text-white font-bold text-base rounded-xl transition-all shadow-lg shadow-[#014B52]/20 flex items-center justify-center gap-2 cursor-pointer"
+            className="w-full h-13 bg-primary-600 hover:bg-[#013c42] text-white font-bold text-base rounded-xl transition-all shadow-lg shadow-primary-600/20 flex items-center justify-center gap-2 cursor-pointer"
           >
             {isLoading ? (
               <>

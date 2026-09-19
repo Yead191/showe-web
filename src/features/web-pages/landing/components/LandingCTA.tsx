@@ -7,9 +7,9 @@ export default function LandingCTA() {
   return (
     <section className="py-10 lg:py-16 bg-white mb-16">
       <div className="container mx-auto px-4">
-        <div className="relative bg-primary-600 rounded-[3rem] px-6 py-16 md:p-20 overflow-hidden shadow-2xl shadow-[#014B52]/20 border border-white/10">
+        <div className="relative bg-primary-600 rounded-[3rem] px-6 py-16 md:p-20 overflow-hidden shadow-2xl shadow-primary-600/20 border border-white/10">
           {/* Background Decorations */}
-          <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-[#F5A800]/20 rounded-full blur-[120px] pointer-events-none translate-x-1/3 -translate-y-1/3" />
+          <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-accent-400/20 rounded-full blur-[120px] pointer-events-none translate-x-1/3 -translate-y-1/3" />
           <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-white/10 rounded-full blur-[100px] pointer-events-none -translate-x-1/3 translate-y-1/3" />
 
           {/* Pattern Overlay */}
@@ -18,7 +18,7 @@ export default function LandingCTA() {
           <div className="relative z-10 text-center max-w-3xl mx-auto space-y-8">
             <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white font-museo leading-tight tracking-tight">
               Ready to elevate your{" "}
-              <span className="text-[#F5A800]">event experience?</span>
+              <span className="text-accent-400">event experience?</span>
             </h2>
             <p className="text-lg md:text-xl text-white/80 font-light max-w-2xl mx-auto leading-relaxed">
               Don't just attend an event—immerse yourself in it. Start exploring
@@ -27,7 +27,7 @@ export default function LandingCTA() {
             </p>
 
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-6">
-              <Button className="h-14 px-8 md:px-10 bg-[#F5A800] hover:bg-[#e09900] text-white font-bold text-lg rounded-2xl flex items-center gap-3 shadow-lg shadow-[#F5A800]/20 active:scale-95 transition-all w-full sm:w-auto">
+              <Button className="h-14 px-8 md:px-10 bg-accent-400 hover:bg-[#e09900] text-white font-bold text-lg rounded-2xl flex items-center gap-3 shadow-lg shadow-[#F5A800]/20 active:scale-95 transition-all w-full sm:w-auto">
                 <Smartphone size={22} />
                 Download App
               </Button>
@@ -43,7 +43,7 @@ export default function LandingCTA() {
               Or{" "}
               <Link
                 href="/home"
-                className="text-white hover:text-[#F5A800] underline underline-offset-4 transition-colors"
+                className="text-white hover:text-accent-400 underline underline-offset-4 transition-colors"
               >
                 visit our platform
               </Link>{" "}
