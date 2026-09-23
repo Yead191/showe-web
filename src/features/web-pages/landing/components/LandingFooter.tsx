@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { LiaLinkedin } from "react-icons/lia";
 import { FaFacebook, FaInstagram } from "react-icons/fa";
 import { BsTwitter } from "react-icons/bs";
+import { CookiePreferencesButton } from "@/components/shared/cookies";
 
 const FOOTER_LINKS = [
   { label: "Home", href: "/for-users" },
@@ -100,36 +101,24 @@ export default function LandingFooter() {
 
       {/* Bottom Bar */}
       <div className="border-t border-white/10 py-6">
-        <div className="container flex flex-col xl:flex-row justify-between items-center gap-4 text-gray-400 text-xs md:text-sm">
+        <div className="container flex flex-col md:flex-row justify-between items-center gap-4 text-gray-400 text-xs md:text-sm">
           <p>©2026 SHOWE • All rights reserved</p>
-          <div className="flex flex-wrap items-center justify-center gap-x-4 sm:gap-x-6 gap-y-2 text-center">
+          <div className="flex flex-wrap items-center justify-center gap-x-4 sm:gap-x-6 gap-y-2">
             <Link
-              href="/terms/user"
+              href="/terms"
               className="hover:text-white transition-colors"
             >
-              Terms & Conditions (User)
+              Terms & Conditions
             </Link>
-            <span className="text-gray-600 hidden sm:inline">•</span>
+            <span className="text-gray-600">•</span>
             <Link
-              href="/terms/organizer"
+              href="/privacy"
               className="hover:text-white transition-colors"
             >
-              Terms & Conditions (Organizer)
+              Privacy Policy
             </Link>
-            <span className="text-gray-600 hidden sm:inline">•</span>
-            <Link
-              href="/privacy/user"
-              className="hover:text-white transition-colors"
-            >
-              Privacy Policy (User)
-            </Link>
-            <span className="text-gray-600 hidden sm:inline">•</span>
-            <Link
-              href="/privacy/organizer"
-              className="hover:text-white transition-colors"
-            >
-              Privacy Policy (Organizer)
-            </Link>
+            <span className="text-gray-600">•</span>
+            <CookiePreferencesButton className="hover:text-white transition-colors cursor-pointer" />
           </div>
         </div>
       </div>

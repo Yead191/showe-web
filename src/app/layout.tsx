@@ -4,6 +4,7 @@ import "./globals.css";
 import { Toaster } from "sonner";
 import ScrollToTop from "@/helpers/ScrollToTop";
 import SplashScreen from "@/components/shared/SplashScreen";
+import { CookieConsentBanner } from "@/components/shared/cookies";
 import { siteConfig } from "@/lib/seo";
 
 const montserrat = Montserrat({
@@ -83,6 +84,7 @@ export default function RootLayout({
         <SplashScreen />
         <ScrollToTop />
         {children}
+        <CookieConsentBanner />
         <Toaster position="bottom-right" richColors duration={2000} closeButton={true} />
       </body>
     </html>
