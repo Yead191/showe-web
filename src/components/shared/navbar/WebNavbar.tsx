@@ -229,7 +229,7 @@ export default function WebNavbar({ user }: { user: any }) {
                 <DropdownMenuTrigger asChild>
                   <Button
                     variant="ghost"
-                    className="relative h-10 w-10 rounded-full p-0 border-2 border-white/10 hover:border-accent-400/50 transition-all overflow-hidden ring-offset-[#014B52] focus-visible:ring-[#F5A800]"
+                    className="relative h-10 w-10 rounded-full p-0 border-2 border-white/10 hover:border-accent-400/50 transition-all overflow-hidden ring-offset-primary-600"
                   >
                     <Avatar className="h-full w-full">
                       <AvatarImage

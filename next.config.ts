@@ -16,6 +16,7 @@ const nextConfig: NextConfig = {
       { protocol: "https", hostname: "images.unsplash.com", pathname: "/**" },
       { protocol: "https", hostname: "i.pravatar.cc", pathname: "/**" },
       { protocol: "https", hostname: "i.ibb.co", pathname: "/**" },
+      { protocol: "http", hostname: "10.10.26.164", pathname: "/**" },
       {
         protocol: "https",
         hostname: "showe-platform-s3-bucket.s3.eu-west-2.amazonaws.com",

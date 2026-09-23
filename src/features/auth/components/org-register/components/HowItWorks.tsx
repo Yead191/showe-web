@@ -1,6 +1,6 @@
 "use client";
 
-import { CalendarPlus, Ticket, Users, QrCode, ArrowRight } from "lucide-react";
+import { CalendarPlus, Ticket, BarChart3, QrCode, ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 interface HowItWorksProps {
@@ -17,21 +17,21 @@ export function HowItWorks({ onContinue }: HowItWorksProps) {
     },
     {
       icon: <Ticket size={24} />,
-      title: "SELL TICKETS",
+      title: "LINK TICKET SALES",
       description:
-        "Create ticket types, set pricing and availability, and manage registrations from one place.",
+        "Direct audiences seamlessly to your official ticket vendor or box office links right from your event.",
     },
     {
-      icon: <Users size={24} />,
-      title: "MANAGE ATTENDEES",
+      icon: <BarChart3 size={24} />,
+      title: "TRACK ENGAGEMENT",
       description:
-        "Keep track of registrations, attendees, and event activity through your organizer dashboard.",
+        "Keep track of programme views, reader interactions, and audience engagement through your dashboard.",
     },
     {
       icon: <QrCode size={24} />,
-      title: "QR CHECK-IN",
+      title: "QR DOWNLOADS",
       description:
-        "Use QR codes to quickly verify and check in attendees at your event.",
+        "Download print-ready QR codes for event signage, brochures, and displays for instant mobile access.",
     },
   ];
 

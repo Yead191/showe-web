@@ -1,17 +1,18 @@
-import Link from 'next/link';
-import Image from 'next/image';
-import { Input } from '@/components/ui/input';
-import { Button } from '@/components/ui/button';
-import { LiaLinkedin } from 'react-icons/lia';
-import { FaFacebook, FaInstagram } from 'react-icons/fa';
-import { BsTwitter } from 'react-icons/bs';
+import Link from "next/link";
+import Image from "next/image";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
+import { LiaLinkedin } from "react-icons/lia";
+import { FaFacebook, FaInstagram } from "react-icons/fa";
+import { BsTwitter } from "react-icons/bs";
 
 const FOOTER_LINKS = [
-  { label: 'Home', href: '/' },
-  { label: 'Events', href: '#events' },
-  { label: 'About us', href: '#about' },
-  { label: 'Programmes', href: '#programmes' },
-  { label: 'Support', href: '#support' },
+  { label: "Home", href: "/for-users" },
+  { label: "Explore", href: "/home" },
+  { label: "Events", href: "/events" },
+  { label: "Programmes", href: "/programmes" },
+  { label: "About us", href: "/about" },
+  { label: "Support", href: "/support" },
 ];
 
 export default function LandingFooter() {
@@ -52,18 +53,32 @@ export default function LandingFooter() {
 
         {/* Social Links */}
         <div className="space-y-4">
-          <p className="text-gray-400 text-[10px] uppercase tracking-widest font-bold">Follow Us</p>
+          <p className="text-gray-400 text-[10px] uppercase tracking-widest font-bold">
+            Follow Us
+          </p>
           <div className="flex justify-center gap-6">
-            <Link href="#" className="text-white hover:text-[#F2A900] transition-colors">
+            <Link
+              href="#"
+              className="text-white hover:text-[#F2A900] transition-colors"
+            >
               <LiaLinkedin className="size-5" />
             </Link>
-            <Link href="#" className="text-white hover:text-[#F2A900] transition-colors">
+            <Link
+              href="#"
+              className="text-white hover:text-[#F2A900] transition-colors"
+            >
               <FaFacebook className="size-5" />
             </Link>
-            <Link href="#" className="text-white hover:text-[#F2A900] transition-colors">
+            <Link
+              href="#"
+              className="text-white hover:text-[#F2A900] transition-colors"
+            >
               <FaInstagram className="size-5" />
             </Link>
-            <Link href="#" className="text-white hover:text-[#F2A900] transition-colors">
+            <Link
+              href="#"
+              className="text-white hover:text-[#F2A900] transition-colors"
+            >
               <BsTwitter className="size-5" />
             </Link>
           </div>
@@ -85,12 +100,36 @@ export default function LandingFooter() {
 
       {/* Bottom Bar */}
       <div className="border-t border-white/10 py-6">
-        <div className="container flex flex-col md:flex-row justify-between items-center gap-4 text-gray-400 text-xs md:text-sm">
+        <div className="container flex flex-col xl:flex-row justify-between items-center gap-4 text-gray-400 text-xs md:text-sm">
           <p>©2026 SHOWE • All rights reserved</p>
-          <div className="flex gap-4 md:gap-8">
-            <Link href="#" className="hover:text-white transition-colors">Terms & Service</Link>
-            <span className="text-gray-600">•</span>
-            <Link href="#" className="hover:text-white transition-colors">Privacy Policy</Link>
+          <div className="flex flex-wrap items-center justify-center gap-x-4 sm:gap-x-6 gap-y-2 text-center">
+            <Link
+              href="/terms/user"
+              className="hover:text-white transition-colors"
+            >
+              Terms & Conditions (User)
+            </Link>
+            <span className="text-gray-600 hidden sm:inline">•</span>
+            <Link
+              href="/terms/organizer"
+              className="hover:text-white transition-colors"
+            >
+              Terms & Conditions (Organizer)
+            </Link>
+            <span className="text-gray-600 hidden sm:inline">•</span>
+            <Link
+              href="/privacy/user"
+              className="hover:text-white transition-colors"
+            >
+              Privacy Policy (User)
+            </Link>
+            <span className="text-gray-600 hidden sm:inline">•</span>
+            <Link
+              href="/privacy/organizer"
+              className="hover:text-white transition-colors"
+            >
+              Privacy Policy (Organizer)
+            </Link>
           </div>
         </div>
       </div>
