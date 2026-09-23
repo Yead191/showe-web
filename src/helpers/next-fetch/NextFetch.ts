@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 "use server";
+import { cookies } from "next/headers";
 import { getAccessToken } from "./getAccessToken";
 
 interface Pagination {
@@ -10,6 +11,8 @@ interface Pagination {
 }
 export interface FetchResponse<T = any> {
   success: boolean;
+  statusCode?: number;
+  isBlocked?: boolean;
   message?: string;
   data?: T;
   error?: string | null;
@@ -36,8 +39,8 @@ export const nextFetch = async <T = any>(
     token,
     headers = {},
     cache = "default",
-    next = {}
-  }: FetchOptions = {}
+    next = {},
+  }: FetchOptions = {},
 ): Promise<FetchResponse<T>> => {
   const accessToken = await getAccessToken();
   const isFormData = body instanceof FormData;
@@ -52,7 +55,6 @@ export const nextFetch = async <T = any>(
   };
 
   try {
-
     const res = await fetch(`${process.env.BASE_URL}${url}`, {
       method,
       headers: reqHeaders,
@@ -68,10 +70,34 @@ export const nextFetch = async <T = any>(
     const json = await res.json();
 
     if (!res.ok) {
+      const isAuthError = res.status === 401 || res.status === 403;
+      const isBlocked =
+        res.status === 403 ||
+        Boolean(
+          json?.message &&
+          typeof json.message === "string" &&
+          json.message.toLowerCase().includes("blocked"),
+        );
+
+      if (isAuthError) {
+        try {
+          const cookieStore = await cookies();
+          cookieStore.delete("accessToken");
+          cookieStore.delete("role");
+        } catch {
+          // Cookies cannot be modified during static render; client interceptor will catch and clear
+        }
+      }
+
       return {
-        ...(typeof json === "object" ? json : {}),
         success: false,
-        message: json?.message,
+        statusCode: res.status,
+        isBlocked,
+        message:
+          json?.message ||
+          (isBlocked
+            ? "Your account has been blocked. Please contact support."
+            : "Request failed"),
         error: json?.errorMessages || "Request failed",
       };
     }
@@ -81,7 +107,7 @@ export const nextFetch = async <T = any>(
       message: json?.message,
       data: json?.data,
       error: null,
-      pagination: json?.pagination
+      pagination: json?.pagination,
     };
   } catch (err) {
     return {

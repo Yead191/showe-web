@@ -8,8 +8,13 @@ import OrgBenefits from "./components/OrgBenefits";
 import OrgVisualShowcase from "./components/OrgVisualShowcase";
 import OrgUseCases from "./components/OrgUseCases";
 import { useRouter } from "next/navigation";
+import type { FaqItem } from "../support/types";
 
-export default function BecomeCreator() {
+interface BecomeCreatorProps {
+    faqs?: FaqItem[];
+}
+
+export default function BecomeCreator({ faqs }: BecomeCreatorProps = {}) {
     const router = useRouter();
 
     return (
@@ -37,7 +42,7 @@ export default function BecomeCreator() {
                 <MakeOwnProgramme />
                 */}
 
-                <LandingFAQ />
+                <LandingFAQ faqs={faqs} />
             </main>
             <LandingFooter />
         </div>

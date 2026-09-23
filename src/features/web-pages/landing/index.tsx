@@ -11,15 +11,27 @@ import LandingFooter from "./components/LandingFooter";
 import HowItWorksProcess from "./components/HowItWorksProcess";
 import { nextFetch } from "@/helpers/next-fetch/NextFetch";
 import type { LandingEventItem } from "./types";
+import type { FaqItem } from "@/features/web-pages/support/types";
 
 export default async function LandingIndex() {
-  const res = await nextFetch<LandingEventItem[]>("/event/search", {
-    method: "GET",
-    cache: "force-cache",
-    next: { revalidate: 60 },
-  });
+  const [res, faqRes] = await Promise.all([
+    nextFetch<LandingEventItem[]>("/event/search", {
+      method: "GET",
+      cache: "force-cache",
+      next: { revalidate: 60 },
+    }),
+    nextFetch<FaqItem[]>("/faq", {
+      method: "GET",
+      cache: "force-cache",
+      next: {
+        revalidate: 60 * 60,
+        tags: ["faq"],
+      },
+    }),
+  ]);
 
   const events = res?.data ?? [];
+  const faqs = faqRes?.data ?? [];
 
   return (
     <div className="flex flex-col min-h-screen">
@@ -33,7 +45,7 @@ export default async function LandingIndex() {
         <LandingEvents event={events[0]} />
         <Programmes events={events} />
         <LandingCTA />
-        <LandingFAQ />
+        <LandingFAQ faqs={faqs} />
       </main>
       <LandingFooter />
     </div>
