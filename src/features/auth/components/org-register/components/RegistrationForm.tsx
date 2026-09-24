@@ -20,6 +20,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { nextFetch } from "@/helpers/next-fetch/NextFetch";
 import { PasswordInput } from "@/features/auth/components/PasswordInput";
+import { ORGANISATION_DASHBOARD_URL } from "@/constants/links";
 import type { OrganizerRegistrationFormData } from "../types";
 
 interface RegistrationFormProps {
@@ -236,7 +237,7 @@ export function RegistrationForm({
           <span className="font-medium">Already have a SHOWE account?</span>
         </div>
         <a
-          href="https://admin.showe.biz"
+          href={ORGANISATION_DASHBOARD_URL}
           target="_blank"
           rel="noopener noreferrer"
           className="inline-flex items-center gap-1.5 font-semibold text-primary-600 hover:text-accent-400 transition-colors"

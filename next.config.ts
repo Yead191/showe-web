@@ -1,6 +1,16 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
+  env: {
+    ORGANISATION_DASHBOARD:
+      process.env.ORGANISATION_DASHBOARD ||
+      process.env.NEXT_PUBLIC_ORGANISATION_DASHBOARD ||
+      "",
+    NEXT_PUBLIC_ORGANISATION_DASHBOARD:
+      process.env.NEXT_PUBLIC_ORGANISATION_DASHBOARD ||
+      process.env.ORGANISATION_DASHBOARD ||
+      "",
+  },
   /* config options here */
   allowedDevOrigins: [
     "http://localhost:3000",

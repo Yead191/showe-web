@@ -1,3 +1,5 @@
+import { ORGANISATION_DASHBOARD_URL } from "@/constants/links";
+
 export type PaymentType = "programme" | "ticket" | "subscription" | string;
 
 type SuccessCopy = {
@@ -50,7 +52,7 @@ export function getSuccessCopy(type?: string | null): SuccessCopy {
         title: "You're all set!",
         description:
           "Your SHOWE organizer subscription is ready. You can now access your organizer dashboard and start managing your events.",
-        primaryHref: "https://admin.showe.biz",
+        primaryHref: ORGANISATION_DASHBOARD_URL,
         primaryLabel: "Go to Organizer Portal →",
         secondaryHref: "/home",
         secondaryLabel: "Back to home",

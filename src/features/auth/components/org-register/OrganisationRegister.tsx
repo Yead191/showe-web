@@ -7,6 +7,7 @@ import { useRouter } from "next/navigation";
 import { ArrowLeft, Sparkles, Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { OrganizerRegistration } from "./OrganizerRegistration";
+import { ORGANISATION_DASHBOARD_URL } from "@/constants/links";
 
 export default function OrganisationRegister() {
   const router = useRouter();
@@ -61,7 +62,7 @@ export default function OrganisationRegister() {
           <div className="text-xs text-white/70">
             Already registered?{" "}
             <a
-              href="https://admin.showe.biz"
+              href={ORGANISATION_DASHBOARD_URL}
               target="_blank"
               rel="noopener noreferrer"
               className="text-accent-400 font-semibold underline hover:text-white transition-colors"
@@ -82,7 +83,7 @@ export default function OrganisationRegister() {
         <div className="w-full max-w-4xl bg-white rounded-3xl shadow-xl shadow-slate-200/60 border border-slate-100 p-6 sm:p-10 my-auto">
           <Suspense
             fallback={
-              <div className="min-h-[400px] flex flex-col items-center justify-center gap-3">
+              <div className="min-h-100 flex flex-col items-center justify-center gap-3">
                 <Loader2 className="w-8 h-8 animate-spin text-primary-600" />
                 <p className="text-sm text-slate-500">Loading onboarding...</p>
               </div>

@@ -35,11 +35,15 @@ export function OrganizerRegistration() {
     searchParams.get("session_id") !== null;
 
   const [currentStep, setCurrentStep] = useState<RegistrationStep>(
-    isReturnSuccess ? "success" : "account"
+    isReturnSuccess ? "success" : "account",
   );
-  const [formData, setFormData] = useState<OrganizerRegistrationFormData>(INITIAL_FORM_DATA);
-  const [isUnverifiedExistingAccount, setIsUnverifiedExistingAccount] = useState(false);
-  const [selectedPackage, setSelectedPackage] = useState<PackageItem | null>(null);
+  const [formData, setFormData] =
+    useState<OrganizerRegistrationFormData>(INITIAL_FORM_DATA);
+  const [isUnverifiedExistingAccount, setIsUnverifiedExistingAccount] =
+    useState(false);
+  const [selectedPackage, setSelectedPackage] = useState<PackageItem | null>(
+    null,
+  );
   const [agreedToTerms, setAgreedToTerms] = useState(false);
   const [agreedToPrivacy, setAgreedToPrivacy] = useState(false);
 
@@ -83,7 +87,7 @@ export function OrganizerRegistration() {
       <StepIndicator currentStep={currentStep} />
 
       {/* Step Router */}
-      <div className="min-h-[420px]">
+      <div className="min-h-105">
         {currentStep === "account" && (
           <RegistrationForm
             initialData={formData}

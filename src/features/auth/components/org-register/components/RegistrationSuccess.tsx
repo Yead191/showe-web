@@ -2,6 +2,7 @@
 
 import { Check, Sparkles, ArrowRight, ExternalLink } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { ORGANISATION_DASHBOARD_URL } from "@/constants/links";
 
 export function RegistrationSuccess() {
   return (
@@ -31,7 +32,7 @@ export function RegistrationSuccess() {
 
       <div className="pt-4 flex flex-col items-center gap-3">
         <a
-          href="https://admin.showe.biz"
+          href={ORGANISATION_DASHBOARD_URL}
           target="_blank"
           rel="noopener noreferrer"
           className="w-full sm:w-auto min-w-65 h-13 px-8 rounded-xl bg-accent-400 hover:bg-[#e09900] text-slate-950 font-bold text-base shadow-lg shadow-accent-400/25 transition-all flex items-center justify-center gap-2 group cursor-pointer"
@@ -44,7 +45,7 @@ export function RegistrationSuccess() {
         </a>
 
         <p className="text-xs text-slate-400">
-          Redirecting to https://admin.showe.biz
+          Redirecting to {ORGANISATION_DASHBOARD_URL}
         </p>
       </div>
     </div>
