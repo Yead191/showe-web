@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import LandingNavbar from "@/components/shared/navbar/LandingNavbar";
 import LandingFAQ from "../landing/components/LandingFAQ";
 import LandingFooter from "../landing/components/LandingFooter";
@@ -11,40 +11,52 @@ import { useRouter } from "next/navigation";
 import type { FaqItem } from "../support/types";
 
 interface BecomeCreatorProps {
-    faqs?: FaqItem[];
+  faqs?: FaqItem[];
 }
 
 export default function BecomeCreator({ faqs }: BecomeCreatorProps = {}) {
-    const router = useRouter();
+  const router = useRouter();
 
-    return (
-        <div className="flex flex-col min-h-screen">
-            <LandingNavbar isCreator={true} />
-            <main>
-                <PageBanner
-                    title="Transform your programme into a powerful digital experience."
-                    description="Engage your audience, unlock new revenue streams, and replace print with a flexible, data-driven platform."
-                    bgImage="/assets/bg/programmes/community.png"
-                    buttons={[
-                        { label: "Get Started", onClick: () => router.push("/organisation-register"), variant: "default" },
-                        { label: "Book a Demo", onClick: () => router.push("/support"), },
-                    ]}
-                />
+  return (
+    <div className="flex flex-col min-h-screen">
+      <LandingNavbar isCreator={true} />
+      <main>
+        <PageBanner
+          title="Transform your programme into a powerful digital experience."
+          description="Engage your audience, unlock new revenue streams, and replace print with a flexible, data-driven platform."
+          bgImage="/assets/bg/programmes/community.png"
+          buttons={[
+            {
+              label: "Get Started",
+              onClick: () => router.push("/organisation-register"),
+              variant: "default",
+            },
+            {
+              label: "Book a Demo",
+              onClick: () =>
+                window.open(
+                  "https://calendly.com/backstage-showe/30min",
+                  "_blank",
+                  "noopener,noreferrer"
+                ),
+            },
+          ]}
+        />
 
-                <OrgStrategicSummary />
-                <OrgBenefits />
-                <OrgVisualShowcase />
-                <OrgUseCases />
+        <OrgStrategicSummary />
+        <OrgBenefits />
+        <OrgVisualShowcase />
+        <OrgUseCases />
 
-                {/* Commenting out sections that no longer match the strategic goals */}
-                {/* 
+        {/* Commenting out sections that no longer match the strategic goals */}
+        {/* 
                 <WhyChooseUs features={becomeCreatorFeatures} title="Why Venues & Producers Choose SHOWE" subtitle="Powerful tools designed to simplify operations and elevate audience engagement" />
                 <MakeOwnProgramme />
                 */}
 
-                <LandingFAQ faqs={faqs} />
-            </main>
-            <LandingFooter />
-        </div>
-    )
+        <LandingFAQ faqs={faqs} />
+      </main>
+      <LandingFooter />
+    </div>
+  );
 }
