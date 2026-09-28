@@ -1,5 +1,4 @@
-import { Button } from "@/components/ui/button";
-import { ChevronRight, QrCode } from "lucide-react";
+import { QrCode } from "lucide-react";
 export default function StorySections() {
   return (
     <section
@@ -36,30 +35,20 @@ export default function StorySections() {
 
           <div className="lg:w-1/2 space-y-8">
             <h2 className="text-3xl md:text-4xl font-bold text-primary-600 font-museo">
-              Our Story
+              Printed programmes haven't fundamentally changed for decades.
             </h2>
             <div className="space-y-6 text-gray-600 leading-relaxed text-lg">
               <p>
-                Born from a passion for live performances and a drive for
-                technological efficiency, SHOWE was founded to solve a
-                persistent problem: the disconnect between the physical stage
-                and the digital hands of the audience.
+                SHOWE started with the question of whether a programme could
+                become something much more useful — something audiences could
+                explore before, during and after an event, while giving
+                organisations a way to understand what their audiences actually
+                engage with.
               </p>
-              <p>
-                We started as a small tool for local theatre groups and quickly
-                grew into a robust platform used by international festivals and
-                sports organizations. Our growth is fueled by one goal—making
-                sure that every event, no matter the size, has access to
-                state-of-the-art interaction tools.
+              <p className="font-semibold text-primary-600 pt-2 tracking-wide">
+                People | Events | Better Together
               </p>
             </div>
-            <Button
-              variant="link"
-              className="text-accent-400 font-bold p-0 flex items-center gap-2 group text-lg"
-            >
-              Read more about our journey
-              <ChevronRight className="group-hover:translate-x-1 transition-transform" />
-            </Button>
           </div>
         </div>
       </div>

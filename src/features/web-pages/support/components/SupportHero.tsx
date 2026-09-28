@@ -9,7 +9,8 @@ export default function SupportHero() {
     if (el) {
       const headerOffset = 80;
       const elementPosition = el.getBoundingClientRect().top;
-      const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+      const offsetPosition =
+        elementPosition + window.pageYOffset - headerOffset;
       window.scrollTo({
         top: offsetPosition,
         behavior: "smooth",
@@ -25,7 +26,7 @@ export default function SupportHero() {
       {/* Ambient background glows */}
       <div className="absolute top-0 right-0 w-96 h-96 bg-accent-400/10 rounded-full -mr-32 -mt-32 blur-3xl pointer-events-none" />
       <div className="absolute bottom-0 left-0 w-80 h-80 bg-white/5 rounded-full -ml-32 -mb-32 blur-3xl pointer-events-none" />
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-48 bg-accent-400/5 blur-[120px] rounded-full pointer-events-none" />
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-175 h-48 bg-accent-400/5 blur-[120px] rounded-full pointer-events-none" />
 
       <div className="container mx-auto px-4 relative z-10">
         <div className="max-w-3xl mx-auto text-center space-y-6">
@@ -40,8 +41,8 @@ export default function SupportHero() {
 
           <p className="text-white/75 text-base md:text-lg max-w-xl mx-auto leading-relaxed">
             Need assistance with your interactive digital programme, artist
-            profile, or account? Explore our help topics below or send a
-            direct message to our backstage team.
+            profile, or account? Explore our help topics below or send a direct
+            message to our backstage team.
           </p>
 
           <div className="flex flex-wrap items-center justify-center gap-3 pt-2">

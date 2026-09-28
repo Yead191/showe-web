@@ -1,12 +1,20 @@
 import { TrendingUp, Users, Zap, Database, Leaf } from "lucide-react";
 
+interface MetricItem {
+  icon: React.ReactNode;
+  title: string;
+  description: string;
+  highlight?: string;
+}
+
 export default function OrgStrategicSummary() {
-  const metrics = [
+  const metrics: MetricItem[] = [
     {
       icon: <TrendingUp className="w-10 h-10 text-accent-400" />,
       title: "Unlock Revenue",
       description:
-        "Directly monetize your programs through ticket sales, sponsorships, and donation integrations.",
+        "Create your organisation. Add your events, venues and artists. Build interactive digital programmes. Understand how audiences engage with them.",
+      highlight: "No subscription required",
     },
     {
       icon: <Users className="w-10 h-10 text-accent-400" />,
@@ -51,10 +59,11 @@ export default function OrgStrategicSummary() {
             <div className="space-y-4">
               <div className="flex items-start gap-4 p-4 rounded-xl bg-slate-50 border-l-4 border-accent-400">
                 <div className="font-bold text-primary-600 text-lg">
-                  “Will it make money?”
+                  “Will it create better event experiences?”
                 </div>
                 <div className="text-slate-600">
-                  — Yes. Through diversified digital revenue streams.
+                  — Yes. Audiences explore, interact, and stay connected before,
+                  during, and after events.
                 </div>
               </div>
               <div className="flex items-start gap-4 p-4 rounded-xl bg-slate-50 border-l-4 border-accent-400">
@@ -72,17 +81,29 @@ export default function OrgStrategicSummary() {
             {metrics.map((item, idx) => (
               <div
                 key={idx}
-                className={`p-8 rounded-2xl transition-all hover:translate-y-[-5px] shadow-sm hover:shadow-xl border border-slate-100 ${idx === 0 ? "md:col-span-2 bg-primary-600 text-white" : "bg-white"}`}
+                className={`p-8 rounded-2xl transition-all hover:-translate-y-1.25 shadow-sm hover:shadow-xl border border-slate-100 ${idx === 0 ? "md:col-span-2 bg-primary-600 text-white" : "bg-white"}`}
               >
                 <div className="mb-4">{item.icon}</div>
                 <h3
-                  className={`text-xl font-bold mb-3 ${idx === 0 ? "text-white" : "text-slate-900"}`}
+                  className={`text-xl font-bold mb-3 ${idx === 0 ? "text-white leading-snug" : "text-slate-900"}`}
                 >
                   {item.title}
                 </h3>
-                <p className={idx === 0 ? "text-white/80" : "text-slate-600"}>
+                <p
+                  className={
+                    idx === 0
+                      ? "text-white/90 leading-relaxed text-base"
+                      : "text-slate-600"
+                  }
+                >
                   {item.description}
                 </p>
+                {item.highlight && (
+                  <div className="mt-4 inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-accent-400/20 text-accent-400 font-bold text-xs uppercase tracking-wider border border-accent-400/30">
+                    <span className="w-1.5 h-1.5 rounded-full bg-accent-400" />
+                    {item.highlight}
+                  </div>
+                )}
               </div>
             ))}
           </div>

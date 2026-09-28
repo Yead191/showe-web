@@ -92,7 +92,10 @@ export default function SupportForm({ selectedTopic = "" }: SupportFormProps) {
   };
 
   return (
-    <section id="contact-form" className="py-20 lg:py-28 bg-gray-50/80 overflow-hidden relative">
+    <section
+      id="contact-form"
+      className="py-20 lg:py-28 bg-gray-50/80 overflow-hidden relative"
+    >
       {/* Decorative background blurs */}
       <div className="absolute top-1/3 -left-32 w-80 h-80 bg-accent-400/5 rounded-full blur-3xl pointer-events-none" />
       <div className="absolute bottom-10 right-0 w-96 h-96 bg-primary-600/5 rounded-full blur-3xl pointer-events-none" />
@@ -102,16 +105,13 @@ export default function SupportForm({ selectedTopic = "" }: SupportFormProps) {
           {/* Left: Direct Contact & Trust Hub */}
           <div className="lg:w-5/12 space-y-8 w-full">
             <div className="space-y-4">
-              <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-accent-400/10 text-accent-400 text-xs font-black uppercase tracking-widest">
-                <Sparkles size={13} />
-                <span>Direct Support</span>
-              </div>
               <h2 className="text-3xl md:text-4xl lg:text-[40px] font-bold text-primary-600 font-museo tracking-tight leading-tight">
                 Backstage Assistance
               </h2>
               <p className="text-gray-500 text-base leading-relaxed">
                 Need immediate help with your account, performer profile, or
-                digital event programme? Connect with our dedicated support team.
+                digital event programme? Connect with our dedicated support
+                team.
               </p>
             </div>
 
@@ -223,8 +223,8 @@ export default function SupportForm({ selectedTopic = "" }: SupportFormProps) {
                     </h3>
                     <p className="text-gray-500 leading-relaxed text-sm md:text-base">
                       Thank you for contacting SHOWE. Your inquiry has been
-                      securely forwarded to our backstage operations desk.
-                      We will review and respond to you via email shortly.
+                      securely forwarded to our backstage operations desk. We
+                      will review and respond to you via email shortly.
                     </p>
                   </div>
                   <Button
@@ -360,7 +360,9 @@ export default function SupportForm({ selectedTopic = "" }: SupportFormProps) {
                       id="message"
                       name="message"
                       value={message}
-                      onChange={(e) => setMessage(e.target.value.slice(0, 1000))}
+                      onChange={(e) =>
+                        setMessage(e.target.value.slice(0, 1000))
+                      }
                       required
                       rows={5}
                       placeholder="Please provide event dates, programme links, or any error messages you encountered..."

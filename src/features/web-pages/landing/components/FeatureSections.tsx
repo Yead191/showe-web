@@ -1,23 +1,25 @@
-import React from 'react';
-import Image from 'next/image';
-import { Button } from '@/components/ui/button';
-import Link from 'next/link';
+import React from "react";
+import Image from "next/image";
+import { Button } from "@/components/ui/button";
+import Link from "next/link";
 
 const FEATURE_DATA = [
   {
-    title: 'All-in-One Programme Experience',
-    description: 'Enjoy a seamless digital event journey where everything you need—schedule, speakers, sessions, and updates—is in one place. No more searching through printed papers or outdated information. With real-time updates, easy navigation, and mobile-friendly access, users can explore events effortlessly, stay informed, and engage more deeply with every moment of the program.',
-    buttonText: 'Book Your Ticket',
-    image: '/assets/images/programmes/program1.jpg',
-    url: '/events',
+    title: "All-in-One Programme Experience",
+    description:
+      "Enjoy a seamless digital event journey where everything you need—schedule, speakers, sessions, and updates—is in one place. No more searching through printed papers or outdated information. With real-time updates, easy navigation, and mobile-friendly access, users can explore events effortlessly, stay informed, and engage more deeply with every moment of the programme.",
+    buttonText: "Book Your Ticket",
+    image: "/assets/images/programmes/program1.jpg",
+    url: "/events",
   },
   {
-    title: 'Effortless Programme Management for Creators',
-    description: 'Enjoy a seamless digital event journey where everything you need—schedule, speakers, sessions, and updates—is in one place. No more searching through printed papers or outdated information. With real-time updates, easy navigation, and mobile-friendly access, users can explore events effortlessly, stay informed, and engage more deeply with every moment of the program.',
-    buttonText: 'Become a Creator',
-    image: '/assets/images/programmes/program2.jpg',
-    url: '/become-creator',
-  }
+    title: "Effortless Programme Management for Creators",
+    description:
+      "Enjoy a seamless digital event journey where everything you need—schedule, speakers, sessions, and updates—is in one place. No more searching through printed papers or outdated information. With real-time updates, easy navigation, and mobile-friendly access, users can explore events effortlessly, stay informed, and engage more deeply with every moment of the programme.",
+    buttonText: "Become a Creator",
+    image: "/assets/images/programmes/program2.jpg",
+    url: "/become-creator",
+  },
 ];
 
 export default function FeatureSections() {
@@ -26,7 +28,7 @@ export default function FeatureSections() {
       {FEATURE_DATA.map((feature, index) => (
         <div
           key={index}
-          className={`flex flex-col lg:flex-row ${index % 2 !== 0 ? 'lg:flex-row-reverse' : ''} min-h-[500px] lg:min-h-[600px]`}
+          className={`flex flex-col lg:flex-row ${index % 2 !== 0 ? "lg:flex-row-reverse" : ""} min-h-[500px] lg:min-h-[600px]`}
         >
           {/* Image Side */}
           <div className="w-full lg:w-1/2 relative h-[400px] lg:h-auto">

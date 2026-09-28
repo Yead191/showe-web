@@ -20,7 +20,7 @@ export default function MissionVission() {
             </div>
             <div className="space-y-6 text-gray-600 leading-relaxed text-lg">
               <p>
-                At SHOWE, we believe that an event program is more than just a
+                At SHOWE, we believe that an event programme is more than just a
                 list of times and names. It's a gateway to discovery, a tool for
                 connection, and a canvas for artists to tell their stories.
               </p>

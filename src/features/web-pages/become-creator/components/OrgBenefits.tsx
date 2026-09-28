@@ -5,7 +5,7 @@ export default function OrgBenefits() {
     {
       icon: <Clock className="w-6 h-6 text-accent-400" />,
       title: "Distribute in Minutes",
-      text: "Go from concept to live program in record time. Our intuitive workshop tools handle the heavy lifting.",
+      text: "Go from concept to live programme in record time. Our intuitive workshop tools handle the heavy lifting.",
     },
     {
       icon: <CheckCircle2 className="w-6 h-6 text-accent-400" />,

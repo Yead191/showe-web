@@ -6,16 +6,16 @@ import MainLandingRelatable from "./components/MainLandingRelatable";
 import LandingFooter from "@/features/web-pages/landing/components/LandingFooter";
 
 export default function MainLandingIndex() {
-    return (
-        <div className="flex flex-col min-h-screen">
-            <MainLandingNavbar />
-            <main className="grow">
-                <MainLandingHero />
-                <MainLandingInfo />
-                <MainLandingSplit />
-                <MainLandingRelatable />
-            </main>
-            <LandingFooter />
-        </div>
-    );
+  return (
+    <div className="flex flex-col min-h-screen">
+      <MainLandingNavbar />
+      <main className="grow">
+        <MainLandingHero />
+        <MainLandingInfo />
+        <MainLandingSplit />
+        <MainLandingRelatable />
+      </main>
+      <LandingFooter />
+    </div>
+  );
 }
