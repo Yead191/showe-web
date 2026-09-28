@@ -11,8 +11,11 @@ const getArtist = cache((id: string) =>
   // User-specific isFavorited — no-store + tag for instant refresh after favourite toggle
   nextFetch<Artist>(`/artist/${id}`, {
     method: "GET",
-    cache: "no-store",
-    tags: ["artist-details"],
+    cache: "force-cache",
+    next: {
+      revalidate: 60 * 60 * 2,
+      tags: ["artist-details"],
+    },
   }),
 );
 
@@ -68,7 +71,14 @@ export default async function page({
 
   const [artistRes, eventsRes] = await Promise.all([
     getArtist(id),
-    nextFetch(`/artist/events/${id}`, { method: "GET" }),
+    nextFetch(`/artist/events/${id}`, {
+      method: "GET",
+      cache: "force-cache",
+      next: {
+        revalidate: 60 * 60 * 2,
+        tags: ["artist-events"],
+      },
+    }),
   ]);
 
   if (!artistRes.success || !artistRes.data) {

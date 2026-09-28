@@ -115,7 +115,7 @@ export function ArtistHero({ artist }: { artist: Artist }) {
             </div>
 
             {/* Basic Info */}
-            <div className="flex-1 space-y-5 pb-2">
+            <div className="flex-1 space-y-4 pb-2">
               <div className="flex flex-wrap items-center gap-2.5">
                 {artist.category && (
                   <span className="bg-accent-400 text-white text-[10px] font-black uppercase tracking-[0.2em] px-4 py-1.5 rounded-full shadow-md">
@@ -133,11 +133,11 @@ export function ArtistHero({ artist }: { artist: Artist }) {
                 <h1 className="text-4xl md:text-6xl font-black text-gray-900 tracking-tighter">
                   {artist.name}
                 </h1>
-                {genres.length > 0 && (
-                  <p className="text-gray-500 font-medium text-base md:text-lg italic opacity-85">
-                    {genres.join(" • ")}
-                  </p>
-                )}
+                <p className="text-gray-500 font-medium text-base md:text-lg italic opacity-85">
+                  {artist?.genres?.length
+                    ? `${artist.genres.join(" • ")}`
+                    : "-"}
+                </p>
               </div>
             </div>
           </div>

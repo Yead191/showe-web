@@ -22,8 +22,11 @@ export const metadata = buildMetadata({
 export default async function page() {
   const faq = await nextFetch<FaqItem[]>("/faq", {
     method: "GET",
-    cache: "default",
-    tags: ["faq"],
+    cache: "force-cache",
+    next: {
+      revalidate: 60 * 60 * 24,
+      tags: ["faq"],
+    },
   });
   return <Support faq={faq} />;
 }

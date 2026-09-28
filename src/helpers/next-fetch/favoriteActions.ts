@@ -3,7 +3,12 @@
 import { nextFetch } from "./NextFetch";
 import { revalidateTags } from "./revalidateTags";
 
-export type InterestType = "Venue" | "Event" | "Artist" | "Performances" | "Recommendations";
+export type InterestType =
+  | "Venue"
+  | "Event"
+  | "Artist"
+  | "Performances"
+  | "Recommendations";
 
 /** POST /event/interest/:id  body: { type } */
 export async function toggleInterest(id: string, type: InterestType) {
@@ -45,7 +50,10 @@ export async function toggleArtistFavorite(artistId: string) {
 export async function getFavouriteList(type: InterestType) {
   return nextFetch(`/event/interest?type=${type}`, {
     method: "GET",
-    cache: "no-store",
+    cache: "force-cache",
+    next: {
+      revalidate: 60 * 60 * 2,
+    },
     tags: ["user-favourites"],
   });
 }
