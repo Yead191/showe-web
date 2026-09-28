@@ -18,7 +18,7 @@ export default function About() {
       <FourPillars />
 
       {/* ── 4. Impact Stats ── */}
-      <ImpactStats />
+      {/* <ImpactStats /> */}
 
       {/* ── 5. Story Section ── */}
       <StorySections />

@@ -16,10 +16,10 @@ export default function CtaSection() {
             <h2 className="text-3xl md:text-5xl font-bold text-white font-museo">
               Ready to transform your event?
             </h2>
-            <p className="text-white/80 text-lg font-medium">
+            {/* <p className="text-white/80 text-lg font-medium">
               Join thousands of organizers and artists who are already using
               SHOWE to build better experiences.
-            </p>
+            </p> */}
             <div className="pt-4">
               <Link href="/organisation-register">
                 <Button className="bg-white text-accent-400 hover:bg-gray-100 px-12 h-14 text-lg font-black rounded-2xl shadow-xl transition-all active:scale-95">
