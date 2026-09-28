@@ -10,9 +10,13 @@ export interface Artist {
     cover_image: string
     short_description?: string
     category?: string
+    type?: string
     genres?: string[]
     instruments?: string[]
     languages?: string[]
+    career_start_year?: number
+    origin?: string
+    isFavorited?: boolean
 }
 
 export default function ArtistDetails({

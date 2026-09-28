@@ -10,6 +10,7 @@ import { Calendar, Heart, MapPin } from "lucide-react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { getImageUrl } from "@/lib/getImageUrl";
 import {
+  toggleArtistFavorite,
   toggleEventFavorite,
   toggleVenueFavorite,
 } from "@/helpers/next-fetch/favoriteActions";
@@ -36,12 +37,29 @@ export interface FavouriteVenue {
   events_count?: number;
 }
 
+export interface FavouriteArtist {
+  _id: string;
+  name: string;
+  image?: string;
+  cover_image?: string;
+  category?: string;
+  type?: string;
+  short_description?: string;
+  genres?: string[];
+  instruments?: string[];
+  languages?: string[];
+  career_start_year?: number;
+  origin?: string;
+}
+
 export default function UserFavourites({
-  events,
-  venues,
+  events = [],
+  venues = [],
+  artists = [],
 }: {
   events: FavouriteEvent[];
   venues: FavouriteVenue[];
+  artists?: FavouriteArtist[];
 }) {
   const router = useRouter();
   const [loadingId, setLoadingId] = useState<string | null>(null);
@@ -88,6 +106,27 @@ export default function UserFavourites({
     }
   };
 
+  const handleUnfavoriteArtist = async (artistId: string) => {
+    if (!artistId || loadingId) return;
+    setLoadingId(artistId);
+    try {
+      const res = await toggleArtistFavorite(artistId);
+      if (res?.success) {
+        toast.success(res.message || "Removed from favourites");
+        router.refresh();
+      } else {
+        toast.error(
+          (typeof res?.error === "string" ? res.error : res?.message) ||
+            "Failed to update favourites",
+        );
+      }
+    } catch {
+      toast.error("Something went wrong. Please try again.");
+    } finally {
+      setLoadingId(null);
+    }
+  };
+
   return (
     <div className="space-y-10 animate-in fade-in slide-in-from-bottom-4 duration-700">
       <div className="space-y-1">
@@ -112,6 +151,12 @@ export default function UserFavourites({
             className="flex-1 rounded-xl px-4 md:px-8 py-3 data-[state=active]:bg-white data-[state=active]:shadow-sm data-[state=active]:text-primary-600 font-black text-[10px] md:text-xs uppercase tracking-widest transition-all"
           >
             Venues ({venues.length})
+          </TabsTrigger>
+          <TabsTrigger
+            value="artists"
+            className="flex-1 rounded-xl px-4 md:px-8 py-3 data-[state=active]:bg-white data-[state=active]:shadow-sm data-[state=active]:text-primary-600 font-black text-[10px] md:text-xs uppercase tracking-widest transition-all"
+          >
+            Artists ({artists.length})
           </TabsTrigger>
         </TabsList>
 
@@ -251,6 +296,118 @@ export default function UserFavourites({
                       disabled={loadingId === venue._id}
                       onClick={() => handleUnfavoriteVenue(venue._id)}
                       className="absolute top-4 right-4 z-10 p-2.5 rounded-full bg-red-500 text-white shadow-lg shadow-red-500/30 hover:bg-red-600 hover:scale-110 active:scale-95 transition-all cursor-pointer disabled:opacity-60"
+                      title="Remove from favourites"
+                    >
+                      <Heart size={16} className="fill-white" />
+                    </button>
+                  </div>
+                );
+              })}
+            </div>
+          )}
+        </TabsContent>
+
+        {/* ── Artists ── */}
+        <TabsContent
+          value="artists"
+          className="animate-in fade-in zoom-in-95 duration-500"
+        >
+          {artists.length === 0 ? (
+            <EmptyState
+              label="No favourite artists yet"
+              href="/home"
+              cta="Explore Artists"
+            />
+          ) : (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {artists.map((artist) => {
+                const coverImage = artist.cover_image
+                  ? getImageUrl(artist.cover_image)
+                  : artist.image
+                    ? getImageUrl(artist.image)
+                    : "/assets/images/events/event2.jpg";
+                const profileImage = artist.image
+                  ? getImageUrl(artist.image)
+                  : artist.cover_image
+                    ? getImageUrl(artist.cover_image)
+                    : "/assets/images/artists/dp.webp";
+
+                return (
+                  <div
+                    key={artist._id}
+                    className="group relative bg-white rounded-3xl overflow-hidden border border-gray-100 shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col"
+                  >
+                    <Link
+                      href={`/artists/${artist._id}`}
+                      className="block flex-1"
+                    >
+                      {/* Cover Header */}
+                      <div className="relative h-28 md:h-32 w-full bg-slate-900 overflow-hidden">
+                        <Image
+                          src={coverImage}
+                          alt={artist.name}
+                          fill
+                          className="object-cover group-hover:scale-105 transition-transform duration-700 opacity-90"
+                          unoptimized
+                        />
+                        <div className="absolute inset-0 bg-linear-to-t from-black/60 via-black/20 to-transparent" />
+                      </div>
+
+                      {/* Content Body */}
+                      <div className="px-5 pb-5 pt-0 relative">
+                        <div className="-mt-10 mb-3 flex items-end justify-between">
+                          <div className="relative h-16 w-16 md:h-18 md:w-18 rounded-2xl overflow-hidden border-4 border-white bg-white shadow-md shrink-0">
+                            <Image
+                              src={profileImage}
+                              alt={artist.name}
+                              fill
+                              className="object-cover"
+                              unoptimized
+                            />
+                          </div>
+                          {artist.category && (
+                            <span className="bg-accent-400 text-white text-[10px] font-black uppercase tracking-widest px-3 py-1 rounded-full shadow-sm">
+                              {artist.category}
+                            </span>
+                          )}
+                        </div>
+
+                        <div className="space-y-1.5">
+                          <div className="flex items-center gap-2">
+                            <h3 className="text-base font-black text-gray-900 group-hover:text-accent-400 transition-colors line-clamp-1">
+                              {artist.name}
+                            </h3>
+                            {artist.type && (
+                              <span className="text-[10px] font-bold text-gray-500 bg-gray-100 px-2 py-0.5 rounded-md">
+                                {artist.type}
+                              </span>
+                            )}
+                          </div>
+
+                          {artist.genres && artist.genres.length > 0 && (
+                            <p className="text-xs font-semibold text-gray-500 line-clamp-1">
+                              {artist.genres.join(" • ")}
+                            </p>
+                          )}
+
+                          {artist.origin && (
+                            <div className="flex items-center gap-1.5 text-xs text-gray-400 font-medium pt-0.5">
+                              <MapPin className="h-3 w-3 text-accent-400 shrink-0" />
+                              <span className="line-clamp-1 capitalize">
+                                {artist.origin}
+                              </span>
+                            </div>
+                          )}
+                        </div>
+                      </div>
+                    </Link>
+
+                    {/* Unfavorite Button */}
+                    <button
+                      type="button"
+                      disabled={loadingId === artist._id}
+                      onClick={() => handleUnfavoriteArtist(artist._id)}
+                      className="absolute top-3 right-3 z-10 p-2.5 rounded-full bg-red-500 text-white shadow-lg shadow-red-500/30 hover:bg-red-600 hover:scale-110 active:scale-95 transition-all cursor-pointer disabled:opacity-60"
                       title="Remove from favourites"
                     >
                       <Heart size={16} className="fill-white" />

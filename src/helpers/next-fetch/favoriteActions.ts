@@ -3,7 +3,7 @@
 import { nextFetch } from "./NextFetch";
 import { revalidateTags } from "./revalidateTags";
 
-export type InterestType = "Venue" | "Event" | "Performances" | "Recommendations";
+export type InterestType = "Venue" | "Event" | "Artist" | "Performances" | "Recommendations";
 
 /** POST /event/interest/:id  body: { type } */
 export async function toggleInterest(id: string, type: InterestType) {
@@ -13,7 +13,14 @@ export async function toggleInterest(id: string, type: InterestType) {
   });
 
   if (res?.success) {
-    await revalidateTags(["venues", "venue-details", "user-favourites", "events"]);
+    await revalidateTags([
+      "venues",
+      "venue-details",
+      "user-favourites",
+      "events",
+      "artists",
+      "artist-details",
+    ]);
   }
 
   return res;
@@ -29,7 +36,12 @@ export async function toggleEventFavorite(eventId: string) {
   return toggleInterest(eventId, "Event");
 }
 
-/** GET /event/interest?type=Venue | Event | ... */
+/** POST /event/interest/:id  body: { type: "Artist" } */
+export async function toggleArtistFavorite(artistId: string) {
+  return toggleInterest(artistId, "Artist");
+}
+
+/** GET /event/interest?type=Venue | Event | Artist | ... */
 export async function getFavouriteList(type: InterestType) {
   return nextFetch(`/event/interest?type=${type}`, {
     method: "GET",

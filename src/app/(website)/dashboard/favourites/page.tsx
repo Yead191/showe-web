@@ -16,15 +16,17 @@ export default async function FavouritesPage() {
         redirect("/home")
     }
 
-    const [eventsRes, venuesRes] = await Promise.all([
+    const [eventsRes, venuesRes, artistsRes] = await Promise.all([
         getFavouriteList("Event"),
         getFavouriteList("Venue"),
+        getFavouriteList("Artist"),
     ])
 
     return (
         <UserFavourites
-            events={eventsRes.data ?? []}
-            venues={venuesRes.data ?? []}
+            events={Array.isArray(eventsRes.data) ? eventsRes.data : []}
+            venues={Array.isArray(venuesRes.data) ? venuesRes.data : []}
+            artists={Array.isArray(artistsRes.data) ? artistsRes.data : []}
         />
     )
 }
