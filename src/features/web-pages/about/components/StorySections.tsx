@@ -3,12 +3,12 @@ export default function StorySections() {
   return (
     <section
       id="our-story"
-      className="py-10 lg:py-16 relative overflow-hidden lg:scroll-mt-[60px]"
+      className="py-10 lg:py-16 relative overflow-hidden lg:scroll-mt-15"
     >
       <div className="container ">
         <div className="flex flex-col lg:flex-row items-center gap-16">
           <div className="lg:w-1/2 relative">
-            <div className="relative aspect-square max-w-[500px] mx-auto">
+            <div className="relative aspect-square max-w-125 mx-auto">
               <div className="absolute inset-0 bg-accent-400/20 rounded-[60px] rotate-6 scale-95" />
               <div className="absolute inset-0 bg-primary-600 rounded-[60px] flex items-center justify-center overflow-hidden">
                 <div className="p-12 text-white space-y-6">
