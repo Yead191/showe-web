@@ -37,7 +37,7 @@ export default function BecomeCreator({ faqs }: BecomeCreatorProps = {}) {
                 window.open(
                   "https://calendly.com/backstage-showe/30min",
                   "_blank",
-                  "noopener,noreferrer"
+                  "noopener,noreferrer",
                 ),
             },
           ]}
