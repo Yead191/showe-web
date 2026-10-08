@@ -518,9 +518,12 @@ interface PollAnswerApiItem {
 
 function PollPreview({ block }: { block: Extract<Block, { type: "poll" }> }) {
   const [voted, setVoted] = useState<string | null>(null);
+  const [hoveredRating, setHoveredRating] = useState<number | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [answers, setAnswers] = useState<PollAnswerApiItem[] | null>(null);
   const [isLoadingAnswers, setIsLoadingAnswers] = useState(false);
+
+  const variant = block.variant || "emoji_tap";
 
   const fetchAnswers = async (pollId: string) => {
     if (!pollId) return;
@@ -531,7 +534,6 @@ function PollPreview({ block }: { block: Extract<Block, { type: "poll" }> }) {
         { method: "GET" },
       );
       if (res?.success && Array.isArray(res.data)) {
-        // console.log(res.data, "poll result");
         setAnswers(res.data);
       }
     } catch (err) {
@@ -591,6 +593,42 @@ function PollPreview({ block }: { block: Extract<Block, { type: "poll" }> }) {
     answers?.reduce((acc, a) => acc + (a.count || 0), 0) ??
     (block.results ?? []).reduce((acc, r) => acc + (r.count || 0), 0);
 
+  // Selected star index for rating
+  const selectedStarIndex = useMemo(() => {
+    if (!voted) return null;
+    const optIdx = block.options.findIndex(
+      (o) => o.id === voted || o.label.toLowerCase() === voted.toLowerCase(),
+    );
+    if (optIdx !== -1) return optIdx + 1;
+    const match = voted.match(/\d+/);
+    if (match) return Number(match[0]);
+    return null;
+  }, [voted, block.options]);
+
+  const getOptionStats = (
+    option: { id: string; label: string },
+    index: number,
+  ) => {
+    const apiMatch = answers?.find(
+      (a) =>
+        a.answer_id === option.id ||
+        a.answer?.toLowerCase() === option.label?.toLowerCase(),
+    );
+    const fallbackResult = block.results?.[index];
+    const count = apiMatch ? apiMatch.count : (fallbackResult?.count ?? 0);
+    const percent = apiMatch
+      ? apiMatch.percentage !== undefined
+        ? apiMatch.percentage
+        : totalVotes > 0
+          ? Math.round((count / totalVotes) * 100)
+          : 0
+      : totalVotes > 0
+        ? Math.round((count / totalVotes) * 100)
+        : 0;
+
+    return { count, percent };
+  };
+
   return (
     <div className="rounded-xl border border-line bg-surface-sunken p-4">
       <div className="flex items-start justify-between gap-2">
@@ -602,111 +640,311 @@ function PollPreview({ block }: { block: Extract<Block, { type: "poll" }> }) {
         )}
       </div>
 
-      <ul className="mt-3 grid grid-cols-2 gap-2">
-        {block.options.map((o) => {
-          const isSelected = voted === o.id;
-          return (
-            <li key={o.id}>
+      {/* ─── 1. RATING VARIANT ─── */}
+      {variant === "rating" ? (
+        <div className="mt-3">
+          <div className="flex flex-col items-center justify-center py-4 px-3 bg-surface-raised rounded-xl border border-line/60">
+            <div className="flex items-center gap-2">
+              {[1, 2, 3, 4, 5].map((starVal) => {
+                const isLit =
+                  hoveredRating !== null
+                    ? starVal <= hoveredRating
+                    : selectedStarIndex !== null
+                      ? starVal <= selectedStarIndex
+                      : false;
+
+                const option =
+                  block.options[starVal - 1] ?? {
+                    id: `rate_${starVal}`,
+                    label: `${starVal} Star${starVal > 1 ? "s" : ""}`,
+                    emoji: "⭐",
+                  };
+
+                return (
+                  <button
+                    key={starVal}
+                    type="button"
+                    disabled={Boolean(voted) || isSubmitting}
+                    onMouseEnter={() => !voted && setHoveredRating(starVal)}
+                    onMouseLeave={() => !voted && setHoveredRating(null)}
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      handleVote(option);
+                    }}
+                    className={`p-1 rounded-lg transition-transform ${
+                      voted
+                        ? "cursor-default"
+                        : "hover:scale-125 active:scale-95 cursor-pointer"
+                    }`}
+                  >
+                    <Star
+                      size={32}
+                      className={`transition-colors duration-200 ${
+                        isLit
+                          ? "text-amber-400 fill-amber-400 drop-shadow-xs"
+                          : "text-line-strong fill-transparent hover:text-amber-300"
+                      }`}
+                    />
+                  </button>
+                );
+              })}
+            </div>
+
+            <div className="mt-2 text-xs font-semibold text-ink-muted h-5 flex items-center">
+              {hoveredRating !== null ? (
+                <span className="text-amber-600 font-bold">
+                  {block.options[hoveredRating - 1]?.label ||
+                    `${hoveredRating} of 5 Stars`}
+                </span>
+              ) : selectedStarIndex !== null ? (
+                <span className="text-primary font-bold">
+                  {block.options[selectedStarIndex - 1]?.label ||
+                    `Rated ${selectedStarIndex} of 5 Stars`}
+                </span>
+              ) : (
+                <span className="text-ink-faint">Tap a star to rate (1–5)</span>
+              )}
+            </div>
+          </div>
+
+          {/* Rating Breakdown / Results */}
+          {showResults && (
+            <div className="mt-3.5 pt-3 border-t border-line/60 space-y-2">
+              <div className="flex items-center justify-between text-[11px] font-semibold text-ink-muted uppercase tracking-wider mb-2">
+                <span>Rating Breakdown</span>
+                {isLoadingAnswers ? (
+                  <span className="flex items-center gap-1 font-normal lowercase">
+                    <Loader2 className="w-3 h-3 animate-spin" /> loading...
+                  </span>
+                ) : (
+                  <span>
+                    {totalVotes} {totalVotes === 1 ? "rating" : "ratings"}
+                  </span>
+                )}
+              </div>
+
+              {[5, 4, 3, 2, 1].map((starVal) => {
+                const optIndex = starVal - 1;
+                const option =
+                  block.options[optIndex] ?? {
+                    id: `rate_${starVal}`,
+                    label: `${starVal} Star${starVal > 1 ? "s" : ""}`,
+                    emoji: "⭐",
+                  };
+                const { count, percent } = getOptionStats(option, optIndex);
+                const isUserPick = selectedStarIndex === starVal;
+
+                return (
+                  <div key={starVal} className="flex items-center gap-2.5 text-xs">
+                    <span className="w-10 flex items-center gap-1 font-bold text-ink shrink-0">
+                      <span>{starVal}</span>
+                      <Star
+                        size={11}
+                        className="text-amber-400 fill-amber-400"
+                      />
+                    </span>
+                    <div className="flex-1 h-2 rounded-full bg-surface-raised overflow-hidden border border-line/40">
+                      <div
+                        className={`h-full rounded-full transition-all duration-500 ${
+                          isUserPick ? "bg-amber-400" : "bg-primary"
+                        }`}
+                        style={{
+                          width: `${Math.max(count > 0 ? 6 : 0, percent)}%`,
+                        }}
+                      />
+                    </div>
+                    <span className="w-16 text-right text-[11px] font-mono text-ink-muted shrink-0">
+                      {count} ({percent.toFixed(0)}%)
+                    </span>
+                  </div>
+                );
+              })}
+            </div>
+          )}
+        </div>
+      ) : variant === "multiple_choice" ? (
+        /* ─── 2. MULTIPLE CHOICE VARIANT ─── */
+        <div className="mt-3 space-y-2">
+          {block.options.map((o, index) => {
+            const isSelected = voted === o.id;
+            const optionLetter = String.fromCharCode(65 + index);
+            const { count, percent } = getOptionStats(o, index);
+
+            return (
               <button
+                key={o.id}
                 type="button"
                 disabled={Boolean(voted) || isSubmitting}
                 onClick={(e) => {
                   e.stopPropagation();
                   handleVote(o);
                 }}
-                className={`w-full rounded-lg border px-3 py-2.5 text-sm font-semibold transition-all flex items-center justify-center gap-2
-                  ${
-                    isSelected
-                      ? "bg-primary text-ink-inverse border-primary shadow-sm"
-                      : voted
-                        ? "bg-surface-raised/70 text-ink/70 border-line opacity-85 cursor-default"
-                        : "bg-surface-raised text-ink border-line hover:border-primary/40 active:scale-[0.98]"
-                  }`}
+                className={`relative w-full overflow-hidden rounded-xl border p-3 text-left transition-all flex items-center justify-between gap-3 ${
+                  isSelected
+                    ? "border-primary bg-primary/10 shadow-xs ring-1 ring-primary/30"
+                    : voted
+                      ? "border-line bg-surface-raised/80 opacity-90 cursor-default"
+                      : "border-line bg-surface-raised hover:border-primary/40 hover:bg-surface-sunken/40 active:scale-[0.99]"
+                }`}
               >
-                {o.emoji && <span className="text-base">{o.emoji}</span>}
-                <span>{o.label}</span>
-                {isSelected && (
-                  <CheckCircle2 className="w-3.5 h-3.5 ml-auto text-ink-inverse" />
+                {/* Background fill progress bar when results are shown */}
+                {showResults && (
+                  <div
+                    className={`absolute inset-y-0 left-0 transition-all duration-700 pointer-events-none ${
+                      isSelected ? "bg-primary/20" : "bg-primary/10"
+                    }`}
+                    style={{
+                      width: `${Math.max(count > 0 ? 4 : 0, percent)}%`,
+                    }}
+                  />
                 )}
+
+                <div className="relative z-10 flex items-center gap-2.5 min-w-0">
+                  <span
+                    className={`w-6 h-6 rounded-md text-[11px] font-bold flex items-center justify-center shrink-0 ${
+                      isSelected
+                        ? "bg-primary text-white"
+                        : "bg-surface-sunken text-ink-muted border border-line"
+                    }`}
+                  >
+                    {optionLetter}
+                  </span>
+                  {o.emoji && <span className="text-base">{o.emoji}</span>}
+                  <span
+                    className={`text-sm font-medium truncate ${
+                      isSelected ? "font-bold text-primary" : "text-ink"
+                    }`}
+                  >
+                    {o.label}
+                  </span>
+                </div>
+
+                <div className="relative z-10 flex items-center gap-2 shrink-0">
+                  {showResults && (
+                    <span className="text-xs font-mono font-bold text-ink-muted">
+                      {count} ({percent.toFixed(0)}%)
+                    </span>
+                  )}
+                  {isSelected ? (
+                    <CheckCircle2 size={16} className="text-primary shrink-0" />
+                  ) : !voted ? (
+                    <div className="w-4 h-4 rounded-full border border-line-strong shrink-0" />
+                  ) : null}
+                </div>
               </button>
-            </li>
-          );
-        })}
-      </ul>
+            );
+          })}
+
+          {showResults && (
+            <div className="flex items-center justify-between text-[11px] font-semibold text-ink-muted uppercase tracking-wider pt-1 px-1">
+              <span>Live Results</span>
+              {isLoadingAnswers ? (
+                <span className="flex items-center gap-1 font-normal lowercase">
+                  <Loader2 className="w-3 h-3 animate-spin" /> loading...
+                </span>
+              ) : (
+                <span>
+                  {totalVotes} {totalVotes === 1 ? "vote" : "votes"}
+                </span>
+              )}
+            </div>
+          )}
+        </div>
+      ) : (
+        /* ─── 3. EMOJI TAP VARIANT ─── */
+        <>
+          <ul className="mt-3 grid grid-cols-2 sm:grid-cols-4 gap-2">
+            {block.options.map((o) => {
+              const isSelected = voted === o.id;
+              return (
+                <li key={o.id}>
+                  <button
+                    type="button"
+                    disabled={Boolean(voted) || isSubmitting}
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      handleVote(o);
+                    }}
+                    className={`w-full rounded-xl border p-3 text-sm font-semibold transition-all flex flex-col items-center justify-center gap-1.5 ${
+                      isSelected
+                        ? "bg-primary text-ink-inverse border-primary shadow-xs"
+                        : voted
+                          ? "bg-surface-raised/70 text-ink/70 border-line opacity-85 cursor-default"
+                          : "bg-surface-raised text-ink border-line hover:border-primary/40 active:scale-[0.98]"
+                    }`}
+                  >
+                    <span className="text-2xl transition-transform hover:scale-110">
+                      {o.emoji || "✨"}
+                    </span>
+                    <span className="text-xs font-semibold truncate max-w-full">
+                      {o.label}
+                    </span>
+                    {isSelected && (
+                      <CheckCircle2 className="w-3.5 h-3.5 text-ink-inverse mt-0.5" />
+                    )}
+                  </button>
+                </li>
+              );
+            })}
+          </ul>
+
+          {showResults && (
+            <div className="mt-4 pt-3 border-t border-line/60 space-y-2.5">
+              <div className="flex items-center justify-between text-[11px] font-semibold text-ink-muted uppercase tracking-wider">
+                <span>Live Results</span>
+                {isLoadingAnswers ? (
+                  <span className="flex items-center gap-1 font-normal lowercase">
+                    <Loader2 className="w-3 h-3 animate-spin" /> Loading...
+                  </span>
+                ) : (
+                  <span>
+                    {totalVotes} {totalVotes === 1 ? "vote" : "votes"}
+                  </span>
+                )}
+              </div>
+
+              {block.options.map((option, index) => {
+                const { count, percent } = getOptionStats(option, index);
+                const isUserPick = voted === option.id;
+
+                return (
+                  <div key={option.id} className="space-y-1">
+                    <div className="flex items-center justify-between text-[11.5px] text-ink">
+                      <span className="flex items-center gap-1.5 font-medium">
+                        {option.emoji && <span>{option.emoji}</span>}
+                        <span>{option.label}</span>
+                        {isUserPick && (
+                          <span className="text-[10px] bg-primary/15 text-primary px-1.5 py-0.2 rounded font-semibold">
+                            Your vote
+                          </span>
+                        )}
+                      </span>
+                      <span className="text-ink-muted font-mono font-medium">
+                        {count} ({percent.toFixed(0)}%)
+                      </span>
+                    </div>
+                    <div className="h-2 rounded-full bg-surface-raised overflow-hidden border border-line/40">
+                      <div
+                        className={`h-full rounded-full transition-all duration-500 ${
+                          isUserPick ? "bg-primary" : "bg-primary/60"
+                        }`}
+                        style={{
+                          width: `${Math.max(count > 0 ? 6 : 0, percent)}%`,
+                        }}
+                      />
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          )}
+        </>
+      )}
 
       {voted && block.thank_you_message && (
         <div className="mt-3 flex items-center gap-1.5 text-[12.5px] text-success font-semibold">
           <CheckCircle2 size={13} className="shrink-0" />
           <span>{block.thank_you_message}</span>
-        </div>
-      )}
-
-      {showResults && (
-        <div className="mt-4 pt-3 border-t border-line/60 space-y-2.5">
-          <div className="flex items-center justify-between text-[11px] font-semibold text-ink-muted uppercase tracking-wider">
-            <span>Live Results</span>
-            {isLoadingAnswers ? (
-              <span className="flex items-center gap-1">
-                <Loader2 className="w-3 h-3 animate-spin" /> Loading...
-              </span>
-            ) : (
-              <span>
-                {totalVotes} {totalVotes === 1 ? "vote" : "votes"}
-              </span>
-            )}
-          </div>
-
-          {block.options.map((option, index) => {
-            const apiMatch = answers?.find(
-              (a) =>
-                a.answer_id === option.id ||
-                a.answer?.toLowerCase() === option.label?.toLowerCase(),
-            );
-            const fallbackResult = block.results?.[index];
-            const count = apiMatch
-              ? apiMatch.count
-              : (fallbackResult?.count ?? 0);
-            const percent = apiMatch
-              ? apiMatch.percentage !== undefined
-                ? apiMatch.percentage
-                : totalVotes > 0
-                  ? Math.round((count / totalVotes) * 100)
-                  : 0
-              : totalVotes > 0
-                ? Math.round((count / totalVotes) * 100)
-                : 0;
-
-            const isUserPick = voted === option.id;
-
-            return (
-              <div key={option.id} className="space-y-1">
-                <div className="flex items-center justify-between text-[11.5px] text-ink">
-                  <span className="flex items-center gap-1.5 font-medium">
-                    {option.emoji && <span>{option.emoji}</span>}
-                    <span>{option.label}</span>
-                    {isUserPick && (
-                      <span className="text-[10px] bg-primary/15 text-primary px-1.5 py-0.2 rounded font-semibold">
-                        Your vote
-                      </span>
-                    )}
-                  </span>
-                  <span className="text-ink-muted font-mono font-medium">
-                    {count} ({percent.toFixed(2)}%)
-                  </span>
-                </div>
-                <div className="h-2 rounded-full bg-surface-raised overflow-hidden border border-line/40">
-                  <div
-                    className={`h-full rounded-full transition-all duration-500 ${
-                      isUserPick ? "bg-primary" : "bg-primary/60"
-                    }`}
-                    style={{
-                      width: `${Math.max(count > 0 ? 6 : 0, percent)}%`,
-                    }}
-                  />
-                </div>
-              </div>
-            );
-          })}
         </div>
       )}
     </div>

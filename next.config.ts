@@ -17,6 +17,7 @@ const nextConfig: NextConfig = {
     "yead3001.binarybards.online",
     "http://168.144.106.179:3009",
     "http://10.10.26.173:3001",
+    "https://showe.biz/",
   ],
   images: {
     // The API server (10.10.26.164) is a private IP. Next.js 16 blocks optimizing
@@ -26,6 +27,7 @@ const nextConfig: NextConfig = {
       { protocol: "https", hostname: "images.unsplash.com", pathname: "/**" },
       { protocol: "https", hostname: "i.pravatar.cc", pathname: "/**" },
       { protocol: "https", hostname: "i.ibb.co", pathname: "/**" },
+      { protocol: "https", hostname: "api.showe.biz", pathname: "/**" },
       { protocol: "http", hostname: "10.10.26.164", pathname: "/**" },
       {
         protocol: "https",

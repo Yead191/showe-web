@@ -6,7 +6,7 @@ export function getImageUrl(imageurl: string | null | undefined) {
       process.env.IMAGE_BASE_URL ||
       process.env.NEXT_PUBLIC_IMAGE_BASE_URL ||
       // "http://10.10.26.164:5002"
-      "http://168.144.106.179:3005"
+      "https://api.showe.biz"
     )?.replace("/files", "");
 
     return `${baseUrl}${imageurl}`;
@@ -16,6 +16,6 @@ export function getImageUrl(imageurl: string | null | undefined) {
   return (
     (process.env.IMAGE_BASE_URL ||
       process.env.NEXT_PUBLIC_IMAGE_BASE_URL ||
-      "http://168.144.106.179:3005/files") + imageurl
+      "https://api.showe.biz/files") + imageurl
   );
 }
