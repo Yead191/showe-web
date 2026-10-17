@@ -9,6 +9,7 @@ import { ChevronLeft, ChevronRight, ArrowUpRight } from "lucide-react";
 import "swiper/css";
 import "swiper/css/navigation";
 import Link from "next/link";
+import { getImageUrl } from "@/lib/getImageUrl";
 
 export default function ExploreByArtist({ artists }: { artists: any[] }) {
   const ARTISTS = artists ?? [];
@@ -66,7 +67,7 @@ export default function ExploreByArtist({ artists }: { artists: any[] }) {
               >
                 <div className="relative aspect-square w-full rounded-3xl overflow-hidden bg-gray-100 shadow-lg group-hover:shadow-xl transition-all duration-500">
                   <Image
-                    src={`${process.env.NEXT_PUBLIC_IMAGE_BASE_URL}${artist.image}`}
+                    src={getImageUrl(artist?.image || "")}
                     alt={artist.name}
                     fill
                     className="object-cover group-hover:scale-110 transition-transform duration-700"
