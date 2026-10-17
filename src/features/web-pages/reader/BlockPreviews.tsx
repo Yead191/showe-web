@@ -36,56 +36,56 @@ export function renderBlockPreview(
 ) {
   const content = (() => {
     switch (block.type) {
-    case "hero":
-      return <HeroPreview block={block} />;
-    case "welcome":
-      return <WelcomePreview block={block} />;
-    case "schedule":
-      return <SchedulePreview block={block} />;
-    case "accessibility":
-      return <AccessibilityPreview block={block} />;
-    case "behind_scenes":
-      return <BehindScenesPreview block={block} />;
-    case "sponsor_thanks":
-      return <SponsorThanksPreview block={block} />;
-    case "refreshments":
-      return <RefreshmentsPreview block={block} />;
-    case "cast_grid":
-      return <CastGridPreview block={block} />;
-    case "cast_spotlight":
-      return <CastSpotlightPreview block={block} />;
-    case "narrative_text":
-      return <NarrativeTextPreview block={block} />;
-    case "image_story":
-      return <ImageStoryPreview block={block} />;
-    case "poll":
-      return <PollPreview block={block} />;
-    case "review":
-      return <ReviewPreview block={block} context={context} />;
-    case "merchandise":
-      return <MerchandisePreview block={block} />;
-    case "future_shows":
-      return <FutureShowsPreview block={block} />;
-    case "donation":
-      return <DonationPreview block={block} />;
-    case "offers":
-      return <OffersPreview block={block} />;
-    case "ads":
-      return <AdsPreview block={block} />;
-    case "memory_capture":
-      return <MemoryCapturePreview block={block} />;
-    case "recap":
-      return <RecapPreview block={block} context={context} />;
-    case "recommendations":
-      return <RecommendationsPreview block={block} />;
-    case "push_notification":
-      return <PushNotificationPreview block={block} />;
-    case "map":
-      return <MapPreview block={block} />;
-    case "directions":
-      return <DirectionsPreview block={block} />;
-    default:
-      return null;
+      case "hero":
+        return <HeroPreview block={block} />;
+      case "welcome":
+        return <WelcomePreview block={block} />;
+      case "schedule":
+        return <SchedulePreview block={block} />;
+      case "accessibility":
+        return <AccessibilityPreview block={block} />;
+      case "behind_scenes":
+        return <BehindScenesPreview block={block} />;
+      case "sponsor_thanks":
+        return <SponsorThanksPreview block={block} />;
+      case "refreshments":
+        return <RefreshmentsPreview block={block} />;
+      case "cast_grid":
+        return <CastGridPreview block={block} />;
+      case "cast_spotlight":
+        return <CastSpotlightPreview block={block} />;
+      case "narrative_text":
+        return <NarrativeTextPreview block={block} />;
+      case "image_story":
+        return <ImageStoryPreview block={block} />;
+      case "poll":
+        return <PollPreview block={block} />;
+      case "review":
+        return <ReviewPreview block={block} context={context} />;
+      case "merchandise":
+        return <MerchandisePreview block={block} />;
+      case "future_shows":
+        return <FutureShowsPreview block={block} />;
+      case "donation":
+        return <DonationPreview block={block} />;
+      case "offers":
+        return <OffersPreview block={block} />;
+      case "ads":
+        return <AdsPreview block={block} />;
+      case "memory_capture":
+        return <MemoryCapturePreview block={block} />;
+      case "recap":
+        return <RecapPreview block={block} context={context} />;
+      case "recommendations":
+        return <RecommendationsPreview block={block} />;
+      case "push_notification":
+        return <PushNotificationPreview block={block} />;
+      case "map":
+        return <MapPreview block={block} />;
+      case "directions":
+        return <DirectionsPreview block={block} />;
+      default:
+        return null;
     }
   })();
 
@@ -413,17 +413,19 @@ function CastGridPreview({
               )}
               <div className="p-2.5 flex-1 flex flex-col min-w-0">
                 <div
-                  className="font-semibold text-ink text-[13px] leading-tight break-words"
+                  className="font-semibold text-ink text-[13px] leading-tight wrap-break-word"
                   style={cardText ? { color: cardText } : undefined}
                 >
                   {m.name}
                 </div>
                 {m.role && (
                   <div
-                    className="text-[11px] text-ink-faint mt-0.5 break-words"
+                    className="text-[11px] text-ink-faint mt-0.5 wrap-break-word"
                     style={
                       cardText
-                        ? { color: `color-mix(in srgb, ${cardText} 65%, transparent)` }
+                        ? {
+                            color: `color-mix(in srgb, ${cardText} 65%, transparent)`,
+                          }
                         : undefined
                     }
                   >
@@ -432,10 +434,12 @@ function CastGridPreview({
                 )}
                 {isOpen && m.bio && (
                   <p
-                    className="text-[11.5px] text-ink-muted mt-2 leading-relaxed whitespace-pre-line break-words"
+                    className="text-[11.5px] text-ink-muted mt-2 leading-relaxed whitespace-pre-line wrap-break-word"
                     style={
                       cardText
-                        ? { color: `color-mix(in srgb, ${cardText} 80%, transparent)` }
+                        ? {
+                            color: `color-mix(in srgb, ${cardText} 80%, transparent)`,
+                          }
                         : undefined
                     }
                   >
@@ -710,12 +714,11 @@ function PollPreview({ block }: { block: Extract<Block, { type: "poll" }> }) {
                       ? starVal <= selectedStarIndex
                       : false;
 
-                const option =
-                  block.options[starVal - 1] ?? {
-                    id: `rate_${starVal}`,
-                    label: `${starVal} Star${starVal > 1 ? "s" : ""}`,
-                    emoji: "⭐",
-                  };
+                const option = block.options[starVal - 1] ?? {
+                  id: `rate_${starVal}`,
+                  label: `${starVal} Star${starVal > 1 ? "s" : ""}`,
+                  emoji: "⭐",
+                };
 
                 return (
                   <button
@@ -782,17 +785,19 @@ function PollPreview({ block }: { block: Extract<Block, { type: "poll" }> }) {
 
               {[5, 4, 3, 2, 1].map((starVal) => {
                 const optIndex = starVal - 1;
-                const option =
-                  block.options[optIndex] ?? {
-                    id: `rate_${starVal}`,
-                    label: `${starVal} Star${starVal > 1 ? "s" : ""}`,
-                    emoji: "⭐",
-                  };
+                const option = block.options[optIndex] ?? {
+                  id: `rate_${starVal}`,
+                  label: `${starVal} Star${starVal > 1 ? "s" : ""}`,
+                  emoji: "⭐",
+                };
                 const { count, percent } = getOptionStats(option, optIndex);
                 const isUserPick = selectedStarIndex === starVal;
 
                 return (
-                  <div key={starVal} className="flex items-center gap-2.5 text-xs">
+                  <div
+                    key={starVal}
+                    className="flex items-center gap-2.5 text-xs"
+                  >
                     <span className="w-10 flex items-center gap-1 font-bold text-ink shrink-0">
                       <span>{starVal}</span>
                       <Star
