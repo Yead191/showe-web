@@ -34,7 +34,8 @@ export function renderBlockPreview(
   block: Block,
   context?: { programme?: ProgrammeDoc | null; page?: ProgrammePage | null },
 ) {
-  switch (block.type) {
+  const content = (() => {
+    switch (block.type) {
     case "hero":
       return <HeroPreview block={block} />;
     case "welcome":
@@ -85,7 +86,34 @@ export function renderBlockPreview(
       return <DirectionsPreview block={block} />;
     default:
       return null;
-  }
+    }
+  })();
+
+  if (!content) return null;
+
+  const align = block.layout?.align;
+  const textAlign =
+    align === "center"
+      ? "center"
+      : align === "right"
+        ? "right"
+        : align === "full"
+          ? "justify"
+          : "left";
+  const alignClass =
+    align === "center"
+      ? "text-center"
+      : align === "right"
+        ? "text-right"
+        : align === "full"
+          ? "text-justify"
+          : "text-left";
+
+  return (
+    <div style={{ textAlign }} className={alignClass}>
+      {content}
+    </div>
+  );
 }
 
 /* ---------------- Module 1 ---------------- */
@@ -452,9 +480,7 @@ function NarrativeTextPreview({
   block: Extract<Block, { type: "narrative_text" }>;
 }) {
   return (
-    <div
-      className={`text-${block.layout.align === "full" ? "left" : block.layout.align}`}
-    >
+    <div>
       {block.eyebrow && <div className="eyebrow mb-2">{block.eyebrow}</div>}
       {block.heading && (
         <h3 className="font-display font-bold text-xl text-ink leading-tight">
