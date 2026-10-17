@@ -32,7 +32,7 @@ export function StepOrgCapture({ state, dispatch }: Props) {
           id="organisationName"
           label="Organisation name"
           icon={<Building2 size={16} />}
-          placeholder="e.g. Grand Theatre"
+          placeholder="Enter Your Organization Name"
           value={o.organisationName ?? ""}
           onChange={(v) => set({ organisationName: v })}
           required
@@ -60,7 +60,7 @@ export function StepOrgCapture({ state, dispatch }: Props) {
           id="contactName"
           label="Contact name"
           icon={<User size={16} />}
-          placeholder="Jane Smith"
+          placeholder="Enter Contact Name"
           value={o.contactName ?? ""}
           onChange={(v) => set({ contactName: v })}
           required

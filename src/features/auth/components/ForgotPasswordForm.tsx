@@ -17,7 +17,7 @@ export function ForgotPasswordForm({
         <Input
           id="forgot-email"
           type="email"
-          placeholder="name@example.com"
+          placeholder="Enter Your Email"
           className="h-12 border-gray-200"
         />
       </div>

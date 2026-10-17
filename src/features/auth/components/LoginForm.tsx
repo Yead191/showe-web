@@ -102,7 +102,7 @@ export function LoginForm({
             name="email"
             id="email"
             type="email"
-            placeholder="name@example.com"
+            placeholder="Enter Your Email"
             className="h-12 border-gray-200 focus:border-accent-400 focus:ring-accent-400/20"
           />
         </div>
@@ -113,7 +113,7 @@ export function LoginForm({
           <PasswordInput
             name="password"
             id="password"
-            placeholder="••••••••"
+            placeholder="Enter your password"
             className="h-12 border-gray-200 focus:border-accent-400 focus:ring-accent-400/20"
           />
           <div className="w-full inline-flex justify-end">

@@ -264,7 +264,7 @@ export function RegistrationForm({
               <Input
                 id="org-name"
                 name="name"
-                placeholder="e.g. Royal Opera House or National Theatre"
+                placeholder="Enter Your Organization Name"
                 value={formData.name}
                 onChange={(e) => handleChange("name", e.target.value)}
                 className={`pl-10 h-12 border-slate-200 focus:border-primary-600 focus:ring-primary-600/20 rounded-xl ${
@@ -355,7 +355,7 @@ export function RegistrationForm({
                 id="org-phone"
                 type="tel"
                 name="phone"
-                placeholder="+44 20 7946 0991"
+                placeholder="Enter Org Phone Number"
                 value={formData.phone}
                 onChange={(e) => handleChange("phone", e.target.value)}
                 className={`pl-10 h-12 border-slate-200 focus:border-primary-600 focus:ring-primary-600/20 rounded-xl ${
@@ -440,7 +440,7 @@ export function RegistrationForm({
             <PasswordInput
               id="org-password"
               name="password"
-              placeholder="••••••••"
+              placeholder="Set your password"
               value={formData.password}
               onChange={(e) => handleChange("password", e.target.value)}
               className={`h-12 border-slate-200 focus:border-primary-600 focus:ring-primary-600/20 rounded-xl ${
@@ -462,7 +462,7 @@ export function RegistrationForm({
             </Label>
             <PasswordInput
               id="org-confirm-password"
-              placeholder="••••••••"
+              placeholder="Confirm your password"
               value={confirmPassword}
               onChange={(e) => {
                 setConfirmPassword(e.target.value);
